@@ -8,10 +8,6 @@ import { Provider } from 'react-redux';
 import { store } from '../store/Index.ts'; 
 import {Login} from '../components/Login.tsx'
 
-
-import React from 'react';
-
-
 const router = createBrowserRouter([
   {
     path: '/',
