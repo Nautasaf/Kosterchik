@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RegisterUserError, RegisterUserResponse, LoginState } from '../../interface/Registration';
-import { loginUser } from '../thunk/LoginThunk'; // если ты создаешь отдельную операцию для логина
+import { loginUser } from '../thunk/LoginThunk'; 
 
 const initialState: LoginState = {
+  username: '',
   email: '',
   password: '',
   city: '',
@@ -24,12 +25,9 @@ const LoginSlice = createSlice({
     setCity: (state, action: PayloadAction<string>) => {  
       state.city = action.payload;
     },
-   
-  
     resetForm: (state) => {
       state.email = '';
       state.password = '';
-      
     },
   },
   extraReducers: (builder) => {
@@ -38,6 +36,7 @@ const LoginSlice = createSlice({
         state.error = null; 
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<RegisterUserResponse>) => {
+        state.username = action.payload.data.username
         state.error = null; 
         state.city = action.payload.data.city || 'ничего нет '; 
         state.isLoggedIn = true;

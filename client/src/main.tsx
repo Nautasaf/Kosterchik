@@ -7,7 +7,9 @@ import {Registration} from '../components/Registration.tsx'
 import { Provider } from 'react-redux';
 import { store } from '../store/Index.ts'; 
 import {Login} from '../components/Login.tsx'
-import{About} from '../components/About.tsx'
+
+
+import React from 'react';
 
 
 const router = createBrowserRouter([
@@ -23,12 +25,11 @@ const router = createBrowserRouter([
         path: '/login',
         element: <Login />,
       },
-      {
-        path: '/HeadPage',
-        element: < About/>,
-      },
+      
     ]
+    
   },
+ 
 ]);
 
 

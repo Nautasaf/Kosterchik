@@ -1,0 +1,45 @@
+.searchContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px; /* Чуть больше расстояние между элементами */
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 750px; /* Чуть шире */
+  margin: 0 auto;
+}
+
+.searchInput {
+  width: 250px; /* Чуть длиннее */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+  background-color: white; 
+  color: black; 
+
+  &:focus {
+    border-color: #007bff;
+  }
+}
+
+.searchButton {
+  width: 230px; /* Немного уже */
+  padding: 12px;
+  background-color: white; /* Белый фон */
+  color: black; /* Черный текст */
+  border: 1px solid #007bff; /* Добавляем границу для выделения */
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #007bff;
+    color: white;
+  }
+}

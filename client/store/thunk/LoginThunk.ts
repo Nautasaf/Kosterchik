@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk<
         return rejectWithValue({ message: errorData?.text || 'Ошибка логина' });
       }
       const data: RegisterUserResponse = await response.json();
-      dispatch(login());  
+      dispatch(login(data));  
      
       
       return data;

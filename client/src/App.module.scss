@@ -1,57 +1,44 @@
-
 .appContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh; 
-  transition: background-color 0.3s, color 0.3s;
-  
 }
-.darkMode {
-  background-color: #333;
-  color: #fff;
-}
-
-.lightMode {
-  background-color: #fff;
-  color: #000;
-}
-
 
 .navMenu {
   display: flex;
-  justify-content: center;
-  background-color: #333;
+  justify-content: space-around;
+  background-color: #a5d8ff; 
   padding: 10px 0;
   position: sticky;
   top: 0;
   z-index: 1000;
-  gap: 15px;
+  border-radius: 4px;
+  border: 1px solid black;
 }
 
 .navLink {
-  color: white;
+  color: black;
   text-decoration: none;
   margin: 0 15px;
   padding: 5px 10px;
   border-radius: 4px;
+  border: 1px solid black;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #0bdc38;
+    background-color: #0bdc38;  
   }
 }
 
 .navLinkActive {
- color: #007bff;
- text-decoration: none; 
- 
+  color: #007bff;  
+  text-decoration: none;
 }
 
 h1 {
   text-align: center;
   margin: 20px 0;
 }
-
 
 .outletContainer {
   flex: 1; 
@@ -61,13 +48,53 @@ h1 {
   padding: 20px;
 }
 
-
 .footer {
-  background-color: #333;
-  color: white;
+  background-color: #a5d8ff; 
+  color: black;
   text-align: center;
   padding: 10px 0;
   position: sticky;
   bottom: 0;
   z-index: 1000;
+  border-radius: 4px;
+  border: 1px solid black;
 }
+
+.darkMode {
+  background-color: #ffc9ff;  
+  color: black;
+}
+
+.lightMode {
+  background-color: #a5d8ff;  
+  color: black;
+}
+
+
+.lightMode .navMenu,
+.lightMode .footer {
+  background-color: #ffc9ff;  
+}
+
+.themeToggle {
+  padding: 5px 10px;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+ 
+
+  &.darkMode {
+    background-color: #2a2a2a;
+    color: white;
+  }
+
+  &.lightMode {
+    background-color: #a5d8ff;
+    color: black;
+  }
+
+ 
+}
+
+

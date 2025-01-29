@@ -18,8 +18,9 @@ async function testConnection() {
 
     const registration = require('./routs/RegistrationRout');
 const loginRouter = require('./routs/LoginRout')
+const logout = require('./routs/Logout')
 
-    server.use('/', registration, loginRouter);
+    server.use('/', registration, loginRouter, logout);
   
 
 

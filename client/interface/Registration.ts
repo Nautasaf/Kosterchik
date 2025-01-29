@@ -10,6 +10,7 @@ export interface RegistrationState {
 
 
 export interface LoginState {
+  username: string;
   email: string;
   password: string;
   city: string;
@@ -20,6 +21,7 @@ export interface LoginState {
 
 
 export interface RegisterUserResponse {
+  username: string;
   text: string; 
 error: null;
   data: {
@@ -38,5 +40,5 @@ export interface RegisterUserError {
 
 export interface AuthState {
   isLoggedIn: boolean; 
-  user: { email: string; id: number } | null; 
+  username: { email: string; id: number } | null; 
 }

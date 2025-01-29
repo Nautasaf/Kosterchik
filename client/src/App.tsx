@@ -1,79 +1,87 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
-import styles from './App.module.scss'; 
+import styles from './App.module.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/Index';
-import {  logout } from '../store/slice/AuthSlice'; 
-import ThemeToggle from '../components/ToggleTheme'; 
-
-
+import { AppDispatch } from '../store/Index';
+import { logoutThunk } from '../store/thunk/LogoutThunk';
+import { Search } from '../components/Search';
+// import {About} from '../components/About'
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const{ isLoggedIn  } = useSelector((state: RootState) => state.Auth);
-  const dispatch = useDispatch(); 
-  
-  console.log("isLoggedIn ",isLoggedIn);
-  
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
+  const dispatch = useDispatch<AppDispatch>();
+
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logoutThunk());
   };
+
   const toggleTheme = () => {
     setIsDarkMode((prev) => !prev);
   };
- 
 
   return (
     <div className={`${styles.appContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
-      
       <nav className={styles.navMenu}>
-      <ThemeToggle toggleTheme={toggleTheme} />
         {isLoggedIn ? (
           <>
-          
             <NavLink
               to="/"
               end
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
+              className={({ isActive }) => 
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
-              Главная
+              Костерчик
             </NavLink>
+            <button
+              onClick={toggleTheme}
+              className={`${styles.navLink} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+            >
+              Переключить тему
+            </button>
+
             <NavLink
               to="/profile"
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
+              className={({ isActive }) => 
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
               Профиль
             </NavLink>
 
-            <NavLink
-              to="/map"
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
-            >
-             Карта
-            </NavLink>
-           
-            <button onClick={handleLogout} className={styles.navLink}>
+            <button onClick={handleLogout} className={`${styles.navLink} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
               Выйти
             </button>
-            
+           
           </>
         ) : (
           <>
             <NavLink
               to="/"
               end
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
+              className={({ isActive }) => 
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
-              Главная
+              Костерчик
             </NavLink>
+            <button
+              onClick={toggleTheme}
+              className={`${styles.navLink} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+            >
+              Переключить тему
+            </button>
+
             <NavLink
               to="/registration"
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
+              className={({ isActive }) => 
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
               Регистрация
             </NavLink>
+
             <NavLink
               to="/login"
-              className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
+              className={({ isActive }) => 
+                `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
               Логин
             </NavLink>
@@ -81,8 +89,8 @@ function App() {
         )}
       </nav>
 
-      {!isLoggedIn && <h1>Добро пожаловать в курьерик !!!</h1>}
-
+      {!isLoggedIn && <h1>Добро пожаловать в пикничОК!!!</h1>}
+      <div>,<Search/></div>
       <div className={styles.outletContainer}>
         <Outlet />
       </div>
@@ -92,12 +100,8 @@ function App() {
         <br />
         адрес: г. Уфа, ул. Салавата Юлаева д.90
       </footer>
-     
     </div>
   );
 }
 
 export default App;
-
-
-

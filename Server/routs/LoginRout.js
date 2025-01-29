@@ -12,10 +12,13 @@ router.post('/login', async (req, res) => {
       const checkPassword = await bcrypt.compare(password, userDB.password);
       if (userDB && checkPassword) {
         req.session.loginedUser = {
+          username:userDB.username,
           id: userDB.id,
           email: userDB.email,
           city: userDB.city
         };
+       
+        
         res.status(200).json({ text: 'OK', data: req.session.loginedUser });
       } else {
         res
