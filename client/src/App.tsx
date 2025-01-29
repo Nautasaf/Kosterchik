@@ -24,6 +24,7 @@ function App() {
     <div className={`${styles.appContainer} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
       <nav className={styles.navMenu}>
         {isLoggedIn ? (
+         
           <>
             <NavLink
               to="/"
@@ -51,8 +52,9 @@ function App() {
             <button onClick={handleLogout} className={`${styles.navLink} ${isDarkMode ? styles.darkMode : styles.lightMode}`}>
               Выйти
             </button>
-           
-          </>
+            
+            </>
+          
         ) : (
           <>
             <NavLink
@@ -83,14 +85,16 @@ function App() {
               className={({ isActive }) => 
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
             >
+              
               Логин
             </NavLink>
           </>
         )}
       </nav>
-
+      {isLoggedIn &&  <Search/>}
+   
       {!isLoggedIn && <h1>Добро пожаловать в пикничОК!!!</h1>}
-      <div>,<Search/></div>
+     
       <div className={styles.outletContainer}>
         <Outlet />
       </div>
