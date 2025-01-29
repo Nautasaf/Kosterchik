@@ -27,7 +27,7 @@ const serverConfig = (server) => {
   server.use(express.urlencoded({ extended: true }));
   server.use(
     cors({
-      origin: ['http://localhost:5173', 'http://81.177.222.5/'],
+      origin: ['http://localhost:5173', 'http://81.177.222.5'],
       methods: 'GET, POST, PUT, DELETE',
       // allowedHeaders:
       //   'Origin, Accept, X-Requested-With, Content-Type, Authorization',

@@ -10,7 +10,7 @@ export const loginUser = createAsyncThunk<
   'login/loginUser',
   async (userData, {  dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch('http://81.177.222.20/login', {
+      const response = await fetch('http://81.177.222.20:3000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

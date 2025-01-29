@@ -9,7 +9,7 @@ export const registerUser = createAsyncThunk<
   'registration/registerUser',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://81.177.222.20/registration', {
+      const response = await fetch('http://81.177.222.20:3000/registration', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

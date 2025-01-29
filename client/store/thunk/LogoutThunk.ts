@@ -5,7 +5,7 @@ export const logoutThunk = createAsyncThunk<void, void, { rejectValue: string }>
   'auth/logoutThunk',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch('http://81.177.222.20/logout', {
+      const response = await fetch('http://81.177.222.20:3000/logout', {
         method: 'POST',
         credentials: 'include',
       });
