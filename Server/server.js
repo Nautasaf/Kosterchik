@@ -1,29 +1,38 @@
-require('dotenv').config({ path: './.env' });
-const express = require('express');
-const serverConfig = require('./serverConfig');
-const server = express();
-const db = require('./db/models/index'); 
-
-serverConfig(server);
- 
-async function testConnection() {
-    try {
-    await db.sequelize.authenticate(); 
-    console.log('БД подключена успешно');
-    } catch (error) {
-    console.log('Ошибка подключения к БД', error.message);
-    }
-    }
-    testConnection()
-
-    const registration = require('./routs/RegistrationRout');
+require('dotenv').config({ path: './.env' })
+const https = require('https');
+const fs = require('fs')
+const express = require('express')
+const serverConfig = require('./serverConfig')
+const server = express()
+const db = require('./db/models/index')
+const registration = require('./routs/RegistrationRout')
 const loginRouter = require('./routs/LoginRout')
 const logout = require('./routs/Logout')
+const uploadRoute = require('./routs/UploadRoute') // Новый маршрут
 
-    server.use('/', registration, loginRouter, logout);
-  
+// Создание папки uploads, если она не существует
+const dir = './uploads'
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir)
+}
 
+serverConfig(server)
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log('Server is working ');
-});
+async function testConnection() {
+  try {
+    await db.sequelize.authenticate()
+    console.log('БД подключена успешно')
+  } catch (error) {
+    console.log('Ошибка подключения к БД', error.message)
+  }
+}
+
+testConnection()
+
+// Подключение маршрутов
+server.use('/', registration, loginRouter, logout, uploadRoute) // Добавляем новый маршрут
+
+const PORT = process.env.PORT || 3000
+server.listen(PORT, () => {
+  console.log(`Server is working on port ${PORT}`)
+})
