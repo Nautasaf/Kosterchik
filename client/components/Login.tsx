@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail, setPassword, resetForm } from '../store/slice/LoginSlice'; 
+import { setEmail, setPassword, resetForm } from '../store/slice/LoginSlice';
 import { AppDispatch, RootState } from '../store/Index';
 import style from './Login.module.scss';
 import { loginUser } from '../store/thunk/LoginThunk';
@@ -14,7 +14,7 @@ export const Login: React.FC = () => {
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault();
 
-   
+
     if (!email || !password) {
       alert('Пожалуйста, заполните все поля.');
       return;
@@ -24,8 +24,8 @@ export const Login: React.FC = () => {
       const response = await dispatch(loginUser({ email, password }));
       if (loginUser.fulfilled.match(response)) {
         alert('Вход выполнен успешно!');
-        dispatch(resetForm());  
-        navigate('/'); 
+        dispatch(resetForm()); 
+        navigate('/');
       } else {
         const errorMessage = response.payload?.message || 'Ошибка входа';
         alert(errorMessage);

@@ -5,10 +5,10 @@ import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {Registration} from '../components/Registration.tsx'
 import { Provider } from 'react-redux';
-import { store } from '../store/Index.ts'; 
+import { store } from '../store/Index.ts';
 import {Login} from '../components/Login.tsx'
+import  ProfilePage  from '../components/profilePage/ProfilePage';
 import { HeadPage } from '../components/HeadPage.tsx';
-// import { About } from '../components/About.tsx';
 import {EventItem} from '../components/EventItem.tsx';
 
 
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/login',
         element: <Login />,
+      },
+      {
+        path: '/profile',
+        element: <ProfilePage />,
       },
       {
         index: true,
