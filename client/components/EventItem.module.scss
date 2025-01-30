@@ -1,0 +1,65 @@
+.eventItem {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px; // Увеличиваем максимальную ширину
+  margin: 20px auto;
+}
+
+.eventTitle {
+  font-size: 2.5rem; // Увеличиваем размер заголовка
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.eventImage {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.eventColumns {
+  display: flex;
+  flex-direction: row;
+  gap: 30px; // Расстояние между колонками
+  flex-wrap: nowrap; // Запрещаем перенос колонок на новую строку
+}
+
+.eventColumn {
+  flex: 1 1 48%; // Колонки занимают 48% ширины контейнера
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Расстояние между элементами внутри колонок
+}
+
+.eventDescription, .eventCity {
+  font-size: 1.2rem; // Увеличиваем размер шрифта
+  color: #555;
+}
+
+.eventButtonContainer {
+  display: flex;
+  flex-direction: row; // Кнопки в ряд
+  gap: 15px; // Расстояние между кнопками
+}
+
+.eventButton {
+  padding: 12px 20px; // Увеличиваем размеры кнопок
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #0056b3;
+  }
+
+  &:active {
+    background-color: #003f7f;
+  }
+}

@@ -6,7 +6,10 @@ import { RootState } from '../store/Index';
 import { AppDispatch } from '../store/Index';
 import { logoutThunk } from '../store/thunk/LogoutThunk';
 import { Search } from '../components/Search';
-// import {About} from '../components/About'
+import { resetFilters } from '../store/slice/SearchSlice'; 
+
+
+
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
@@ -18,6 +21,11 @@ function App() {
 
   const toggleTheme = () => {
     setIsDarkMode((prev) => !prev);
+   
+  };
+
+  const handleResetFilters = () => {
+    dispatch(resetFilters()); 
   };
 
   return (
@@ -31,6 +39,7 @@ function App() {
               end
               className={({ isActive }) => 
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+              onClick={handleResetFilters}  
             >
               Костерчик
             </NavLink>
@@ -62,6 +71,7 @@ function App() {
               end
               className={({ isActive }) => 
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''} ${isDarkMode ? styles.darkMode : styles.lightMode}`}
+              onClick={handleResetFilters}  
             >
               Костерчик
             </NavLink>
@@ -91,13 +101,16 @@ function App() {
           </>
         )}
       </nav>
-      {isLoggedIn &&  <Search/>}
+      
    
       {!isLoggedIn && <h1>Добро пожаловать в пикничОК!!!</h1>}
      
       <div className={styles.outletContainer}>
         <Outlet />
       </div>
+
+     
+
 
       <footer className={styles.footer}>
         контакты: + 7(929)-198-88-32
@@ -109,3 +122,4 @@ function App() {
 }
 
 export default App;
+

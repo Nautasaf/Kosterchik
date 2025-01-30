@@ -1,4 +1,5 @@
 require('dotenv').config({ path: './.env' });
+const path = require('path');
 const express = require('express');
 const serverConfig = require('./serverConfig');
 const server = express();
@@ -16,11 +17,18 @@ async function testConnection() {
     }
     testConnection()
 
-    const registration = require('./routs/RegistrationRout');
+const registration = require('./routs/RegistrationRout');
 const loginRouter = require('./routs/LoginRout')
 const logout = require('./routs/Logout')
+const eventRout = require('./routs/EventRout')
+const searchRout = require('./routs/SearchRout')
+
 
     server.use('/', registration, loginRouter, logout);
+    server.use('/events', eventRout)
+    server.use('/search', searchRout)
+
+    
   
 
 
