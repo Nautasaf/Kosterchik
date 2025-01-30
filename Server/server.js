@@ -29,16 +29,14 @@ async function testConnection() {
 
 testConnection()
 
-    const registration = require('./routs/RegistrationRout');
-const loginRouter = require('./routs/LoginRout')
-const logout = require('./routs/Logout')
+
 const eventRout = require('./routs/EventRout')
 const searchRout = require('./routs/SearchRout')
 
-    server.use('/', registration, loginRouter, logout);
-    server.use('/events', eventRout)
-    server.use('/search', searchRout)
-
+    
+  server.use('/events', eventRout)
+  server.use('/search', searchRout)
+  server.use('/', registration, loginRouter, logout, uploadRoute)
 
   const PORT = process.env.PORT || 3000
   server.listen(PORT, () => {

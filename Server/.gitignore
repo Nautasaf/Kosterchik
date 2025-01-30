@@ -23,3 +23,5 @@ sessions
 *.njsproj
 *.sln
 *.sw?
+.env
+uploads
