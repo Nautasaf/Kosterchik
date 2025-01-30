@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+
 import styles from './Search.module.scss';
-import { setCity, setDate, setTitle, resetFilters} from '../store/slice/SearchSlice';
+import { setCity, setDate, setTitle} from '../store/slice/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {  AppDispatch, RootState } from '../store/Index';
 import { fetchSearch} from '../store/thunk/SearchThunk'
@@ -29,8 +29,7 @@ export const Search: React.FC = () => {
     }));
     
   };
- 
-
+  
   return (
     <div className={styles.searchContainer}>
       <input
@@ -62,6 +61,7 @@ export const Search: React.FC = () => {
     </div>
   );
 };
+
 
 
 
