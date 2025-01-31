@@ -12,6 +12,8 @@ dist
 dist-ssr
 *.local
 sessions
+.env
+uploads
 
 # Editor directories and files
 .vscode/*
@@ -23,5 +25,3 @@ sessions
 *.njsproj
 *.sln
 *.sw?
-.env
-uploads
