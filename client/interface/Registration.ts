@@ -25,6 +25,12 @@ export interface User {
   photoUrl: string
 }
 
+export interface UserState {
+  users: User | null;
+  loading: boolean;
+  error: string | null;
+}
+
 export interface RegisterUserResponse {
   username: string
   text: string
@@ -33,7 +39,8 @@ export interface RegisterUserResponse {
 }
 
 export interface RegisterUserError {
-  message: string
+  message: string | undefined
+ 
 }
 
 export interface AuthState {

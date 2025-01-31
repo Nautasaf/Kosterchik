@@ -1,15 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import {
-  RegisterUserResponse,
-  RegisterUserError,
-} from '../../interface/Registration'
+import {RegisterUserResponse,RegisterUserError, User,} from '../../interface/Registration'
 import { login } from '../slice/AuthSlice'
 
 export const loginUser = createAsyncThunk<
-  RegisterUserResponse,
+ User,
   { email: string; password: string },
   { rejectValue: RegisterUserError }
->('login/loginUser', async (userData, { dispatch, rejectWithValue }) => {
+>('login/loginUser',
+   async (userData, { dispatch, rejectWithValue }) => {
   try {
     const response = await fetch('http://localhost:3000/login', {
       method: 'POST',

@@ -51,8 +51,8 @@ const RegistrationSlice = createSlice({
         state.error = null;
       
       })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.error = action.payload || null
+      .addCase(registerUser.rejected, (state, action: PayloadAction<RegisterUserError | undefined>) => {
+        state.error = action.payload ?? null;
       });
   },
 });

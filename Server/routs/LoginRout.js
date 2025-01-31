@@ -21,12 +21,10 @@ router.post('/login', async (req, res) => {
 
         res.status(200).json({ text: 'OK', data: req.session.loginedUser })
       } else {
-        res.status(403).json({ text: 'Неправильные логин(email) и/или пароль' })
+        res.status(403).json({ message: 'Неправильные логин(email) и/или пароль' })
       }
     } else {
-      res
-        .status(403)
-        .json({ text: 'Пользователя с данным емайлом не существует' })
+      res.status(403).json({ message: 'Пользователя с данным емайлом не существует' })
     }
   } catch (error) {
     console.log('Ошибка при получении пользователя из БД: ', error)

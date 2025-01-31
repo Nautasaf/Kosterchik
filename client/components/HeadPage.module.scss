@@ -1,63 +1,65 @@
 .headPageContainer {
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .pageTitle {
-    font-size: 2rem;
-    margin-top: 0px;
-    color: #333;
-  }
-  
-  .eventList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  max-height: 700px;
-  overflow-y: scroll; 
-  -ms-overflow-style: none; 
-  scrollbar-width: none;  
-  
-  &::-webkit-scrollbar {
-    display: none;  
-  }
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px;
+  text-align: center;
 }
-  
-  .eventItem {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid #0a0000;
-    padding: 20px;
-    border-radius: 8px;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, box-shadow 0.2s;
-    width: calc(45% - 10px); 
-    height: 350px; 
-    box-sizing: border-box;
-    
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+
+.pageTitle {
+  font-size: 36px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.eventList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Два столбца */
+  gap: 30px;
+  margin-top: 20px;
+}
+
+.eventItem {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    transform: translateY(-5px);
   }
-  
-  .eventTitle {
-    font-size: 1.8rem;
-    margin: 10px 0;
-    color: #333;
-  }
-  
+
   .eventImage {
     width: 100%;
-    height: auto;
-    border-radius: 8px;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 2px solid #f1f1f1;
+  }
+
+  .eventTitle {
+    font-size: 24px;
+    color: #007bff;
+    margin: 15px 20px 10px;
+  }
+
+  .eventInfo {
+    font-size: 16px;
+    color: #555;
+    padding: 0 20px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    height: 60px;
+    overflow: hidden;
+  }
+
+  .eventCity,
+  .eventDate {
+    font-size: 14px;
+    color: #777;
+    margin-left: 20px;
     margin-bottom: 10px;
   }
-  
-  .eventInfo {
-    font-size: 1.2rem;
-    color: #555;
-    margin-top: 10px;
-  }
+}
