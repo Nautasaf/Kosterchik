@@ -4,13 +4,16 @@ import {
   RegisterUserError,
 } from '../../interface/Registration'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(`API URL is ${apiUrl}`);
+
 export const registerUser = createAsyncThunk<
   RegisterUserResponse,
   { username: string; email: string; password: string; city: string },
   { rejectValue: RegisterUserError }
 >('registration/registerUser', async (userData, { rejectWithValue }) => {
   try {
-    const response = await fetch('http://localhost:3000/registration', {
+    const response = await fetch(`${apiUrl}/registration`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

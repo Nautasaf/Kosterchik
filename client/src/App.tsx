@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './App.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/Index';
 import { AppDispatch } from '../store/Index';
 import { logoutThunk } from '../store/thunk/LogoutThunk';
-import { Search } from '../components/Search';
 import { setUser } from '../store/slice/UserSlice'
 import { resetFilters } from '../store/slice/SearchSlice';
 function App() {

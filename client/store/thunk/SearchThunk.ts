@@ -1,11 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import {  Event } from '../../interface/EventFetch';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(`API URL is ${apiUrl}`);
+
 export const fetchSearch= createAsyncThunk<Event[], { city: string; date: string; title: string }>(
   'search/fetchEvents',
   async (filters, { rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:3000/search', {
+      const response = await fetch(`${apiUrl}/search`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', 

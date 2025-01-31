@@ -1,11 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { logout } from '../slice/AuthSlice'; 
+import { logout } from '../slice/AuthSlice';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(`API URL is ${apiUrl}`);
 
 export const logoutThunk = createAsyncThunk<void, void, { rejectValue: string }>(
   'auth/logoutThunk',
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      const response = await fetch('http://localhost:3000/logout', {
+      const response = await fetch(`${apiUrl}/logout`, {
         method: 'POST',
         credentials: 'include',
       });
