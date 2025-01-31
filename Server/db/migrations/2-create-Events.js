@@ -31,6 +31,18 @@ module.exports = {
         },
         onDelete: 'CASCADE',
       },
+      imageUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      background: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      requirements: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

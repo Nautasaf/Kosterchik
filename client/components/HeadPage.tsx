@@ -1,62 +1,62 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
-import styles from './HeadPage.module.scss'; 
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSearch } from "../store/thunk/SearchThunk"; 
-import { RootState, AppDispatch } from "../store/Index"; 
-import { Search } from "./Search";
+import React, { useState, useCallback, useEffect, useRef } from 'react'
+import { NavLink } from 'react-router-dom'
+import styles from './HeadPage.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchSearch } from '../store/thunk/SearchThunk'
+import { RootState, AppDispatch } from '../store/Index'
+import { Search } from './Search'
 
 export const HeadPage = () => {
-  const dispatch = useDispatch<AppDispatch>(); 
+  const dispatch = useDispatch<AppDispatch>()
   const { events, loading, error, filters } = useSelector(
-    (state: RootState) => state.search  
-  );
-  const { isLoggedIn } = useSelector((state: RootState) => state.Auth); 
+    (state: RootState) => state.search,
+  )
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
 
-  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(
+    null,
+  )
 
-  const prevFilters = useRef(filters);
+  const prevFilters = useRef(filters)
 
   const handleDebounce = useCallback(() => {
     if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
+      clearTimeout(debounceTimeout)
     }
     const timeout = setTimeout(() => {
-      dispatch(fetchSearch(filters)); 
-    }, 1500);
+      dispatch(fetchSearch(filters))
+    }, 1500)
 
-    setDebounceTimeout(timeout);
-  }, [filters, debounceTimeout, dispatch]);
+    setDebounceTimeout(timeout)
+  }, [filters, debounceTimeout, dispatch])
 
   useEffect(() => {
-    
     if (filters !== prevFilters.current) {
-      prevFilters.current = filters;
-      handleDebounce(); 
+      prevFilters.current = filters
+      handleDebounce()
     }
-  }, [filters, handleDebounce]);
-
+  }, [filters, handleDebounce])
 
   useEffect(() => {
     if (!filters.city && !filters.date && !filters.title) {
-      dispatch(fetchSearch({ city: '', date: '', title: '' }));
+      dispatch(fetchSearch({ city: '', date: '', title: '' }))
     }
-  }, [filters, dispatch]); 
+  }, [filters, dispatch])
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return <div>Загрузка...</div>
   }
 
   if (!isLoggedIn) {
-    return <div>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
+    return <div>Пожалуйста, авторизуйтесь для просмотра событий.</div>
   }
 
   if (error) {
-    return <div>Произошла ошибка: {error}</div>;
+    return <div>Произошла ошибка: {error}</div>
   }
 
   if (events.length === 0) {
-    return <div>Нет доступных событий</div>;
+    return <div>Нет доступных событий</div>
   }
 
   return (
@@ -81,5 +81,5 @@ export const HeadPage = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}

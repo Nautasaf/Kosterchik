@@ -1,0 +1,72 @@
+.createEventContainer {
+  max-width: 600px;
+  width: 100%;
+  max-height: 65vh;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #e9a4e2;
+  border-radius: 8px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  h2 {
+    text-align: center;
+    color: #0d7082;
+  }
+
+  .formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      font-weight: bold;
+      color: #0d7082;
+    }
+
+    input[type='text'],
+    input[type='date'],
+    textarea,
+    input[type='color'] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #15367e;
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      background-color: #e6e6e6;
+      color: #093593;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+  }
+
+  .submitButton {
+    display: block;
+    width: fit-content;
+    padding: 0.75rem 1.5rem;
+    background-color: #007bff;
+    color: rgb(242, 237, 237);
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+    margin-top: 10px;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}

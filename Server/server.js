@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './.env' })
-const https = require('https');
+const https = require('https')
 const fs = require('fs')
 const express = require('express')
 const serverConfig = require('./serverConfig')
@@ -8,7 +8,8 @@ const db = require('./db/models/index')
 const registration = require('./routs/RegistrationRout')
 const loginRouter = require('./routs/LoginRout')
 const logout = require('./routs/Logout')
-const uploadRoute = require('./routs/UploadRoute') // Новый маршрут
+const uploadRoute = require('./routs/UploadRoute')
+const CreateEventRout = require('./routs/CreateEventRout')
 
 // Создание папки uploads, если она не существует
 const dir = './uploads'
@@ -29,16 +30,15 @@ async function testConnection() {
 
 testConnection()
 
-
 const eventRout = require('./routs/EventRout')
 const searchRout = require('./routs/SearchRout')
 
-    
-  server.use('/events', eventRout)
-  server.use('/search', searchRout)
-  server.use('/', registration, loginRouter, logout, uploadRoute)
+server.use('/events', eventRout)
+server.use('/search', searchRout)
+server.use('/', registration, loginRouter, logout, uploadRoute)
+server.use('/events', CreateEventRout)
 
-  const PORT = process.env.PORT || 3000
-  server.listen(PORT, () => {
-    console.log(`Server is working on port ${PORT}`)
-  })
+const PORT = process.env.PORT || 3000
+server.listen(PORT, () => {
+  console.log(`Server is working on port ${PORT}`)
+})
