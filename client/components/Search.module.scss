@@ -9,14 +9,17 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 750px;
+  width: 90vw;
   margin: 0 auto;
   position: sticky;
-  top: 59px;
-  z-index: 1000; 
+  top: 90px;
+  z-index: 1000;
+  transition: all 0.3s ease;
 }
 
 .searchInput {
-  width: 250px;
+  width: 40vw;
+  max-width: 250px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -24,7 +27,7 @@
   outline: none;
   transition: border-color 0.3s;
   background-color: white; 
-  color: grey; 
+  color: grey;
 
   &:focus {
     border-color: #007bff;
@@ -32,10 +35,11 @@
 }
 
 .searchButton {
-  width: 230px;
+  width: 40vw;
+  max-width: 230px;
   padding: 12px;
   background-color: white;
-  color: black; 
+  color: black;
   border: 1px solid #007bff;
   border-radius: 6px;
   font-size: 16px;
@@ -45,5 +49,24 @@
   &:hover {
     background-color: #007bff;
     color: white;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .searchContainer {
+    width: 95vw;
+  }
+
+  .searchInput,
+  .searchButton {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchInput,
+  .searchButton {
+    width: 90vw;
   }
 }

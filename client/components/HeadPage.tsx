@@ -1,18 +1,19 @@
-import React, { useState, useCallback, useEffect, useRef } from "react";
+import React from 'react';
+import{ useState, useCallback, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import styles from './HeadPage.module.scss'; 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearch } from "../store/thunk/SearchThunk"; 
 import { RootState, AppDispatch } from "../store/Index"; 
-import { Search } from "./Search";
+import moment from 'moment'; 
+import 'moment/locale/ru'; 
+moment.locale('ru');
 
 export const HeadPage = () => {
-  const dispatch = useDispatch<AppDispatch>(); 
-  const { events, loading, error, filters } = useSelector(
-    (state: RootState) => state.search  
-  );
-  const { isLoggedIn } = useSelector((state: RootState) => state.Auth); 
 
+  const dispatch = useDispatch<AppDispatch>(); 
+  const { events, loading, error, filters } = useSelector((state: RootState) => state.search);
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth); 
   const [debounceTimeout, setDebounceTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const prevFilters = useRef(filters);
@@ -29,7 +30,6 @@ export const HeadPage = () => {
   }, [filters, debounceTimeout, dispatch]);
 
   useEffect(() => {
-    
     if (filters !== prevFilters.current) {
       prevFilters.current = filters;
       handleDebounce(); 
@@ -61,7 +61,6 @@ export const HeadPage = () => {
 
   return (
     <div className={styles.headPageContainer}>
-      {isLoggedIn && <Search />}
       <h1 className={styles.pageTitle}>Список событий</h1>
       <div className={styles.eventList}>
         {events.map((event) => (
@@ -77,9 +76,13 @@ export const HeadPage = () => {
               className={styles.eventImage}
             />
             <p className={styles.eventInfo}>{event.description}</p>
+            <p className={styles.eventCity}>{event.city}</p>
+            <p className={styles.eventDate}>{moment(event.date).format('D MMMM YYYY, HH:mm')}</p>
+           
           </NavLink>
         ))}
       </div>
     </div>
+    
   );
 };

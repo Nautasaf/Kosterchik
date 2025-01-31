@@ -1,4 +1,4 @@
-
+import React from 'react';
 import styles from './Search.module.scss';
 import { setCity, setDate, setTitle} from '../store/slice/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import {  AppDispatch, RootState } from '../store/Index';
 import { fetchSearch} from '../store/thunk/SearchThunk'
 
 export const Search: React.FC = () => {
+  
   const dispatch = useDispatch<AppDispatch>();
   const { city, date, title } = useSelector((state: RootState) => state.search.filters)
 
@@ -21,16 +22,12 @@ export const Search: React.FC = () => {
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setTitle(event.target.value)); 
   };
-  const handleSearch = () => {
-    dispatch(fetchSearch({
-      city,
-      date,
-      title
-    }));
+ 
     
-  };
+
   
   return (
+
     <div className={styles.searchContainer}>
       <input
         type="text"
@@ -54,13 +51,9 @@ export const Search: React.FC = () => {
         onChange={handleTitleChange}
         className={styles.searchInput}
       />
-      
-      <button onClick={handleSearch} className={styles.searchButton}>
-        Найти
-      </button>
     </div>
   );
-};
+}
 
 
 

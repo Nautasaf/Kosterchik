@@ -6,6 +6,7 @@ import profileReducer from './slice/ProfileSlice';
 import userReducer from './slice/UserSlice';
 import eventsReducer from '../store/slice/EventFetch'
 import searchReducer from '../store/slice/SearchSlice'
+import AllUserReduser from "../store/slice/AllUserSlice"
 
 export const store = configureStore({
     reducer:{
@@ -16,6 +17,7 @@ export const store = configureStore({
         user: userReducer,
         Events: eventsReducer,
         search: searchReducer,
+        AllUsers: AllUserReduser,
     }
 })
 
