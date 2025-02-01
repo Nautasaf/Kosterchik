@@ -1,45 +1,52 @@
-require('dotenv').config({ path: './.env' })
-const https = require('https')
-const fs = require('fs')
-const express = require('express')
-const serverConfig = require('./serverConfig')
-const server = express()
-const db = require('./db/models/index')
-const registration = require('./routs/RegistrationRout')
-const loginRouter = require('./routs/LoginRout')
-const logout = require('./routs/Logout')
-const uploadRoute = require('./routs/UploadRoute')
-const CreateEventRout = require('./routs/CreateEventRout')
-
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+require('dotenv').config({ path: './.env' });
+const https = require('https');
+const fs = require('fs');
+const express = require('express');
+const serverConfig = require('./serverConfig');
+const server = express();
+const db = require('./db/models/index');
+const registration = require('./routs/RegistrationRout');
+const loginRouter = require('./routs/LoginRout');
+const logout = require('./routs/Logout');
+const uploadRoute = require('./routs/UploadRoute');
+const CreateEventRout = require('./routs/CreateEventRout');
 // Создание папки uploads, если она не существует
-const dir = './uploads'
+const dir = './uploads';
 if (!fs.existsSync(dir)) {
-  fs.mkdirSync(dir)
+    fs.mkdirSync(dir);
 }
-
-serverConfig(server)
-
-async function testConnection() {
-  try {
-    await db.sequelize.authenticate()
-    console.log('БД подключена успешно')
-  } catch (error) {
-    console.log('Ошибка подключения к БД', error.message)
-  }
+serverConfig(server);
+function testConnection() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield db.sequelize.authenticate();
+            console.log('БД подключена успешно');
+        }
+        catch (error) {
+            console.log('Ошибка подключения к БД', error);
+        }
+    });
 }
-
-testConnection()
-
-const eventRout = require('./routs/EventRout')
-const searchRout = require('./routs/SearchRout')
-const getUsers = require('./routs/GetAllUser')
-server.use('/events', eventRout)
-server.use('/search', searchRout)
-server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout)
-  server.use('/users', getUsers)
-
-const PORT = process.env.PORT || 3000
+testConnection();
+const eventRout = require('./routs/EventRout');
+const searchRout = require('./routs/SearchRout');
+const getUsers = require('./routs/GetAllUser');
+server.use('/events', eventRout);
+server.use('/search', searchRout);
+server.use('/', registration, loginRouter, logout, uploadRoute);
+server.use('/events', CreateEventRout);
+server.use('/users', getUsers);
+const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Server is working on port ${PORT}`)
-})
+    console.log(`Server is working on port ${PORT}`);
+});
