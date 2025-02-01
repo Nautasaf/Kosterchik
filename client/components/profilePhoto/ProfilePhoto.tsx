@@ -4,6 +4,9 @@ import styles from './ProfilePhoto.module.scss'
 import { setUser } from '../../store/slice/UserSlice'
 import { useDispatch } from 'react-redux'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
+
 interface ProfilePhotoProps {
   photoUrl: string
   altText: string
@@ -29,7 +32,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ photoUrl, altText }) => {
 
     try {
       const response = await axios.put(
-        'http://localhost:3000/profile/photo',
+        `${apiUrl}/profile/photo`,
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
@@ -41,8 +44,11 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ photoUrl, altText }) => {
 
       dispatch(setUser(user))
     } catch (error) {
-      console.error('Ошибка:', error)
-      alert(`Произошла ошибка при загрузке файла: ${error.message}`)
+      if (error instanceof Error) {
+        alert(`Произошла ошибка при загрузке файла: ${error.message}`);
+      } else {
+        alert('Произошла неизвестная ошибка');
+      }
     }
   }
 

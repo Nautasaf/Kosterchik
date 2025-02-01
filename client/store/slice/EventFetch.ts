@@ -1,6 +1,6 @@
 import { createSlice} from '@reduxjs/toolkit';
 import { fetchEvents } from '../thunk/EventThunk';
-import{EventsState, Event  } from '../../interface/EventFetch'
+import{EventsState} from '../../interface/EventFetch'
 
 const initialState: EventsState = {
     events: [],

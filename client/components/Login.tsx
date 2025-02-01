@@ -21,7 +21,7 @@ export const Login: React.FC = () => {
     }
 
     try {
-      const response = await dispatch(loginUser({ email, password }));
+      const response : any = await dispatch(loginUser({ email, password }));
       if (loginUser.fulfilled.match(response)) {
         alert('Вход выполнен успешно!');
         dispatch(resetForm()); 

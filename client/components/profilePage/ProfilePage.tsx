@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styles from './ProfilePage.module.scss'
 import ProfilePhoto from '../profilePhoto/ProfilePhoto'
 import { useSelector } from 'react-redux'

@@ -6,7 +6,6 @@ import {
 import { login } from '../slice/AuthSlice'
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log(`API URL is ${apiUrl}`);
 
 export const loginUser = createAsyncThunk<
   RegisterUserResponse,

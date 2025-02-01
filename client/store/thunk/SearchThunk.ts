@@ -2,7 +2,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {  Event } from '../../interface/EventFetch';
 
 const apiUrl = import.meta.env.VITE_API_URL;
-console.log(`API URL is ${apiUrl}`);
 
 export const fetchSearch= createAsyncThunk<Event[], { city: string; date: string; title: string }>(
   'search/fetchEvents',
@@ -27,7 +26,11 @@ export const fetchSearch= createAsyncThunk<Event[], { city: string; date: string
       
       return data;
     } catch (error) {
-      return rejectWithValue(error.message);
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      } else {
+        alert('Произошла неизвестная ошибка');
+      }
     }
   }
 );

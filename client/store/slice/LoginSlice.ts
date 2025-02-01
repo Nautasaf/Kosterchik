@@ -41,12 +41,15 @@ const LoginSlice = createSlice({
         state.error = null
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
-        state.username = action.payload.username
-        state.email = action.payload.email
-        state.city = action.payload.city
-        state.photoUrl = action.payload.photoUrl
-        state.error = null
-        state.isLoggedIn = true
+        const user = action.payload as User;
+        if (user) {
+          state.username = user.username
+          state.email = user.email
+          state.city = user.city
+          state.photoUrl = user.photoUrl
+          state.error = null
+          state.isLoggedIn = true
+        }
       })
       .addCase(
         loginUser.rejected,
