@@ -22,7 +22,7 @@ const sessionConfig = {
 
 const corsOptions = {
   origin(origin, callback) {
-    const isAllowedOrigin = process.env.CORS_URL.includes(origin)
+    const isAllowedOrigin = ['http://localhost:5173', 'https://kosterchik.ru'].includes(origin)
 
     if (!origin || isAllowedOrigin) {
       callback(null, true)

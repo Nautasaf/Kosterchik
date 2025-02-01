@@ -63,7 +63,6 @@ router.post('/', async (req, res) => {
   try {
     const filters = req.body;
     const events = await searchEvents(filters);
-    console.log('Найденные события:', events);
     res.json(events);
   } catch (error) {
     console.error('Ошибка при обработке запроса:', error);
