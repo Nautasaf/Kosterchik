@@ -1,11 +1,7 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import {
-  RegisterUserError,
-  RegisterUserResponse,
-  LoginState,
-  User,
-} from '../../interface/Registration'
-import { loginUser } from '../thunk/LoginThunk'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {LoginState, RegisterUserError } from '../../interface/Registration';
+import { loginUser } from '../thunk/LoginThunk';
+
 
 const initialState: LoginState = {
   username: '',
@@ -15,62 +11,51 @@ const initialState: LoginState = {
   photoUrl: '',
   error: null,
   isLoggedIn: false,
-}
+};
 
 const LoginSlice = createSlice({
   name: 'Login',
   initialState,
   reducers: {
     setEmail: (state, action: PayloadAction<string>) => {
-      state.email = action.payload
+      state.email = action.payload;
     },
     setPassword: (state, action: PayloadAction<string>) => {
-      state.password = action.payload
+      state.password = action.payload;
     },
     setCity: (state, action: PayloadAction<string>) => {
-      state.city = action.payload
+      state.city = action.payload;
     },
     resetForm: (state) => {
-      state.email = ''
-      state.password = ''
+      state.email = '';
+      state.password = '';
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.error = null
+        state.error = null;
       })
-      .addCase(loginUser.fulfilled, (state, action: PayloadAction<User>) => {
-        const user = action.payload as User;
-        if (user) {
-          state.username = user.username
-          state.email = user.email
-          state.city = user.city
-          state.photoUrl = user.photoUrl
-          state.error = null
-          state.isLoggedIn = true
-        }
+      .addCase(loginUser.fulfilled, (state, action) => {
+     
+        state.username = action.payload.username;
+        state.error = null;
+        state.isLoggedIn = true;
       })
       .addCase(
         loginUser.rejected,
         (state, action: PayloadAction<RegisterUserError | undefined>) => {
-          if (action.payload) {
-            state.error = action.payload
-          } else {
-            state.error = { message: 'Ошибка логина' }
-          }
-        },
-      )
+          state.error = action.payload ?? { message: 'Неизвестная ошибка' };
+        
+      });
   },
-})
+});
 
 export const {
   setEmail,
   setPassword,
-
   setCity,
-
   resetForm,
-} = LoginSlice.actions
+} = LoginSlice.actions;
 
-export default LoginSlice.reducer
+export default LoginSlice.reducer;

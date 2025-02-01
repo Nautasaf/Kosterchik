@@ -29,8 +29,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      imageUrl: { 
+      imageUrl: {
         type: DataTypes.STRING,
+        allowNull: true,
+      },
+      background: { // Новое поле
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      requirements: { // Новое поле
+        type: DataTypes.TEXT,
         allowNull: true,
       },
     },

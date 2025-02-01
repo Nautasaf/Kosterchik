@@ -1,12 +1,13 @@
-import React from 'react'
-import styles from './ProfilePage.module.scss'
-import ProfilePhoto from '../profilePhoto/ProfilePhoto'
-import { useSelector } from 'react-redux'
-import { RootState } from '../../store/Index.ts'
+import React from 'react';
+import styles from './ProfilePage.module.scss';
+import ProfilePhoto from '../profilePhoto/ProfilePhoto';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store/Index';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user)
-  console.log(user)
+  const user = useSelector((state: RootState) => state.user);
+  const navigate = useNavigate();
 
   return (
     <div className={styles.containerProfile}>
@@ -19,10 +20,15 @@ const ProfilePage: React.FC = () => {
       </div>
       <div className={styles.buttonsBlock}>
         <button className={styles.button1}>История</button>
-        <button className={styles.button2}>Предложить событие</button>
+        <button
+          className={styles.button2}
+          onClick={() => navigate('/create-event')}
+        >
+          Предложить событие
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;
