@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { RootState } from '../store/Index'
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 interface Event {
   id: number
@@ -32,7 +33,7 @@ export const createEvent = createAsyncThunk(
   async (eventData: Omit<Event, 'id'>, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/events',
+        `${apiUrl}/events`,
         eventData,
         {
           headers: { 'Content-Type': 'application/json' },
@@ -41,9 +42,16 @@ export const createEvent = createAsyncThunk(
       )
       return response.data
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || 'Ошибка при создании события',
-      )
+      if (error instanceof Error) {
+        return rejectWithValue(
+          error || 'Ошибка при создании события',
+        )
+      } else if (typeof error === 'object' && error !== null && 'message' in error) {
+        const typedError = error as { message: string };
+        console.error(`Ошибка API: ${typedError.message}`);
+      } else {
+        console.error('Произошла неизвестная ошибка');
+      }
     }
   },
 )

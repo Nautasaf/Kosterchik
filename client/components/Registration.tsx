@@ -36,7 +36,6 @@ export const Registration: React.FC = () => {
       if (registerUser.fulfilled.match(response)) {
         alert('Регистрация успешна!')
         navigate('/login')
-        console.log(response)
       } else if (registerUser.rejected.match(response)) {
         const errorMessage = response.payload?.message || 'Ошибка регистрации'
         alert(errorMessage)

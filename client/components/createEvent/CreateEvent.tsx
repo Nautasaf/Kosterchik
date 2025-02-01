@@ -4,6 +4,18 @@ import { RootState } from '../../store/Index'
 import { useNavigate } from 'react-router-dom'
 import styles from './CreateEvent.module.scss'
 import { createEvent } from '../../store/slice/EventSlice'
+import { AppDispatch } from '../../store/Index'
+
+interface IEventData {
+  title: string,
+  description: string,
+  city: string,
+  date: string,
+  userId: number,
+  imageUrl: string,
+  background: string,
+  requirements: string
+}
 
 const CreateEvent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -20,7 +32,12 @@ const CreateEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const eventData = {
+    if (!user.id) {
+      alert('Необходимо авторизоваться для создания события.');
+      return;
+    }
+
+    const eventData: IEventData = {
       title,
       description,
       city,

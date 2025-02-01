@@ -5,7 +5,7 @@ router.post('/logout', (req, res) => {
     return res.status(400).json({ message: 'Сессия не найдена или пользователь не авторизован' });
   }
 
-  console.log('До удаления сессии:', req.session);
+  // console.log('До удаления сессии:', req.session);
 
   req.session.destroy((err) => {
     if (err) {

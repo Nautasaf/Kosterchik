@@ -3,7 +3,6 @@ import styles from './Search.module.scss';
 import { setCity, setDate, setTitle} from '../store/slice/SearchSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import {  AppDispatch, RootState } from '../store/Index';
-import { fetchSearch} from '../store/thunk/SearchThunk'
 
 export const Search: React.FC = () => {
   

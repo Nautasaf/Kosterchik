@@ -46,7 +46,6 @@ const LoginSlice = createSlice({
         loginUser.rejected,
         (state, action: PayloadAction<RegisterUserError | undefined>) => {
           state.error = action.payload ?? { message: 'Неизвестная ошибка' };
-        
       });
   },
 });
