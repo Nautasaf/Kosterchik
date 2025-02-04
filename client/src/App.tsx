@@ -133,9 +133,7 @@ function App() {
         )}
       </nav>
       
-      {isLoggedIn && <Search />}
       {!isLoggedIn && <h1>Добро пожаловать в пикничОК!!!</h1>}
-
       <div className={styles.outletContainer}>
         <Outlet />
       </div>

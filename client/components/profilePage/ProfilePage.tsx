@@ -19,12 +19,15 @@ const ProfilePage: React.FC = () => {
         <p>Город: {user.city}</p>
       </div>
       <div className={styles.buttonsBlock}>
-        <button className={styles.button1}>История</button>
+        <button className={styles.button1} onClick={()=>navigate('/history')}>История</button>
         <button
           className={styles.button2}
           onClick={() => navigate('/create-event')}
         >
           Предложить событие
+        </button>
+        <button onClick={()=>navigate('/favorites')}>
+          события на которые я хочу сходить 
         </button>
       </div>
     </div>

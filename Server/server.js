@@ -33,11 +33,14 @@ testConnection()
 const eventRout = require('./routs/EventRout')
 const searchRout = require('./routs/SearchRout')
 const getUsers = require('./routs/GetAllUser')
+const favorites = require('./routs/Favorite')
+
 server.use('/events', eventRout)
 server.use('/search', searchRout)
 server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout)
-  server.use('/users', getUsers)
+server.use('/events', CreateEventRout) 
+server.use('/users', getUsers)
+server.use('/favorites', favorites)
 
 const PORT = process.env.PORT || 3000
 server.listen(PORT, () => {
