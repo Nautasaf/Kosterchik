@@ -8,44 +8,47 @@ const searchEvents = async (filters) => {
   const { city, date, title } = filters;
   const where = {};
 
-  // Поиск по городу
   if (city && city.trim() !== '') {
     where.city = { [Sequelize.Op.iLike]: `%${city.trim()}%` };
   }
 
-  // Поиск по дате (игнорируем время)
   if (date && date.trim() !== '') {
-    const trimmedDate = date.trim();
+    let trimmedDate = date.trim();
+
+    // Дополняем месяц нулем, если он состоит из одной цифры
+    if (trimmedDate.split('-')[1].length === 1) {
+      trimmedDate = trimmedDate.replace(/-(\d)$/, '-0$1');
+    }
+
     let formattedDate;
 
-    // Попытка распарсить дату в трех форматах
-    if (moment(trimmedDate, 'YYYY', true).isValid()) {
-      // Если только год
-      formattedDate = moment(trimmedDate, 'YYYY', true);
+    // Логика для поиска по дате (например, по году, месяцу или дням)
+    if (moment(trimmedDate, 'DD-MM', true).isValid()) {
+      // Если введена дата в формате "DD-MM", то добавляем текущий год
+      formattedDate = moment(trimmedDate, 'DD-MM', true).year(new Date().getFullYear());
       where.date = {
-        [Sequelize.Op.gte]: formattedDate.startOf('year').toDate(),
-        [Sequelize.Op.lte]: formattedDate.endOf('year').toDate(),
+        [Sequelize.Op.gte]: formattedDate.startOf('day').toDate(),
+        [Sequelize.Op.lte]: formattedDate.endOf('day').toDate(),
+      };
+    } else if (moment(trimmedDate, 'YYYY-MM-DD', true).isValid()) {
+      // Если введена дата в формате "YYYY-MM-DD"
+      formattedDate = moment(trimmedDate, 'YYYY-MM-DD', true);
+      where.date = {
+        [Sequelize.Op.gte]: formattedDate.startOf('day').toDate(),
+        [Sequelize.Op.lte]: formattedDate.endOf('day').toDate(),
       };
     } else if (moment(trimmedDate, 'MM-YYYY', true).isValid()) {
-      // Если месяц и год
+      // Если введена дата в формате "MM-YYYY", ищем по месяцу
       formattedDate = moment(trimmedDate, 'MM-YYYY', true);
       where.date = {
         [Sequelize.Op.gte]: formattedDate.startOf('month').toDate(),
         [Sequelize.Op.lte]: formattedDate.endOf('month').toDate(),
       };
-    } else if (moment(trimmedDate, 'DD-MM-YYYY', true).isValid()) {
-      // Если день, месяц и год
-      formattedDate = moment(trimmedDate, 'DD-MM-YYYY', true);
-      where.date = {
-        [Sequelize.Op.gte]: formattedDate.startOf('day').toDate(),
-        [Sequelize.Op.lte]: formattedDate.endOf('day').toDate(),
-      };
     } else {
-      throw new Error('Некорректная дата');
+      console.log('Некорректная дата');
     }
   }
 
-  // Поиск по названию
   if (title && title.trim() !== '') {
     where.title = { [Sequelize.Op.iLike]: `%${title.trim()}%` };
   }
@@ -54,14 +57,14 @@ const searchEvents = async (filters) => {
     const events = await Event.findAll({ where });
     return events;
   } catch (error) {
-    console.log('Ошибка при поиске событий:', error);
+    console.error('Ошибка при поиске событий:', error);
     throw error;
   }
 };
-
 router.post('/', async (req, res) => {
   try {
     const filters = req.body;
+    console.log('Полученные фильтры:', filters);
     const events = await searchEvents(filters);
     res.json(events);
   } catch (error) {

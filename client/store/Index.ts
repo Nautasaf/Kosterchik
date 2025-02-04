@@ -8,6 +8,8 @@ import eventsReducer from '../store/slice/EventFetch'
 import searchReducer from '../store/slice/SearchSlice'
 import eventReducer from '../store/slice/EventSlice'
 import AllUserReduser from "../store/slice/AllUserSlice"
+import favoritesReducer from "../store/slice/FavoriteSlice"
+import  userEventReducer from '../store/slice/UserEventSlice'
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +21,9 @@ export const store = configureStore({
     Events: eventsReducer,
     search: searchReducer,
         AllUsers: AllUserReduser,
-    event: eventReducer, // Добавляем новый слайс
+    event: eventReducer,
+    Favorites: favoritesReducer,
+UserEvent: userEventReducer
   },
 })
 

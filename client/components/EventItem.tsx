@@ -5,6 +5,7 @@ import styles from './EventItem.module.scss';
 import { RootState, AppDispatch } from '../store/Index';
 import { fetchUsers } from '../store/thunk/AllUserThunk';
 import { fetchEvents } from '../store/thunk/EventThunk';
+import { addToFavorites } from '../store/thunk/FavoriteThunk';
 import moment from 'moment'; 
 import 'moment/locale/ru'; 
 moment.locale('ru');
@@ -24,7 +25,6 @@ export const EventItem = () => {
 
   useEffect(() => {
     if (event) {
-      
       dispatch(fetchUsers(event.userId));
     }
   }, [dispatch, event]);
@@ -37,7 +37,14 @@ export const EventItem = () => {
     return <div>Событие не найдено</div>;
   }
 
+  const userData = JSON.parse(localStorage.getItem('user') || '{}'); 
+  const userId = userData.id; 
   
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
+    }
+  };
 
 
   return (
@@ -71,7 +78,7 @@ export const EventItem = () => {
             <button className={styles.eventButton} onClick={() => console.log('Задать вопрос')}>
               Задать вопрос
             </button>
-            <button className={styles.eventButton} onClick={() => console.log('Я готов')}>
+            <button className={styles.eventButton} onClick={handleAddToFavorites}>
               Я готов
             </button>
             <button className={styles.eventButton} onClick={() => console.log('Участники')}>
