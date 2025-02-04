@@ -38,7 +38,7 @@ const favorites = require('./routs/Favorite')
 server.use('/events', eventRout)
 server.use('/search', searchRout)
 server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout) 
+server.use('/events', CreateEventRout)
 server.use('/users', getUsers)
 server.use('/favorites', favorites)
 

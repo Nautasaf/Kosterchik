@@ -9,7 +9,6 @@ import { Search } from '../components/Search'
 import { setUser } from '../store/slice/UserSlice'
 import { resetFilters } from '../store/slice/SearchSlice'
 
-
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
@@ -132,7 +131,9 @@ function App() {
           </>
         )}
       </nav>
-      
+
+      {isLoggedIn && <Search />}
+
       {!isLoggedIn && <h1>Добро пожаловать в пикничОК!!!</h1>}
       <div className={styles.outletContainer}>
         <Outlet />

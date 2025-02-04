@@ -1,3 +1,4 @@
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
@@ -12,6 +13,7 @@ import { EventItem } from '../components/EventItem.tsx'
 import CreateEvent from '../components/createEvent/CreateEvent'
 import {FavoritesPage} from "../components/FavoritesPage.tsx"
 import{HistoryPage} from "../components/HistoryPage.tsx"
+import EditEventPage from '../components/EditEventPage/EditEventPage'
 
 const router = createBrowserRouter([
   {
@@ -50,10 +52,12 @@ const router = createBrowserRouter([
         path: '/history',
         element: <HistoryPage/>,
       },
+      {
+        path: '/edit-event/:eventId',
+        element: <EditEventPage />,
+      },
     ],
   },
- 
-
 ])
 
 createRoot(document.getElementById('root')!).render(

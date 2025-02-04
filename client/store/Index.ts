@@ -10,6 +10,9 @@ import eventReducer from '../store/slice/EventSlice'
 import AllUserReduser from "../store/slice/AllUserSlice"
 import favoritesReducer from "../store/slice/FavoriteSlice"
 import  userEventReducer from '../store/slice/UserEventSlice'
+import AllUserReduser from '../store/slice/AllUserSlice'
+
+
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +26,7 @@ export const store = configureStore({
         AllUsers: AllUserReduser,
     event: eventReducer,
     Favorites: favoritesReducer,
-UserEvent: userEventReducer
+    UserEvent: userEventReducer
   },
 })
 

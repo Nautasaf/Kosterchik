@@ -1,18 +1,18 @@
-'use strict';
-const { Model } = require('sequelize');
+'use strict'
+const { Model } = require('sequelize')
 
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
       // (1) Event принадлежит одному User (создателю)
-      Event.belongsTo(models.User, { foreignKey: 'userId' });
+      Event.belongsTo(models.User, { foreignKey: 'userId' })
       // (2) Event <-> User (участники)
       Event.belongsToMany(models.User, {
         through: models.EventUser,
         foreignKey: 'eventId',
-      });
+      })
       // (3) Event -> Message (один-ко-многим)
-      Event.hasMany(models.Message, { foreignKey: 'eventId' });
+      Event.hasMany(models.Message, { foreignKey: 'eventId' })
     }
   }
 
@@ -33,11 +33,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      background: { // Новое поле
+      background: {
+        // Новое поле
         type: DataTypes.STRING,
         allowNull: true,
       },
-      requirements: { // Новое поле
+      requirements: {
+        // Новое поле
         type: DataTypes.TEXT,
         allowNull: true,
       },
@@ -45,8 +47,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Event',
-    }
-  );
+    },
+  )
 
-  return Event;
-};
+  return Event
+}
