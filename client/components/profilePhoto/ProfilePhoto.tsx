@@ -55,7 +55,11 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ photoUrl, altText }) => {
   return (
     <div className={styles.blockPhoto}>
       {photoUrl ? (
-        <img src={`http://localhost:3000${photoUrl}`} alt={altText} className={styles.blockPhotoImg} />
+        <img
+          src={`http://localhost:3000${photoUrl}`}
+          alt={altText}
+          className={styles.blockPhotoImg}
+        />
       ) : (
         <span className={styles.blockPhotoSpan} onClick={handleButtonClick}>
           Добавить фото

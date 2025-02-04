@@ -1,72 +1,128 @@
-import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit'
-import axios from 'axios'
-import { RootState } from '../store/Index'
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { RootState } from '../store/Index';
 
 interface Event {
-  id: number
-  title: string
-  description: string
-  city: string
-  date: string
-  userId: number
-  imageUrl: string
-  background: string
-  requirements: string
+  id: number;
+  title: string;
+  description: string;
+  city: string;
+  date: string;
+  userId: number;
+  imageUrl: string;
+  background: string;
+  requirements: string;
 }
 
 interface EventState {
-  events: Event[]
-  loading: boolean
-  error: string | null
+  events: Event[];
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: EventState = {
   events: [],
   loading: false,
   error: null,
-}
+};
 
-// Асинхронный thunk для создания события
+// Thunk для создания события
 export const createEvent = createAsyncThunk(
   'events/createEvent',
   async (eventData: Omit<Event, 'id'>, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        'http://localhost:3000/events',
-        eventData,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        },
-      )
-      return response.data
+      const response = await axios.post('http://localhost:3000/events', eventData, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      return response.data;
     } catch (error) {
-      return rejectWithValue(
-        error.response?.data || 'Ошибка при создании события',
-      )
+      return rejectWithValue(error.response?.data || 'Ошибка при создании события');
     }
   },
-)
+);
+
+// Thunk для редактирования события
+export const editEvent = createAsyncThunk(
+  'events/editEvent',
+  async ({ eventId, updatedData }: { eventId: number; updatedData: Partial<Event> }, { rejectWithValue }) => {
+    try {
+      const response = await axios.put(`http://localhost:3000/events/${eventId}`, updatedData, {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Ошибка при редактировании события');
+    }
+  },
+);
+
+// Thunk для удаления события
+export const deleteEvent = createAsyncThunk(
+  'events/deleteEvent',
+  async (eventId: number, { rejectWithValue }) => {
+    try {
+      await axios.delete(`http://localhost:3000/events/${eventId}`, {
+        withCredentials: true,
+      });
+      return eventId;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || 'Ошибка при удалении события');
+    }
+  },
+);
 
 const eventSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(createEvent.pending, (state) => {
-        state.loading = true
-        state.error = null
-      })
-      .addCase(createEvent.fulfilled, (state, action: PayloadAction<Event>) => {
-        state.loading = false
-        state.events.push(action.payload)
-      })
-      .addCase(createEvent.rejected, (state, action) => {
-        state.loading = false
-        state.error = action.payload as string
-      })
-  },
-})
+    // Создание события
+    builder.addCase(createEvent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(createEvent.fulfilled, (state, action: PayloadAction<Event>) => {
+      state.loading = false;
+      state.events.push(action.payload);
+    });
+    builder.addCase(createEvent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
 
-export default eventSlice.reducer
+    // Редактирование события
+    builder.addCase(editEvent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(editEvent.fulfilled, (state, action: PayloadAction<Event>) => {
+      state.loading = false;
+      const index = state.events.findIndex((event) => event.id === action.payload.id);
+      if (index !== -1) {
+        state.events[index] = action.payload;
+      }
+    });
+    builder.addCase(editEvent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+
+    // Удаление события
+    builder.addCase(deleteEvent.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(deleteEvent.fulfilled, (state, action: PayloadAction<number>) => {
+      state.loading = false;
+      state.events = state.events.filter((event) => event.id !== action.payload);
+    });
+    builder.addCase(deleteEvent.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+  },
+});
+
+export default eventSlice.reducer;

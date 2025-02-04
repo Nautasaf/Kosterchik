@@ -20,6 +20,11 @@ const CreateEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    if (user.id === null) {
+      alert('Ошибка: пользователь не авторизован');
+      return;
+    }
+
     const eventData = {
       title,
       description,

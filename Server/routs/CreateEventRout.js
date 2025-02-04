@@ -1,12 +1,27 @@
-const express = require('express');
-const router = express.Router();
-const { Event } = require('../db/models');
+const express = require('express')
+const router = express.Router()
+const { Event, EventUser } = require('../db/models')
 
-// Создание события
 router.post('/', async (req, res) => {
-  const { title, description, city, date, userId, imageUrl, background, requirements } = req.body;
-
   try {
+    const {
+      title,
+      description,
+      city,
+      date,
+      userId,
+      imageUrl,
+      background,
+      requirements,
+    } = req.body
+
+    // Проверяем, что userId передан и он не равен null
+    if (!userId) {
+      return res.status(400).json({ message: 'Ошибка: userId не указан' })
+    }
+    console.log('userId===>', userId)
+
+    // Создаем событие в базе данных
     const newEvent = await Event.create({
       title,
       description,
@@ -16,13 +31,20 @@ router.post('/', async (req, res) => {
       imageUrl,
       background,
       requirements,
-    });
+    })
 
-    res.status(201).json(newEvent);
+    // Добавляем создателя события в таблицу EventUser
+    await EventUser.create({
+      userId: userId,
+      eventId: newEvent.id,
+    })
+
+    // Возвращаем созданное событие
+    res.status(201).json(newEvent)
   } catch (error) {
-    console.error('Ошибка при создании события:', error);
-    res.status(500).json({ message: 'Ошибка при создании события' });
+    console.error('Ошибка при создании события:', error)
+    res.status(500).json({ message: 'Ошибка сервера' })
   }
-});
+})
 
-module.exports = router;
+module.exports = router

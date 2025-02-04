@@ -36,7 +36,8 @@ const getUsers = require('./routs/GetAllUser')
 server.use('/events', eventRout)
 server.use('/search', searchRout)
 server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout)
+
+server.use('/events', CreateEventRout) // TODO: Исправить
   server.use('/users', getUsers)
 
 const PORT = process.env.PORT || 3000
