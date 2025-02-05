@@ -8,7 +8,11 @@ import MyEventsModal from '../MyEvent/MyEventsModal'
 import axios from 'axios'
 
 const ProfilePage: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user)
+  // const user = useSelector((state: RootState) => state.user)
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const storedUser = localStorage.getItem('userss');
+  const user = storedUser ? JSON.parse(storedUser) : null;
+
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [userEvents, setUserEvents] = useState<any[]>([])
@@ -30,6 +34,15 @@ const ProfilePage: React.FC = () => {
     }
   }, [user.id])
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate])
+
+  if (!isLoggedIn) {
+    return <div>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
+  }
   return (
     <div className={styles.containerProfile}>
       <h2>Профиль</h2>

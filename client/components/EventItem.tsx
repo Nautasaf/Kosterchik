@@ -1,13 +1,15 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './EventItem.module.scss'
-import { RootState, AppDispatch } from '../store/Index'
-import { fetchUsers } from '../store/thunk/AllUserThunk'
-import { fetchEvents } from '../store/thunk/EventThunk'
-import moment from 'moment'
-import 'moment/locale/ru'
-moment.locale('ru')
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import styles from './EventItem.module.scss';
+import { RootState, AppDispatch } from '../store/Index';
+import { fetchUsers } from '../store/thunk/AllUserThunk';
+import { fetchEvents } from '../store/thunk/EventThunk';
+import { addToFavorites } from '../store/thunk/FavoriteThunk';
+import moment from 'moment'; 
+import 'moment/locale/ru'; 
+import React from 'react';
+moment.locale('ru');
 
 export const EventItem = () => {
   const { id } = useParams()
@@ -68,10 +70,12 @@ export const EventItem = () => {
 
         <div className={styles.eventColumn}>
           <div className={styles.eventDescription}>{event.description}</div>
-          <div className={styles.eventCity}>{event.city}</div>
+          <div className={styles.eventCity}>Город: {event.city}</div>
+          <div className={styles.eventCity}>Место: {event.district}</div>
           <div className={styles.eventDate}>
-            {moment(event.date).format('D MMMM YYYY, HH:mm')}
-          </div>
+  Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+  {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+</div>
 
           <div className={styles.eventButtonContainer}>
             <button
