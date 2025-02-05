@@ -1,75 +1,83 @@
 .registrationForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #bad0d3; /* Цвет фона как на странице профиля */
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px; /* Установите ширину для страницы */
+  margin: 0 auto;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #dcdcdc; /* Пограничный цвет */
+  font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
+
+  .formTitle {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    color: #2d2d2d; /* Цвет заголовка */
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .formGroup {
+    margin-bottom: 1rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #333;
-    min-width: 400px;
-    border-radius: 10px;
-    border: 2px solid rgb(13, 0, 0); 
-    padding: 2rem;
-  
-    .formTitle {
-      text-align: center;
-      margin-bottom: 1.5rem;
-      font-size: 1.5rem;
-      color: white;
+
+    .formLabel {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      color: #2d2d2d;
+      font-weight: 500;
     }
-  
-    .formGroup {
-      margin-bottom: 1rem;
-      width: 100%; 
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  
-      .formLabel {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-        color: white;
-        font-weight: 500;
-      }
-  
-      .formInput {
-        width: 70%; 
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-        color: #fff; 
-        background-color: #444; 
-        transition: border-color 0.3s ease;
-  
-        &:focus {
-          border-color: #007bff; 
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-  
-        &::placeholder {
-          color: #999; 
-        }
-      }
-    }
-  
-    .formButton {
-      width: 70%; 
+
+    .formInput {
+      width: 70%;
       padding: 0.75rem;
-      background-color: #007bff;
-      color: white;
-      border: none;
+      border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-  
-      &:hover {
-        background-color: #0056b3;
+      color: #333;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        border-color: #494a4b; /* Цвет при фокусе */
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(73, 74, 75, 0.1);
       }
-  
-      &:active {
-        background-color: #004080;
+
+      &::placeholder {
+        color: #999;
       }
     }
   }
+
+  .formButton {
+    width: 70%;
+    padding: 0.75rem;
+    background: linear-gradient(45deg, #494a4b, #a4e9e9);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(45deg, #494a4b, #a4e9e9);
+      box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
+    }
+
+    &:active {
+      background: linear-gradient(45deg, #494a4b, #a4e9e9);
+      box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
+    }
+  }
+}

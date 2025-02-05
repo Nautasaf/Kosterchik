@@ -5,6 +5,9 @@ export interface RegistrationState {
   confirmPassword: string
   city: string
   error: RegisterUserError | null
+  age: string; 
+  gender: string; 
+  phone: string; 
 }
 
 export interface LoginState {

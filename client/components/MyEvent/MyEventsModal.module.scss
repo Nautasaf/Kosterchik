@@ -1,3 +1,4 @@
+/* Общие стили для модального окна */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -9,37 +10,134 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  animation: fadeIn 0.3s ease-out; /* Плавное появление */
 }
 
 .modalContent {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
+  background-color: #bad0d3; /* Цвет фона из вашей палитры */
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
   width: 100%;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.3s ease-out; /* Плавное появление контента */
+  position: relative; /* Для позиционирования крестика */
+  border: 2px solid #dcdcdc;
+  font-family: 'Montserrat', sans-serif;
 }
 
+/* Кнопка закрытия в углу */
 .closeButton {
-  background-color: #ff4d4f;
-  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  font-size: 24px;
+  color: #706e6e;
   cursor: pointer;
-  margin-bottom: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
 }
 
 .closeButton:hover {
-  background-color: #ff7875;
+  color: #ff7875;
 }
 
+/* Анимации для появления модального окна */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Стили для списка событий */
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
-  padding: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
   border-bottom: 1px solid #eee;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+// li:hover {
+//   background-color: #f7f7f7;
+//   cursor: pointer;
+// }
+
+/* Кнопки редактирования и удаления */
+.editButton,
+.deleteButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #494a4b, #a4e9e9);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+  width: fit-content;
+  box-shadow: 10px 10px 10px rgba(100, 103, 106, 0.3);
+}
+
+.editButton:hover,
+.deleteButton:hover {
+  background: linear-gradient(45deg, #494a4b, #a4e9e9);
+  box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
+}
+
+.editButton {
+  background-color: #494a4b;
+}
+
+.deleteButton {
+  background-color: #ff4d4f;
+}
+
+.deleteButton:hover {
+  background-color: #ff7875;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 20px;
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .closeButton {
+    font-size: 20px;
+  }
+
+  .editButton,
+  .deleteButton {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
 }

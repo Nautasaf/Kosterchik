@@ -1,72 +1,79 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
-
-  export const addToFavorites = createAsyncThunk(
-    'favorites/addToFavorites',
-    async ({ eventId, userId }: { eventId: number, userId: number }, { rejectWithValue }) => {
-      try {
-        const response = await fetch('http://localhost:3000/favorites/add-to-favorites', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId, eventId }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Ошибка при добавлении в избранное');
-        }
-  
-        const data = await response.json();
+// Получение списка избранных событий
+export const fetchFavorites = createAsyncThunk(
+  "favorites/fetchFavorites",
+  async (userId: number, { rejectWithValue }) => {
+    try {
+      console.log("Запрос на получение избранных событий для userId:", userId);
+      const response = await fetch(`http://localhost:3000/favorites/${userId}`);
       
-        
-        return data; 
-      } catch (error) {
-        return rejectWithValue(error.message); 
-      }
+      if (!response.ok) throw new Error("Ошибка при загрузке избранных");
+      
+      const data = await response.json();
+      console.log("Полученные избранные события:", data);
+      
+      return data;
+    } catch (error) {
+      console.error("Ошибка при получении избранных:", error);
+      return rejectWithValue(error.message);
     }
-  );
+  }
+);
 
-  export const removeFromFavorites = createAsyncThunk(
-    'favorites/removeFromFavorites',
-    async ({ userId, eventId }: { userId: number; eventId: number }, { rejectWithValue }) => {
-      try {
-        const response = await fetch(`http://localhost:3000/favorites/remove`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ userId, eventId }),
-        });
-  
-        if (!response.ok) {
-          throw new Error('Ошибка при удалении из избранного');
-        }
-  
-        return eventId; 
-      } catch (error) {
-        return rejectWithValue(error.message);
-      }
-    }
-  );
-  
+// Добавление события в избранное
+export const addToFavorites = createAsyncThunk(
+  "favorites/addToFavorites",
+  async ({ userId, eventId }: { userId: number; eventId: number }, { dispatch, rejectWithValue }) => {
+    try {
+      console.log(`Добавление в избранное: userId=${userId}, eventId=${eventId}`);
+      
+      const response = await fetch("http://localhost:3000/favorites/add-to-favorites", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, eventId }),
+      });
 
-  export const fetchFavorites = createAsyncThunk(
-    'favorites/fetchFavorites',
-    async (userId: number, { rejectWithValue }) => {
-      try {
-        const response = await fetch(`http://localhost:3000/favorites/${userId}`);
-  
-        if (!response.ok) {
-          throw new Error('Ошибка при получении избранных событий');
-        }
-  
-        const data = await response.json();
-        return data; 
-       
-        
-      } catch (error) {
-        return rejectWithValue(error.message); 
-      }
+      if (!response.ok) throw new Error("Ошибка при добавлении в избранное");
+
+      const data = await response.json();
+      console.log("Добавлено в избранное:", data);
+
+      dispatch(fetchFavorites(userId)); 
+
+      return data;
+    } catch (error) {
+      console.error("Ошибка при добавлении в избранное:", error);
+      return rejectWithValue(error.message);
     }
-  );
+  }
+);
+
+// Удаление события из избранного
+export const removeFromFavorites = createAsyncThunk(
+  "favorites/removeFromFavorites",
+  async ({ userId, eventId }: { userId: number; eventId: number }, { dispatch, rejectWithValue }) => {
+    try {
+      console.log(`Удаление из избранного: userId=${userId}, eventId=${eventId}`);
+      
+      const response = await fetch("http://localhost:3000/favorites/remove", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, eventId }),
+      });
+
+      if (!response.ok) throw new Error("Ошибка при удалении из избранного");
+
+      const data = await response.json();
+      console.log("Удалено из избранного:", data);
+
+     
+
+      return { userId, eventId };
+    } catch (error) {
+      console.error("Ошибка при удалении из избранного:", error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
