@@ -1,3 +1,4 @@
+import React from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
@@ -10,6 +11,9 @@ import ProfilePage from '../components/profilePage/ProfilePage'
 import { HeadPage } from '../components/HeadPage.tsx'
 import { EventItem } from '../components/EventItem.tsx'
 import CreateEvent from '../components/createEvent/CreateEvent'
+import {FavoritesPage} from "../components/FavoritesPage.tsx"
+import{HistoryPage} from "../components/HistoryPage.tsx"
+import EditEventPage from '../components/EditEventPage/EditEventPage'
 
 const router = createBrowserRouter([
   {
@@ -39,6 +43,18 @@ const router = createBrowserRouter([
       {
         path: '/event/:id',
         element: <EventItem />,
+      },
+      {
+        path: '/favorites',
+        element: <FavoritesPage/>,
+      },
+      {
+        path: '/history',
+        element: <HistoryPage/>,
+      },
+      {
+        path: '/edit-event/:eventId',
+        element: <EditEventPage />,
       },
     ],
   },
