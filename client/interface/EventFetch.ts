@@ -6,6 +6,8 @@ export interface Event {
   start_date: string;
   end_date: string;
   userId: number;
+  people: number;
+  maxPeople: number | null
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;
@@ -23,20 +25,7 @@ export interface Event {
   rating?: number;
   organizer?: string;
   popularity?: number;
-}
-    id: number;
-    title: string;
-    description: string;
-    city: string;
-    date: string;
-    userId: number;
-    people: number;
-    maxPeople: number | null
-    createdAt: string;
-    updatedAt: string;
-    imageUrl?: string; 
-  }
-  
+}  
   
    export interface EventsState {
     events: Event[];

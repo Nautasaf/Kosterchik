@@ -13,6 +13,18 @@ router.post('/', async (req, res) => {
       imageUrl,
       background,
       requirements,
+      maxPeople,
+      start_date,
+      end_date,
+      price,
+      event_type,
+      age_restriction,
+      duration,
+      district,
+      format,
+      language,
+      accessibility,
+      organizer,
     } = req.body
 
     // Проверяем, что userId передан и он не равен null
@@ -31,6 +43,19 @@ router.post('/', async (req, res) => {
       imageUrl,
       background,
       requirements,
+      people: 1,
+      maxPeople,
+      start_date,
+      end_date,
+      price,
+      event_type,
+      age_restriction,
+      duration,
+      district,
+      format,
+      language,
+      accessibility,
+      organizer,
     })
 
     // Добавляем создателя события в таблицу EventUser

@@ -8,7 +8,6 @@ import { fetchEvents } from '../store/thunk/EventThunk';
 import { addToFavorites } from '../store/thunk/FavoriteThunk';
 import moment from 'moment'; 
 import 'moment/locale/ru'; 
-import React from 'react';
 moment.locale('ru');
 
 export const EventItem = () => {
@@ -41,6 +40,15 @@ export const EventItem = () => {
   if (!event) {
     return <div>Событие не найдено</div>
   }
+
+  const userData = JSON.parse(localStorage.getItem('user') || '{}'); 
+  const userId = userData.id; 
+
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
+    }
+  };
 
   return (
     <div className={styles.eventItem}>
@@ -78,8 +86,8 @@ export const EventItem = () => {
           )}
           <div className={styles.eventCity}>Место: {event.district}</div>
           <div className={styles.eventDate}>
-  Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
-  {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+          {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
 </div>
 
           <div className={styles.eventButtonContainer}>
@@ -91,7 +99,7 @@ export const EventItem = () => {
             </button>
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Я готов')}
+              onClick={handleAddToFavorites}
             >
               Я готов
             </button>

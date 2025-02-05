@@ -46,7 +46,7 @@ export const Sidebar = ({ onFilterChange }) => {
       <h3 className={styles.header}>Фильтры</h3>
 
       <label>Дата события:</label>
-      <input type="date" name="date" value={filters.} onChange={handleChange} />
+      <input type="date" name="date" value={filters.date} onChange={handleChange} />
 
       <label>Тип события:</label>
       <select name="eventType" value={filters.eventType} onChange={handleChange}>
