@@ -1,19 +1,30 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { RootState } from '../store/Index';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 interface Event {
-  id: number;
-  title: string;
-  description: string;
-  city: string;
-  date: string;
-  userId: number;
-  imageUrl: string;
-  background: string;
-  requirements: string;
+  id?: number
+  title: string
+  description: string
+  city: string
+  date: string
+  userId: number
+  imageUrl: string
+  background: string
+  requirements: string
+  maxPeople: number
+  start_date: string
+  end_date: string
+  price: number
+  event_type: string
+  age_restriction: number
+  duration: number 
+  district: string
+  format: string
+  language: string
+  accessibility: boolean
+  organizer: string
 }
 
 interface EventState {

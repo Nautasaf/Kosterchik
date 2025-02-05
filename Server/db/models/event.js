@@ -37,7 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       start_date: { // 🗓 Дата начала события
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       end_date: { // 🗓 Дата окончания события (может быть null)
         type: DataTypes.DATE,
@@ -56,12 +56,12 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       people: {
-        // Новое поле
+        // количество людей на данный момент
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       maxPeople: {
-        // Новое поле
+        // Максимально число человек
         type: DataTypes.INTEGER,
         allowNull: true,
       },
@@ -92,10 +92,6 @@ module.exports = (sequelize, DataTypes) => {
       format: { // 🏠 Формат (онлайн / оффлайн)
         type: DataTypes.STRING,
         allowNull: false,
-      },
-      available_seats: { // 🎟 Количество доступных мест
-        type: DataTypes.INTEGER,
-        allowNull: true,
       },
       language: { // 🌍 Язык события
         type: DataTypes.STRING,

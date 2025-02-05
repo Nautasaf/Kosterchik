@@ -1,13 +1,11 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./HeadPage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSearch } from "../store/thunk/SearchThunk";
 import { RootState, AppDispatch } from "../store/Index";
-import { Search } from "./Search";
 import { useDebounce } from "../hooks/useDebounce";
 import { Sidebar } from "./SideBar";
-import React from "react";
 import moment from "moment";
 import "moment/locale/ru";
 moment.updateLocale("ru", {
@@ -69,7 +67,7 @@ export const HeadPage = () => {
   return (
     <div className={styles.headPageContainer}>
      
-      {isLoggedIn && <Sidebar onFilterChange={handleFilterChange} />}
+      {/* {isLoggedIn && <Sidebar onFilterChange={handleFilterChange} />} */}
       <h1 className={styles.pageTitle}>Список событий</h1>
       <div className={styles.eventList}>
         {events.map((event) => (

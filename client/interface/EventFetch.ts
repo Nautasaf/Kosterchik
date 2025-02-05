@@ -25,8 +25,7 @@ export interface Event {
   rating?: number;
   organizer?: string;
   popularity?: number;
-}
-  
+}  
   
    export interface EventsState {
     events: Event[];

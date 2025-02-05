@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Sidebar.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/Index";

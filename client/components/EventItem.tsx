@@ -8,7 +8,6 @@ import { fetchEvents } from '../store/thunk/EventThunk';
 import { addToFavorites } from '../store/thunk/FavoriteThunk';
 import moment from 'moment'; 
 import 'moment/locale/ru'; 
-import React from 'react';
 moment.locale('ru');
 
 export const EventItem = () => {
@@ -89,8 +88,8 @@ export const EventItem = () => {
             <div className={styles.eventCity}>Количество участников: {event.people}</div>
           )}
           <div className={styles.eventDate}>
-  Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
-  {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+          {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
 </div>
 
           <div className={styles.eventButtonContainer}>
@@ -100,7 +99,10 @@ export const EventItem = () => {
             >
               Задать вопрос
             </button>
-            <button className={styles.eventButton} onClick={handleAddToFavorites}>
+            <button
+              className={styles.eventButton}
+              onClick={handleAddToFavorites}
+            >
               Я готов
             </button>
             <button
