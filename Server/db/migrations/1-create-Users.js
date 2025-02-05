@@ -28,6 +28,18 @@ module.exports = {
       photoUrl: {
         type: Sequelize.STRING,
       },
+      age: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      phone: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

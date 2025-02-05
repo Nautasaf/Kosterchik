@@ -37,7 +37,6 @@ const LoginSlice = createSlice({
         state.error = null;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
-     
         state.username = action.payload.username;
         state.error = null;
         state.isLoggedIn = true;

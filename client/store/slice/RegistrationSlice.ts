@@ -9,6 +9,9 @@ const initialState: RegistrationState = {
   confirmPassword: '',
   city: '',
   error: null,
+  age: '', 
+  gender: '',  
+  phone: '', 
 };
 
 const RegistrationSlice = createSlice({
@@ -30,7 +33,15 @@ const RegistrationSlice = createSlice({
       setCity: (state, action: PayloadAction<string>) => {
         state.city = action.payload;
       },
-      
+      setAge: (state, action: PayloadAction<string>) => { 
+        state.age = action.payload;
+      },
+      setGender: (state, action: PayloadAction<string>) => {  
+        state.gender = action.payload;
+      },
+      setPhone: (state, action: PayloadAction<string>) => { 
+        state.phone = action.payload;
+      },
     setError: (state, action: PayloadAction<RegisterUserError>) => {
       state.error = action.payload;
     },
@@ -38,8 +49,12 @@ const RegistrationSlice = createSlice({
       state.username = '';
       state.email = '';
       state.password = '';
+      state.confirmPassword = '';
       state.error = null;
-      state.city = ''
+      state.city = '';
+      state. age ='';
+      state.gender ='';
+      state.phone =''; 
     },
   },
   extraReducers: (builder) => {
@@ -65,6 +80,9 @@ export const {
   setError,
   setCity,
   resetForm,
+  setAge,
+  setGender,
+  setPhone,
 } = RegistrationSlice.actions;
 
 export default RegistrationSlice.reducer;

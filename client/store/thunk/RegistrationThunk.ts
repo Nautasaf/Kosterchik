@@ -8,7 +8,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 export const registerUser = createAsyncThunk<
   RegisterUserResponse,
-  { username: string; email: string; password: string; city: string },
+  { username: string; email: string; password: string; city: string; age: string; gender: string; phone: string },
   { rejectValue: RegisterUserError }
 >('registration/registerUser', async (userData, { rejectWithValue }) => {
   try {
