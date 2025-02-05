@@ -121,6 +121,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: 'Event',
       timestamps: true, // createdAt и updatedAt
     }
-  )
-  return Event
-}
+  );
+  return Event;
+};

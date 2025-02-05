@@ -33,6 +33,17 @@ export const EventItem = () => {
     }
   }, [dispatch, event])
 
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
+  const userId = userData.id; 
+  console.log(userId );
+  
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
+    }
+  };
+
+
   if (eventsLoading || usersLoading) {
     return <div>Загрузка данных...</div>
   }
