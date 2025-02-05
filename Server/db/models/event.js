@@ -43,6 +43,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
+      people: {
+        // Новое поле
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      maxPeople: {
+        // Новое поле
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
     {
       sequelize,

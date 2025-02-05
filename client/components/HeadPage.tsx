@@ -68,6 +68,12 @@ export const HeadPage = () => {
               className={styles.eventImage}
             />
             <p className={styles.eventInfo}>{event.description}</p>
+            {event.maxPeople ? 
+              (
+                <p className={styles.eventInfo}>Количество участников: {event.people}/{event.maxPeople}</p>
+              ) : (
+                <p className={styles.eventInfo}>Количество участников: {event.people}</p>
+              )}
             <p className={styles.eventCity}>{event.city}</p>
             <p className={styles.eventDate}>
               {moment(event.date).format("D MMMM YYYY, HH:mm")}

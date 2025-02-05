@@ -69,6 +69,11 @@ export const EventItem = () => {
         <div className={styles.eventColumn}>
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>{event.city}</div>
+          {event.maxPeople ? (
+            <div className={styles.eventCity}>Количество участников: {event.people}/{event.maxPeople}</div>
+          ) : (
+            <div className={styles.eventCity}>Количество участников: {event.people}</div>
+          )}
           <div className={styles.eventDate}>
             {moment(event.date).format('D MMMM YYYY, HH:mm')}
           </div>

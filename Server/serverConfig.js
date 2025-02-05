@@ -22,24 +22,32 @@ const sessionConfig = {
 
 const corsOptions = {
   origin(origin, callback) {
-    const isAllowedOrigin = ['http://localhost:5173', 'https://kosterchik.ru'].includes(origin)
+    // Список разрешенных доменов
+    const allowedOrigins = ['http://localhost:5173', 'https://kosterchik.ru'];
 
-    if (!origin || isAllowedOrigin) {
-      callback(null, true)
+    // Нормализация origin (удаление лишних пробелов)
+    const normalizedOrigin = origin?.trim();
+
+    // Проверяем, входит ли origin в список разрешенных
+    if (!normalizedOrigin || allowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true); // Разрешаем доступ
     } else {
-      const error = ApiError.BadRequestError('Not allowed by CORS')
-      callback(error)
+      // Отказываем в доступе с кодом 403
+      return callback(new Error('Not allowed by CORS'), false);
     }
   },
-  methods: 'GET, POST, PUT, DELETE',
-  credentials: true,
-}
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Массив методов
+  allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+  credentials: true, // Разрешаем использование кук и аутентификационных данных
+  optionsSuccessStatus: 204, // Код ответа для предварительных запросов
+};
 
 const serverConfig = (server) => {
   server.use(morgan('tiny'))
   server.use(express.json())
   server.use(express.urlencoded({ extended: true }))
-  server.use(cors(corsOptions))
+  server.use(cors(corsOptions));
+  server.options('*', cors(corsOptions));
   server.use(express.static('public'))
   server.use(bodyParser.json())
   server.use(cookieParser(process.env.SESSION_SECRET || 'secret'))

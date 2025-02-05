@@ -38,7 +38,7 @@ const ProfilePage: React.FC = () => {
         <p>Город: {user.city}</p>
       </div>
       <div className={styles.buttonsBlock}>
-        <button className={styles.button1} onClick={()=>navigate('/history')} onClick={() => navigate('/history')}>
+        <button className={styles.button1} onClick={()=>navigate('/history')}>
           История
         </button>
         <button className={styles.button1} onClick={() => setIsModalOpen(true)}>

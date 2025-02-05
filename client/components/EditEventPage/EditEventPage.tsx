@@ -110,6 +110,16 @@ const EditEventPage: React.FC = () => {
           />
         </div>
 
+        {/* Максимальное число человек */}
+        <div className={styles.formGroup}>
+          <label>Максимальное количество человек:</label>
+          <textarea
+            name="maxPeople"
+            value={eventData.maxPeople || ''}
+            onChange={handleChange}
+          />
+        </div>
+
         {/* Цвет фона */}
         <div className={styles.formGroup}>
           <label>Цвет фона:</label>

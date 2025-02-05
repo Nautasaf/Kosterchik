@@ -43,6 +43,14 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: true,
       },
+      people: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      maxPeople: {
+        allowNull: true,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

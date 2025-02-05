@@ -5,6 +5,8 @@ export interface Event {
     city: string;
     date: string;
     userId: number;
+    people: number;
+    maxPeople: number | null
     createdAt: string;
     updatedAt: string;
     imageUrl?: string; 
