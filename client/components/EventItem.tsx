@@ -1,44 +1,51 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './EventItem.module.scss'
-import { RootState, AppDispatch } from '../store/Index'
-import { fetchUsers } from '../store/thunk/AllUserThunk'
-import { fetchEvents } from '../store/thunk/EventThunk'
-import moment from 'moment'
-import 'moment/locale/ru'
-moment.locale('ru')
+// EventItem.tsx
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./EventItem.module.scss";
+import { RootState, AppDispatch } from "../store/Index";
+import { fetchUsers } from "../store/thunk/AllUserThunk";
+import { fetchEvents } from "../store/thunk/EventThunk";
+import moment from "moment";
+import "moment/locale/ru";
+import { YMaps, Map, Placemark } from "react-yandex-maps";
+moment.locale("ru");
 
 export const EventItem = () => {
-  const { id } = useParams()
-  const dispatch = useDispatch<AppDispatch>()
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { events, loading: eventsLoading } = useSelector(
-    (state: RootState) => state.Events,
-  )
+    (state: RootState) => state.Events
+  );
   const { users, loading: usersLoading } = useSelector(
-    (state: RootState) => state.AllUsers,
-  )
+    (state: RootState) => state.AllUsers
+  );
 
   useEffect(() => {
-    dispatch(fetchEvents())
-  }, [dispatch])
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
-  const event = events.find((e) => e.id.toString() === id)
+  const event = events.find((e) => e.id.toString() === id);
 
   useEffect(() => {
     if (event) {
-      dispatch(fetchUsers(event.userId))
+      dispatch(fetchUsers(event.userId));
     }
-  }, [dispatch, event])
+  }, [dispatch, event]);
 
   if (eventsLoading || usersLoading) {
-    return <div>Загрузка данных...</div>
+    return <div>Загрузка данных...</div>;
   }
 
   if (!event) {
-    return <div>Событие не найдено</div>
+    return <div>Событие не найдено</div>;
   }
+
+  const eventCoordinates =
+    event.latitude && event.longitude
+      ? [event.latitude, event.longitude]
+      : null;
 
   return (
     <div className={styles.eventItem}>
@@ -56,7 +63,7 @@ export const EventItem = () => {
             <img
               className={styles.profilePhoto}
               src={users?.photoUrl}
-              alt='avatar'
+              alt="avatar"
             />
             <div className={styles.profileInfo}>
               <p>Имя: {users?.username}</p>
@@ -70,31 +77,41 @@ export const EventItem = () => {
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>{event.city}</div>
           <div className={styles.eventDate}>
-            {moment(event.date).format('D MMMM YYYY, HH:mm')}
+            {moment(event.date).format("D MMMM YYYY, HH:mm")}
           </div>
+
+          {eventCoordinates && (
+            <div className={styles.mapContainer}>
+              <YMaps>
+                <Map
+                  state={{ center: eventCoordinates, zoom: 10 }}
+                  width="100%"
+                  height="300px">
+                  <Placemark geometry={eventCoordinates} />
+                </Map>
+              </YMaps>
+            </div>
+          )}
 
           <div className={styles.eventButtonContainer}>
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Задать вопрос')}
-            >
+              onClick={() => console.log("Задать вопрос")}>
               Задать вопрос
             </button>
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Я готов')}
-            >
+              onClick={() => console.log("Я готов")}>
               Я готов
             </button>
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Участники')}
-            >
+              onClick={() => console.log("Участники")}>
               Участники
             </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

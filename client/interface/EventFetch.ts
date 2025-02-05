@@ -1,4 +1,6 @@
 export interface Event {
+    longitude: any;
+    latitude: any;
     id: number;
     title: string;
     description: string;
