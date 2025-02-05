@@ -5,6 +5,7 @@ import { setEmail, setPassword, resetForm } from '../store/slice/LoginSlice'
 import { AppDispatch, RootState } from '../store/Index'
 import style from './Login.module.scss'
 import { loginUser } from '../store/thunk/LoginThunk'
+import { toast } from 'react-toastify'
 
 export const Login: React.FC = () => {
   const { email, password } = useSelector((state: RootState) => state.Login)
@@ -15,14 +16,14 @@ export const Login: React.FC = () => {
     event.preventDefault()
 
     if (!email || !password) {
-      alert('Пожалуйста, заполните все поля.')
+      toast.success('Пожалуйста, заполните все поля.')
       return
     }
 
     try {
-      const response : any = await dispatch(loginUser({ email, password }));
+      const response: any = await dispatch(loginUser({ email, password }))
       if (loginUser.fulfilled.match(response)) {
-        alert('Вход выполнен успешно!')
+        toast.success('Вход выполнен успешно!')
         dispatch(resetForm())
         navigate('/')
       } else {
@@ -31,7 +32,7 @@ export const Login: React.FC = () => {
       }
     } catch (error) {
       console.error('Ошибка:', error)
-      alert('Произошла ошибка при входе. Пожалуйста, попробуйте снова.')
+      toast.error('Произошла ошибка при входе. Пожалуйста, попробуйте снова.')
     }
   }
 
@@ -83,6 +84,14 @@ export const Login: React.FC = () => {
       <button type='submit' className={style.formButton}>
         Войти
       </button>
+      <div className={style.formFooter}>
+        <p>
+          Нет аккаунта?{' '}
+          <a href='/registration' className={style.footerLink}>
+            Зарегистрируйтесь
+          </a>
+        </p>
+      </div>
     </form>
   )
 }

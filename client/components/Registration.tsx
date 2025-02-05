@@ -11,6 +11,7 @@ import type { AppDispatch, RootState } from '../store/Index'
 import style from './Registration.module.scss'
 import React from 'react'
 import { registerUser } from '../store/thunk/RegistrationThunk'
+import { toast } from 'react-toastify'
 
 export const Registration: React.FC = () => {
   const { username, email, password, confirmPassword, city } = useSelector(
@@ -24,7 +25,15 @@ export const Registration: React.FC = () => {
     event.preventDefault()
 
     if (password !== confirmPassword) {
-      alert('Пароли не совпадают!')
+      toast.error('Пароли не совпадают!', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
       return
     }
 
@@ -34,16 +43,40 @@ export const Registration: React.FC = () => {
       )
 
       if (registerUser.fulfilled.match(response)) {
-        alert('Регистрация успешна!')
+        toast.success('Регистрация успешна!', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
         navigate('/login')
       } else if (registerUser.rejected.match(response)) {
         const errorMessage = response.payload?.message || 'Ошибка регистрации'
-        alert(errorMessage)
+        toast.error(errorMessage, {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
         console.log(errorMessage)
       }
     } catch (error) {
       console.error('Ошибка:', error)
-      alert('Ошибка при отправке запроса. Попробуйте снова.')
+      toast.error('Ошибка при отправке запроса. Попробуйте снова.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      })
     }
   }
 

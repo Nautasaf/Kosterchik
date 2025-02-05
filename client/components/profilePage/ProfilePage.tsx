@@ -1,32 +1,34 @@
-import React, { useState, useEffect } from 'react';
-import styles from './ProfilePage.module.scss';
-import ProfilePhoto from '../profilePhoto/ProfilePhoto';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/Index';
-import { useNavigate } from 'react-router-dom';
-import MyEventsModal from '../MyEvent/MyEventsModal';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react'
+import styles from './ProfilePage.module.scss'
+import ProfilePhoto from '../profilePhoto/ProfilePhoto'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../store/Index'
+import { useNavigate } from 'react-router-dom'
+import MyEventsModal from '../MyEvent/MyEventsModal'
+import axios from 'axios'
 
 const ProfilePage: React.FC = () => {
-  const user = useSelector((state: RootState) => state.user);
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [userEvents, setUserEvents] = useState<any[]>([]);
+  const user = useSelector((state: RootState) => state.user)
+  const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [userEvents, setUserEvents] = useState<any[]>([])
 
   useEffect(() => {
     const fetchUserEvents = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/events/user/${user.id}`);
-        setUserEvents(response.data.events);
+        const response = await axios.get(
+          `http://localhost:3000/events/user/${user.id}`,
+        )
+        setUserEvents(response.data.events)
       } catch (error) {
-        console.error('Ошибка при получении событий пользователя:', error);
+        console.error('Ошибка при получении событий пользователя:', error)
       }
-    };
+    }
 
     if (user.id) {
-      fetchUserEvents();
+      fetchUserEvents()
     }
-  }, [user.id]);
+  }, [user.id])
 
   return (
     <div className={styles.containerProfile}>
@@ -38,7 +40,7 @@ const ProfilePage: React.FC = () => {
         <p>Город: {user.city}</p>
       </div>
       <div className={styles.buttonsBlock}>
-        <button className={styles.button1} onClick={()=>navigate('/history')} onClick={() => navigate('/history')}>
+        <button className={styles.button1} onClick={() => navigate('/history')}>
           История
         </button>
         <button className={styles.button1} onClick={() => setIsModalOpen(true)}>
@@ -59,8 +61,7 @@ const ProfilePage: React.FC = () => {
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default ProfilePage;
-
+export default ProfilePage

@@ -1,39 +1,24 @@
 .loginForm {
-  max-width: 400px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-
-.formTitle {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.formGroup {
-  margin-bottom: 15px;
-}
-
-.formLabel {
-  display: block;
-  margin-bottom: 5px;
-}
-.loginForm {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #333;
-  min-width: 400px;
-  border-radius: 10px;
-  border: 2px solid rgb(13, 0, 0);
+  background-color: #bad0d3;
+  border-radius: 12px;
   padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #dcdcdc;
+  font-family: 'Montserrat', sans-serif;
 
   .formTitle {
     text-align: center;
     margin-bottom: 1.5rem;
     font-size: 1.5rem;
-    color: white;
+    color: #2d2d2d;
+    font-weight: 600;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .formGroup {
@@ -47,7 +32,7 @@
       display: block;
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: white;
+      color: #2d2d2d;
       font-weight: 500;
     }
 
@@ -57,14 +42,14 @@
       border: 1px solid #ccc;
       border-radius: 4px;
       font-size: 1rem;
-      color: #fff;
-      background-color: #444;
+      color: #333;
+      background-color: #fff;
       transition: border-color 0.3s ease;
 
       &:focus {
-        border-color: #007bff;
+        border-color: #494a4b;
         outline: none;
-        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+        box-shadow: 0 0 0 3px rgba(73, 74, 75, 0.1);
       }
 
       &::placeholder {
@@ -76,28 +61,30 @@
   .formButton {
     width: 70%;
     padding: 0.75rem;
-    background-color: #007bff;
+    background: linear-gradient(45deg, #494a4b, #a4e9e9);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: #0056b3;
+      background: linear-gradient(45deg, #494a4b, #a4e9e9);
+      box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
     }
 
     &:active {
-      background-color: #004080;
+      background: linear-gradient(45deg, #494a4b, #a4e9e9);
+      box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
     }
   }
 
   .formFooter {
     margin-top: 1.5rem;
     text-align: center;
-    color: white;
+    color: #2d2d2d;
     font-size: 0.875rem;
 
     .footerLink {
