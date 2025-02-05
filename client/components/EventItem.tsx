@@ -52,15 +52,6 @@ export const EventItem = () => {
     return <div>Событие не найдено</div>
   }
 
-  const userData = JSON.parse(localStorage.getItem('user') || '{}'); 
-  const userId = userData.id; 
-
-  const handleAddToFavorites = () => {
-    if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
-    }
-  };
-
   return (
     <div className={styles.eventItem}>
       <h2 className={styles.eventTitle}>{event.title}</h2>
