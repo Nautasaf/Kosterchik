@@ -7,13 +7,13 @@ import { createEvent } from '../../store/slice/EventSlice'
 import { AppDispatch } from '../../store/Index'
 
 interface IEventData {
-  title: string,
-  description: string,
-  city: string,
-  date: string,
-  userId: number,
-  imageUrl: string,
-  background: string,
+  title: string
+  description: string
+  city: string
+  date: string
+  userId: number
+  imageUrl: string
+  background: string
   requirements: string
 }
 
@@ -33,8 +33,8 @@ const CreateEvent: React.FC = () => {
     e.preventDefault()
 
     if (!user.id) {
-      alert('Необходимо авторизоваться для создания события.');
-      return;
+      alert('Необходимо авторизоваться для создания события.')
+      return
     }
 
     const eventData: IEventData = {
@@ -81,15 +81,6 @@ const CreateEvent: React.FC = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Город:</label>
-          <input
-            type='text'
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
           <label>Описание события:</label>
           <textarea
             value={description}
@@ -102,6 +93,15 @@ const CreateEvent: React.FC = () => {
           <textarea
             value={requirements}
             onChange={(e) => setRequirements(e.target.value)}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Город:</label>
+          <input
+            type='text'
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
           />
         </div>
         <div className={styles.formGroup}>

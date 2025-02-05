@@ -17,15 +17,15 @@ export const HeadPage = () => {
   const { events, loading, error, filters } = useSelector(
     (state: RootState) => state.search
   );
-  
-  
+
+
   const debouncedFilters = useDebounce(filters, 1000);
 
   const handleFetch = useCallback(() => {
     dispatch(fetchSearch(debouncedFilters));
   }, [debouncedFilters, dispatch]);
 
-  
+
   useEffect(() => {
     if (debouncedFilters.city || debouncedFilters.date || debouncedFilters.title) {
       handleFetch();
@@ -39,7 +39,7 @@ export const HeadPage = () => {
   }
 
   if (!isLoggedIn) {
-    return <div>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
+    return <div className={styles.authMessage}>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
   }
 
   if (error) {
@@ -52,7 +52,6 @@ export const HeadPage = () => {
 
   return (
     <div className={styles.headPageContainer}>
-      {isLoggedIn && <Search />}
       <h1 className={styles.pageTitle}>Список событий</h1>
       <div className={styles.eventList}>
         {events.map((event) => (
