@@ -16,6 +16,9 @@ router.post('/login', async (req, res) => {
           email: userDB.email,
           city: userDB.city,
           photoUrl: userDB.photoUrl,
+          age: userDB.age,  
+      gender: userDB.gender,
+      phone: userDB.phone,
         }
 
         res.status(200).json({ text: 'OK', data: req.session.loginedUser })

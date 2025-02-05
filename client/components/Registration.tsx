@@ -6,14 +6,18 @@ import {
   setPassword,
   setConfirmPassword,
   setCity,
+  setAge,
+  setGender,
+  setPhone,
+  resetForm,
 } from '../store/slice/RegistrationSlice'
 import type { AppDispatch, RootState } from '../store/Index'
 import style from './Registration.module.scss'
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { registerUser } from '../store/thunk/RegistrationThunk'
 
 export const Registration: React.FC = () => {
-  const { username, email, password, confirmPassword, city } = useSelector(
+  const { username, email, password, confirmPassword, city, age, gender, phone } = useSelector(
     (state: RootState) => state.Registration,
   )
 
@@ -27,14 +31,12 @@ export const Registration: React.FC = () => {
       alert('Пароли не совпадают!')
       return
     }
-
     try {
-      const response = await dispatch(
-        registerUser({ username, email, password, city }),
-      )
+      const response = await dispatch(registerUser({ username, email, password, city, age, gender, phone }))
 
       if (registerUser.fulfilled.match(response)) {
         alert('Регистрация успешна!')
+        dispatch( resetForm())
         navigate('/login')
       } else if (registerUser.rejected.match(response)) {
         const errorMessage = response.payload?.message || 'Ошибка регистрации'
@@ -47,7 +49,7 @@ export const Registration: React.FC = () => {
     }
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange =  (event: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = event.target
 
     switch (name) {
@@ -65,6 +67,15 @@ export const Registration: React.FC = () => {
         break
       case 'city':
         dispatch(setCity(value))
+        break
+      case 'age':
+        dispatch(setAge(value))
+        break
+      case 'gender':
+        dispatch(setGender(value))
+        break
+      case 'phone':
+        dispatch(setPhone(value))
         break
       default:
         break
@@ -139,6 +150,51 @@ export const Registration: React.FC = () => {
           id='city'
           name='city'
           value={city}
+          onChange={handleInputChange}
+          className={style.formInput}
+          required
+        />
+      </div>
+      <div className={style.formGroup}>
+        <label htmlFor='age' className={style.formLabel}>
+          Возраст:
+        </label>
+        <input
+          type='number'
+          id='age'
+          name='age'
+          value={age}
+          onChange={handleInputChange}
+          className={style.formInput}
+          required
+        />
+      </div>
+      <div className={style.formGroup}>
+        <label htmlFor='gender' className={style.formLabel}>
+          Пол:
+        </label>
+        <select
+          id='gender'
+          name='gender'
+          value={gender}
+          onChange={handleInputChange}
+          className={style.formInput}
+          required
+        >
+          <option value=''>Выберите пол</option>
+          <option value='male'>Мужской</option>
+          <option value='female'>Женский</option>
+        </select>
+      </div>
+      <div className={style.formGroup}>
+        <label htmlFor='phone' className={style.formLabel}>
+          Телефон:
+        </label>
+        <input
+          type='tel'
+          id='phone'
+          name='phone'
+          value={phone}
           onChange={handleInputChange}
           className={style.formInput}
           required

@@ -15,9 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     password: DataTypes.STRING,
     city: DataTypes.STRING,
     photoUrl: DataTypes.STRING,
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    gender: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    phone: {
+      type: DataTypes.STRING, 
+      allowNull: true,
+    },
   }, {
     sequelize,
     modelName: 'User',
   });
+  
   return User;
 };

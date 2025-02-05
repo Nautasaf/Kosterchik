@@ -14,7 +14,7 @@
 
 .eventList {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Два столбца */
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   margin-top: 20px;
 }
