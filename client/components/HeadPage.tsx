@@ -68,7 +68,7 @@ export const HeadPage = () => {
 
   return (
     <div className={styles.headPageContainer}>
-      {isLoggedIn && <Search />}
+     
       {isLoggedIn && <Sidebar onFilterChange={handleFilterChange} />}
       <h1 className={styles.pageTitle}>Список событий</h1>
       <div className={styles.eventList}>

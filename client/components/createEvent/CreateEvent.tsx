@@ -29,10 +29,13 @@ const CreateEvent: React.FC = () => {
   const [requirements, setRequirements] = useState('')
   const [background, setBackground] = useState('#ffffff')
 
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
+  const userId = userData.id; 
+  console.log(userId );
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!user.id) {
+    if (!userId) {
       alert('Необходимо авторизоваться для создания события.')
       return
     }
@@ -42,7 +45,7 @@ const CreateEvent: React.FC = () => {
       description,
       city,
       date,
-      userId: user.id,
+      userId,
       imageUrl: user.photoUrl,
       background,
       requirements,

@@ -5,6 +5,11 @@ const router = express.Router();
 
 router.post('/add-to-favorites', async (req, res) => {
   const { userId, eventId } = req.body;
+ console.log(req.body);
+ 
+    
+  
+  
   try {
     const existingFavorite = await UserFavorite.findOne({
       where: { userId, eventId }

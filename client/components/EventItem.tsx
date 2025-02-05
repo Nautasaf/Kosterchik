@@ -34,6 +34,17 @@ export const EventItem = () => {
     }
   }, [dispatch, event])
 
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
+  const userId = userData.id; 
+  console.log(userId );
+  
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
+    }
+  };
+
+
   if (eventsLoading || usersLoading) {
     return <div>Загрузка данных...</div>
   }
@@ -84,10 +95,7 @@ export const EventItem = () => {
             >
               Задать вопрос
             </button>
-            <button
-              className={styles.eventButton}
-              onClick={() => console.log('Я готов')}
-            >
+            <button className={styles.eventButton} onClick={handleAddToFavorites}>
               Я готов
             </button>
             <button

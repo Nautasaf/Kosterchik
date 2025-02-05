@@ -4,6 +4,7 @@ const { Event, EventUser } = require('../db/models')
 
 router.post('/', async (req, res) => {
   try {
+    console.log('Полученные данные:', req.body) 
     const {
       title,
       description,
@@ -14,7 +15,7 @@ router.post('/', async (req, res) => {
       background,
       requirements,
     } = req.body
-
+   
     // Проверяем, что userId передан и он не равен null
     if (!userId) {
       return res.status(400).json({ message: 'Ошибка: userId не указан' })

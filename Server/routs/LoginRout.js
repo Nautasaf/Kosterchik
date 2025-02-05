@@ -24,6 +24,8 @@ router.post('/login', async (req, res) => {
         res.status(200).json({ text: 'OK', data: req.session.loginedUser })
       } else {
         res.status(403).json({ message: 'Неправильные логин(email) и/или пароль' })
+        console.log('Данные пользователя из БД:', userDB);
+        console.log('Сравнение паролей:', checkPassword);
       }
     } else {
       res.status(403).json({ message: 'Пользователя с данным емайлом не существует' })

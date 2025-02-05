@@ -116,3 +116,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true, // createdAt и updatedAt
     }
   );
+  return Event;
+};
