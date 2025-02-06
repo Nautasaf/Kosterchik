@@ -1,8 +1,12 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
+
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const deleteEvent = createAsyncThunk<number, number, { rejectValue: string }>(
   'events/deleteEvent',
   async (eventId, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+      const response = await fetch(`${apiUrl}/events/${eventId}`, {
         method: 'DELETE',
       });
 

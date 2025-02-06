@@ -20,14 +20,13 @@ const loginRouter = require('./routs/LoginRout');
 const logout = require('./routs/Logout');
 const uploadRoute = require('./routs/UploadRoute');
 const CreateEventRout = require('./routs/CreateEventRout');
+const favorites = require('./routs/Favorite');
 // Создание папки uploads, если она не существует
 const dir = './uploads';
 if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
 }
-
-serverConfig(server)
-
+serverConfig(server);
 function testConnection() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -39,21 +38,16 @@ function testConnection() {
         }
     });
 }
-
-testConnection()
-
-const eventRout = require('./routs/EventRout')
-const searchRout = require('./routs/SearchRout')
-const getUsers = require('./routs/GetAllUser')
-const favorites = require('./routs/Favorite')
-
-server.use('/events', eventRout)
-server.use('/search', searchRout)
-server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout)
-server.use('/users', getUsers)
-server.use('/favorites', favorites)
-
+testConnection();
+const eventRout = require('./routs/EventRout');
+const searchRout = require('./routs/SearchRout');
+const getUsers = require('./routs/GetAllUser');
+server.use('/events', eventRout);
+server.use('/search', searchRout);
+server.use('/', registration, loginRouter, logout, uploadRoute);
+server.use('/events', CreateEventRout);
+server.use('/users', getUsers);
+server.use('/favorites', favorites);
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`);

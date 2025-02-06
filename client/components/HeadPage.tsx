@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./HeadPage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +8,8 @@ import { useDebounce } from "../hooks/useDebounce";
 import { Sidebar } from "./SideBar";
 import moment from "moment";
 import "moment/locale/ru";
+import { getAllFavorites } from "../store/thunk/FavoriteThunk";
+import { Favorite } from "../interface/EventFetch";
 moment.updateLocale("ru", {
   months: [
     "Января", "Февраля", "Марта", "Апреля", "Маия", "Июня",
@@ -25,10 +27,14 @@ export const HeadPage = () => {
   const { events, loading, error, filters } = useSelector(
     (state: RootState) => state.search
   );
+  const allFavorites = useSelector(
+    (state: RootState) => state.Favorites.favorites
+  )
 
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
+  const userId = userData.id; 
 
   const debouncedFilters = useDebounce(filters, 1000);
-
 
   const handleFilterChange = (newFilters) => {  
     dispatch({ type: "search/updateFilters", payload: newFilters });  
@@ -39,6 +45,20 @@ export const HeadPage = () => {
     dispatch(fetchSearch(debouncedFilters));
   }, [debouncedFilters, dispatch]);
 
+  const handleGetFavorites = (eventId : number) => {
+    const copyFav = JSON.parse(JSON.stringify(allFavorites));
+    const favCounter = copyFav.filter((fav) => fav.eventId === eventId).length;
+    return favCounter
+  }
+
+  // Функция для проверки, участвует ли пользователь в событии
+  const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number): boolean => {
+    return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
+  };
+
+  useEffect(() => {
+    dispatch(getAllFavorites())
+  }, [dispatch])
 
   useEffect(() => {
     if (debouncedFilters.city || debouncedFilters.date || debouncedFilters.title) {
@@ -83,12 +103,22 @@ export const HeadPage = () => {
               className={styles.eventImage}
             /> */}
             <p className={styles.eventInfo}>{event.description}</p>
+
             {event.maxPeople ? 
               (
-                <p className={styles.eventInfo}>Количество участников: {event.people}/{event.maxPeople}</p>
+                <p className={styles.eventInfo}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</p>
               ) : (
-                <p className={styles.eventInfo}>Количество участников: {event.people}</p>
-              )}
+                <p className={styles.eventInfo}>Количество участников: {handleGetFavorites(event.id)}</p>
+            )}
+
+            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
+              <div className={styles.eventInfo}>Вы уже участвуете в этом мероприятии</div>
+            ) : handleGetFavorites(event.id) === event.maxPeople ? (
+              <div className={styles.eventInfo}>В этом мероприятии уже максимальное количество участвующих</div>
+            ) : (
+              <div className={styles.eventInfo}>Вы можете присоединиться к этому мероприятию</div>
+            )}
+            
             <p className={styles.eventCity}>Город: {event.city}</p>
             <p className={styles.eventCity}>Место: {event.district}</p>
             <div className={styles.eventDate}>

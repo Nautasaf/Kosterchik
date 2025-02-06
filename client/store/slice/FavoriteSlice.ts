@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchFavorites, addToFavorites, removeFromFavorites } from "../thunk/FavoriteThunk";
+import { fetchFavorites, addToFavorites, removeFromFavorites, getAllFavorites } from "../thunk/FavoriteThunk";
 
 
 interface Event {
@@ -50,6 +50,9 @@ const favoriteSlice = createSlice({
       })
       .addCase(removeFromFavorites.fulfilled, (state, action: PayloadAction<{ userId: number; eventId: number }>) => {
         state.favorites = state.favorites.filter((fav) => fav.eventId !== action.payload.eventId); 
+      })
+      .addCase(getAllFavorites.fulfilled, (state, action) => {
+        state.favorites = action.payload; 
       });
   },
 });

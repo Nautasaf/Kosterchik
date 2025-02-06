@@ -6,7 +6,6 @@ export interface Event {
   start_date: string;
   end_date: string;
   userId: number;
-  people: number;
   maxPeople: number | null
   createdAt: string;
   updatedAt: string;
@@ -42,4 +41,12 @@ export interface Event {
       date: string;
       title: string;
     };
+  }
+
+  export interface Favorite {
+    id: number;
+    userId: number;
+    eventId: number;
+    createdAt: string;
+    updatedAt: string;
   }

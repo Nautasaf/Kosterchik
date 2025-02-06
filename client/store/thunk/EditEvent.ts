@@ -1,11 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Event } from '../../interface/EventFetch';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const editEvent = createAsyncThunk<Event, { eventId: number; updatedData: Partial<Event> }, { rejectValue: string }>(
   'events/editEvent',
   async ({ eventId, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await fetch(`http://localhost:3000/events/${eventId}`, {
+      const response = await fetch(`${apiUrl}/events/${eventId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -1,12 +1,16 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log(apiUrl);
+
+
 // Получение списка избранных событий
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async (userId: number, { rejectWithValue }) => {
     try {
       console.log("Запрос на получение избранных событий для userId:", userId);
-      const response = await fetch(`http://localhost:3000/favorites/${userId}`);
+      const response = await fetch(`${apiUrl}/favorites/${userId}`);
       
       if (!response.ok) throw new Error("Ошибка при загрузке избранных");
       
@@ -28,7 +32,7 @@ export const addToFavorites = createAsyncThunk(
     try {
       console.log(`Добавление в избранное: userId=${userId}, eventId=${eventId}`);
       
-      const response = await fetch("http://localhost:3000/favorites/add-to-favorites", {
+      const response = await fetch(`${apiUrl}/favorites/add-to-favorites`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, eventId }),
@@ -56,7 +60,7 @@ export const removeFromFavorites = createAsyncThunk(
     try {
       console.log(`Удаление из избранного: userId=${userId}, eventId=${eventId}`);
       
-      const response = await fetch("http://localhost:3000/favorites/remove", {
+      const response = await fetch(`${apiUrl}/favorites/remove`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, eventId }),
@@ -72,6 +76,24 @@ export const removeFromFavorites = createAsyncThunk(
       return { userId, eventId };
     } catch (error) {
       console.error("Ошибка при удалении из избранного:", error);
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Получение списка избранных событий
+export const getAllFavorites = createAsyncThunk(
+  "favorites/getAllFavorites",
+  async () => {
+    try {
+      const response = await fetch(`${apiUrl}/favorites`);
+      
+      if (!response.ok) throw new Error("Ошибка при загрузке избранных");
+      
+      const data = await response.json();      
+      return data;
+    } catch (error) {
+      console.error("Ошибка при получении всех фаворитов:", error);
       return rejectWithValue(error.message);
     }
   }

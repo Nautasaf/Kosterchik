@@ -23,7 +23,7 @@ const sessionConfig = {
 const corsOptions = {
   origin(origin, callback) {
     // Список разрешенных доменов
-    const allowedOrigins = ['http://localhost:5173', 'https://kosterchik.ru'];
+    const allowedOrigins = ['http://localhost:5173', 'https://kosterchik.ru', 'https://api.kosterchik.ru'];
 
     // Нормализация origin (удаление лишних пробелов)
     const normalizedOrigin = origin?.trim();
@@ -36,8 +36,8 @@ const corsOptions = {
       return callback(new Error('Not allowed by CORS'), false);
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Массив методов
-  allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Массив методов
+  allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'X-Requested-With','Accept'], // Разрешенные заголовки, Добавил три аргумента
   credentials: true, // Разрешаем использование кук и аутентификационных данных
   optionsSuccessStatus: 204, // Код ответа для предварительных запросов
 };

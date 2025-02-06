@@ -11,7 +11,7 @@ export const HistoryPage: React.FC = () => {
   const userId = userData.id;
   const { favorites, loading: favoritesLoading } = useSelector((state: RootState) => state.Favorites);
   const { events: userEvents, loading: userEventsLoading } = useSelector((state: RootState) => state.UserEvent);
-console.log(favorites);
+  console.log(favorites);
 
   useEffect(() => {
     if (userId) {

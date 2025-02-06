@@ -55,11 +55,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      people: {
-        // количество людей на данный момент
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
       maxPeople: {
         // Максимально число человек
         type: DataTypes.INTEGER,

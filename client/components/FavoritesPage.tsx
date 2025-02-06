@@ -8,7 +8,7 @@ export const FavoritesPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userData = JSON.parse(localStorage.getItem('userss') || '{}');
   const userId = userData.id;
-  const  favorites = useSelector(
+  const favorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   );
 

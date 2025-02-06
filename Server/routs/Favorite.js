@@ -5,10 +5,8 @@ const router = express.Router();
 
 router.post('/add-to-favorites', async (req, res) => {
   const { userId, eventId } = req.body;
- console.log(req.body);
+  console.log(req.body);
  
-    
-  
   
   try {
     const existingFavorite = await UserFavorite.findOne({
@@ -54,6 +52,21 @@ router.get('/:userId', async (req, res) => {
       where: { userId },
       include: [{ model: Event }]
     });
+    if (!favorites.length) {
+      return res.status(404).json({ message: 'Нет избранных событий' });
+    }
+    return res.status(200).json(favorites);
+  } catch (error) {
+    console.error('Ошибка при получении избранных событий:', error);
+    return res.status(500).json({ error: 'Ошибка при получении избранных событий' });
+  }
+});
+
+router.get('/', async (req, res) => {
+  try { 
+    const favorites = await UserFavorite.findAll();
+    console.log(favorites);
+    
     if (!favorites.length) {
       return res.status(404).json({ message: 'Нет избранных событий' });
     }
