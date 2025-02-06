@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./EventItem.module.scss";
@@ -8,6 +8,8 @@ import { fetchEvents } from "../store/thunk/EventThunk";
 import moment from "moment";
 import "moment/locale/ru";
 import { YMaps, Map, Placemark } from "react-yandex-maps";
+import SubscriptionMap from "../components/SubscriptionMaps/SubscriptionMaps";
+
 moment.locale("ru");
 
 export const EventItem = () => {
@@ -20,6 +22,8 @@ export const EventItem = () => {
   const { users, loading: usersLoading } = useSelector(
     (state: RootState) => state.AllUsers
   );
+
+  const [showRoute, setShowRoute] = useState(false);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -43,7 +47,7 @@ export const EventItem = () => {
 
   const eventCoordinates =
     event.latitude && event.longitude
-      ? [event.latitude, event.longitude]
+      ? ([event.latitude, event.longitude] as [number, number])
       : null;
 
   return (
@@ -100,7 +104,7 @@ export const EventItem = () => {
             </button>
             <button
               className={styles.eventButton}
-              onClick={() => console.log("Я готов")}>
+              onClick={() => setShowRoute(true)}>
               Я готов
             </button>
             <button
@@ -111,6 +115,12 @@ export const EventItem = () => {
           </div>
         </div>
       </div>
+      {showRoute && eventCoordinates && (
+        <SubscriptionMap
+          eventCoordinates={eventCoordinates}
+          onClose={() => setShowRoute(false)}
+        />
+      )}
     </div>
   );
 };
