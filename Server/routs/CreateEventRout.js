@@ -22,7 +22,6 @@ router.post('/', async (req, res) => {
     }
     console.log('userId===>', userId);
 
-    // Создаем событие с координатами
     const newEvent = await Event.create({
       title,
       description,
@@ -36,7 +35,6 @@ router.post('/', async (req, res) => {
       longitude,
     });
 
-    // Добавляем создателя события в таблицу EventUser
     await EventUser.create({
       userId: userId,
       eventId: newEvent.id,

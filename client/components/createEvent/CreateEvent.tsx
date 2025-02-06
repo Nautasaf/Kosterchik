@@ -1,4 +1,3 @@
-// CreateEvent.tsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/Index";
@@ -17,7 +16,7 @@ interface IEventData {
   imageUrl: string;
   background: string;
   requirements: string;
-  latitude: number; // новые поля
+  latitude: number;
   longitude: number;
 }
 
@@ -32,7 +31,6 @@ const CreateEvent: React.FC = () => {
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState("");
   const [background, setBackground] = useState("#ffffff");
-  // Начальные координаты — по умолчанию Москва
   const [location, setLocation] = useState<{ lat: number; lng: number }>({
     lat: 55.751244,
     lng: 37.618423,

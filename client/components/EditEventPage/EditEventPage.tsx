@@ -1,4 +1,3 @@
-// EditEventPage.tsx
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../../store/Index";
@@ -28,7 +27,6 @@ const EditEventPage: React.FC = () => {
       if (!response.ok) throw new Error("Ошибка при получении события");
       const data = await response.json();
       setEventData(data);
-      // Если координаты заданы, установить их; иначе задать значение по умолчанию (Москва)
       if (data.latitude && data.longitude) {
         setLocation({ lat: data.latitude, lng: data.longitude });
       } else {
