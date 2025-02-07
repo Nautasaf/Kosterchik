@@ -14,7 +14,7 @@
 }
 
 .modalContent {
-  background-color: #bad0d3; /* Цвет фона из вашей палитры */
+  background-color: #ffffff; /* Белый фон для светлой темы */
   padding: 30px;
   border-radius: 12px;
   max-width: 600px;
@@ -24,6 +24,14 @@
   position: relative; /* Для позиционирования крестика */
   border: 2px solid #dcdcdc;
   font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Темная тема для модального окна */
+.darkMode .modalContent {
+  background-color: #121212; /* Чёрный фон для тёмной темы */
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Кнопка закрытия в углу */
@@ -41,7 +49,7 @@
 }
 
 .closeButton:hover {
-  color: #ff7875;
+  color: #ff7875; /* Красный при наведении */
 }
 
 /* Анимации для появления модального окна */
@@ -75,25 +83,39 @@ ul {
 li {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #eee;
   font-size: 16px;
   font-family: Arial, sans-serif;
   color: #333;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-// li:hover {
-//   background-color: #f7f7f7;
-//   cursor: pointer;
-// }
+li:last-child {
+  border-bottom: none;
+}
+
+li:hover {
+  background-color: #f7f7f7; /* Светло-серый при наведении */
+  cursor: pointer;
+}
+
+/* Темная тема для списка событий */
+.darkMode li {
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode li:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
 
 /* Кнопки редактирования и удаления */
 .editButton,
 .deleteButton {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
-  color: white;
   border: none;
   border-radius: 8px;
   font-size: 1rem;
@@ -101,27 +123,29 @@ li {
   transition: all 0.3s ease;
   margin-top: 10px;
   width: fit-content;
-  box-shadow: 10px 10px 10px rgba(100, 103, 106, 0.3);
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  color: white; /* Белый текст для обоих кнопок */
 }
-
-.editButton:hover,
-.deleteButton:hover {
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
-  box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
-}
-
+/* Стиль кнопки "Редактировать" */
 .editButton {
-  background-color: #494a4b;
+  background: linear-gradient(45deg, #2196F3, #42A5F5); /* Градиент синего цвета */
 }
 
+.editButton:hover {
+  background: linear-gradient(45deg, #1E88E5, #42A5F5); /* Немного темнее при наведении */
+  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3); /* Тень синего цвета */
+}
+
+/* Стиль кнопки "Удалить" */
 .deleteButton {
-  background-color: #ff4d4f;
+  background: linear-gradient(45deg, #FF5252, #FF7043); /* Градиент красного цвета */
 }
 
 .deleteButton:hover {
-  background-color: #ff7875;
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
+  background: linear-gradient(45deg, #F44336, #FF7043); /* Немного темнее при наведении */
+  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3); /* Тень красного цвета */
 }
+
 
 /* Стили для мобильных устройств */
 @media (max-width: 768px) {

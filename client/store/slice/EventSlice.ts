@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { RootState } from '../store/Index';
+import { RootState } from '../../store/Index';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -13,6 +13,7 @@ interface Event {
   userId: number;
   imageUrl: string;
   background: string;
+  backgroundColor: string
   requirements: string;
 }
 

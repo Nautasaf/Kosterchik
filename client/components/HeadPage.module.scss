@@ -1,16 +1,18 @@
+/* Основной контейнер страницы */
 .headPageContainer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px;
-  background-color: #bad0d3;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8; /* Светлый фон для минимализма */
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); /* Мягкая тень */
   text-align: center;
-  border: 2px solid #dcdcdc;
+  border: 1px solid #e0e0e0; /* Тонкая граница */
   font-family: 'Montserrat', sans-serif;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+/* Сообщение авторизации */
 .authMessage {
   display: flex;
   justify-content: center;
@@ -18,83 +20,115 @@
   height: 100vh;
   width: 100%;
   font-size: 1.5rem;
-  color: white;
-  font-weight: bold;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
-  background: url("/jXU0dJZ5oEs.jpg") center/cover no-repeat;
+  color: #fff;
+  font-weight: 600;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+    url('/jXU0dJZ5oEs.jpg') center/cover no-repeat;
 }
 
+/* Заголовок страницы */
 .pageTitle {
-  font-size: 36px;
-  font-weight: 450;
+  font-size: 42px;
+  font-weight: 600;
   color: #2d2d2d;
-  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-  margin-bottom: 30px;
+  margin-bottom: 40px;
+  letter-spacing: -1px; /* Уменьшение расстояния между буквами */
 }
 
+/* Список событий */
 .eventList {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr); /* Всегда два столбца */
   gap: 30px;
   margin-top: 20px;
 }
 
+/* Карточка события */
 .eventItem {
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
-  border-radius: 12px;
-  box-shadow: 10px 10px 15px rgba(100, 103, 106, 0.3);
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
   overflow: hidden;
-  transition: transform 0.3s ease-in-out, background-color 0.3s;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
   cursor: pointer;
   text-decoration: none;
+  border: 1px solid #e0e0e0; /* Тонкая граница */
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 10px 10px 20px rgba(51, 52, 54, 0.4);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Увеличенная тень при наведении */
   }
 }
 
+/* Изображение события */
 .eventImage {
   width: 100%;
-  height: 180px;
+  height: 200px;
   object-fit: cover;
-  border-bottom: 2px solid #f1f1f1;
+  border-bottom: 1px solid #e0e0e0; /* Тонкая граница */
 }
 
+/* Заголовок события */
 .eventTitle {
-  font-size: 24px;
-  color: white;
-  margin: 15px 20px 10px;
+  font-size: 22px;
+  color: #2d2d2d;
+  margin: 20px 20px 10px;
+  font-weight: 600;
 }
 
+/* Информация о событии */
 .eventInfo {
   font-size: 16px;
-  color: white;
+  color: #666;
   padding: 0 20px;
-  margin-bottom: 10px;
-  line-height: 1.4;
+  margin-bottom: 15px;
+  line-height: 1.5;
   height: 60px;
   overflow: hidden;
-  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
 }
 
+/* Город и дата события */
 .eventCity,
 .eventDate {
   font-size: 14px;
-  color: white;
+  color: #888;
   margin-left: 20px;
-  margin-bottom: 10px;
-  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
 }
 
+/* Адаптация под мобильные устройства */
 @media (max-width: 768px) {
+  .headPageContainer {
+    padding: 20px;
+  }
+
+  .pageTitle {
+    font-size: 32px;
+  }
+
   .eventList {
     grid-template-columns: repeat(1, 1fr);
   }
 }
 
 @media (max-width: 480px) {
-  .headPageContainer {
-    padding: 20px;
+  .pageTitle {
+    font-size: 28px;
+  }
+
+  .eventTitle {
+    font-size: 20px;
+  }
+
+  .eventInfo {
+    font-size: 14px;
+  }
+}
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+  .eventList {
+    grid-template-columns: repeat(1, 1fr); /* Один столбец на мобильных */
   }
 }
