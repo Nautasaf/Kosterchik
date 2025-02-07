@@ -23,7 +23,6 @@ router.post('/add-to-favorites', async (req, res) => {
 
 router.delete('/remove', async (req, res) => {
   const { userId, eventId } = req.body;
-console.log("пришло ", req.body);
 
   try {
     const deleted = await UserFavorite.destroy({

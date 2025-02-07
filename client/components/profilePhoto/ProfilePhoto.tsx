@@ -62,7 +62,7 @@ const ProfilePhoto: React.FC<ProfilePhotoProps> = ({ photoUrl, altText }) => {
     <div className={styles.blockPhoto}>
       {photoUrl ? (
         <img
-          src={`http://localhost:3000${photoUrl}`}
+          src={`http://localhost:3000/${photoUrl}`}
           alt={altText}
           className={styles.blockPhotoImg}
         />

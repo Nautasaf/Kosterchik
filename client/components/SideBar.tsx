@@ -144,6 +144,7 @@ export const Sidebar: React.FC = () => {
         Доступные места:
         <input type="number" name="available_seats" value={filters.available_seats} onChange={handleInputChange} />
       </label>
+      {/* ToDo: value={event.maxPeople - handleGetFavorites} */}
 
       <label>
   Язык:

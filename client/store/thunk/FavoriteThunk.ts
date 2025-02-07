@@ -1,12 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 // получение списка избранных событий
 export const fetchFavorites = createAsyncThunk(
   "favorites/fetchFavorites",
   async (userId: number, { rejectWithValue }) => {
     try {
     
-      const response = await fetch(`http://localhost:3000/favorites/${userId}`);
+      const response = await fetch(`${apiUrl}/favorites/${userId}`);
       
       if (!response.ok) throw new Error("Ошибка при загрузке избранных");
       

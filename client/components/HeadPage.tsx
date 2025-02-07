@@ -7,9 +7,7 @@ import { RootState, AppDispatch } from "../store/Index";
 import moment from "moment";
 import "moment/locale/ru";
 import { Sidebar } from "./SideBar";
-import React from "react";
 import { getAllFavorites } from "../store/thunk/FavoriteThunk";
-import { Favorite } from "../interface/EventFetch";
 
 
 moment.updateLocale("ru", {
@@ -25,27 +23,20 @@ moment.updateLocale("ru", {
 
 export const HeadPage = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const { events, loading, error } = useSelector((state: RootState) => state.Events);
+  const filters = useSelector((state: RootState) => state.search.filters);
   const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
-  const { events, loading, error, filters } = useSelector(
-    (state: RootState) => state.search
-  );
+  
+  useEffect(() => {
+    dispatch(fetchEvents()); 
+  }, [dispatch]);
+
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   )
 
   const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
   const userId = userData.id; 
-
-  const debouncedFilters = useDebounce(filters, 1000);
-
-  const handleFilterChange = (newFilters) => {  
-    dispatch({ type: "search/updateFilters", payload: newFilters });  
-  };
-
-
-  const handleFetch = useCallback(() => {
-    dispatch(fetchSearch(debouncedFilters));
-  }, [debouncedFilters, dispatch]);
 
   const handleGetFavorites = (eventId : number) => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
@@ -141,15 +132,19 @@ export const HeadPage = () => {
   }, [events, filters]);
 
 
+  if (!isLoggedIn) {
+    return <div className={styles.authMessage}>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
+  }
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Произошла ошибка: {error}</div>;
+  
   
   return (
     <div className={styles.headPageContainer}>
         <Sidebar />
       <h1 className={styles.pageTitle}>Все события</h1>
       <div className={styles.eventList}>
-        {events.map((event) => (
+        {filteredEvents.map((event) => (
           <NavLink
             to={`/event/${event.id}`}
             key={event.id}

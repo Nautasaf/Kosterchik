@@ -61,7 +61,7 @@ export const HistoryPage: React.FC = () => {
             {favorites.map((favorite) => (
               <li key={favorite.eventId} className={styles["favorite-item"]}>
                 <h3>{favorite.Event?.title || "Без названия"}</h3>
-                <p>{favorite.Event.description}</p>
+                <p>{favorite.Event?.description}</p>
                 <p>{favorite.Event?.city}</p>
                 <p>{favorite.Event?.date}</p>
                 <button onClick={() => handleRemoveFavorite(favorite.eventId)}>Удалить</button>

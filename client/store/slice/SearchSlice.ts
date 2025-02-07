@@ -32,7 +32,7 @@ interface Event {
   age_restriction: number;
   event_type: string;
   price: number;
-  id: string | number;
+  id: number;
   title: string;
   description: string;
   city: string;

@@ -18,11 +18,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Event.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -35,6 +30,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       start_date: { // 🗓 Дата начала события
         type: DataTypes.DATE,
         allowNull: true,
@@ -42,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
       end_date: { // 🗓 Дата окончания события (может быть null)
         type: DataTypes.DATE,
         allowNull: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       },
       imageUrl: {
         type: DataTypes.STRING,
@@ -56,13 +59,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       maxPeople: {
-        // Максимально число человек
+        // Максимальное число человек
         type: DataTypes.INTEGER,
         allowNull: true,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       },
       price: { // 💰 Цена билета (null = бесплатно)
         type: DataTypes.INTEGER,
@@ -70,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       event_type: { // 🎭 Тип события (концерт, выставка, конференция и т.д.)
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       age_restriction: { // 🔞 Возрастное ограничение (0+, 6+, 12+, 18+)
         type: DataTypes.INTEGER,
@@ -86,7 +85,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       format: { // 🏠 Формат (онлайн / оффлайн)
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       language: { // 🌍 Язык события
         type: DataTypes.STRING,
