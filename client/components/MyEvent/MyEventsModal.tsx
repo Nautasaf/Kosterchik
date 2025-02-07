@@ -58,6 +58,7 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
             localEvents.map((event) => (
               <li key={event.id}>
                 {event.title}
+                <div className='blockButton'>
                 <button
                   className={styles.editButton}
                   onClick={() => handleEditEvent(event.id)}
@@ -70,6 +71,7 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
                 >
                   Удалить
                 </button>
+                </div>
               </li>
             ))
           ) : (

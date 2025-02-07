@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
   const dispatch = useDispatch<AppDispatch>()
   const location = useLocation() // Получаем текущий маршрут
