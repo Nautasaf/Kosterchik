@@ -4,7 +4,7 @@ import { RootState } from '../store/Index';
 import { updateFilters } from '../store/slice/SearchSlice';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import styles from './Sidebar.module.scss';
+import styles from './SideBar.module.scss';
 import { parse, format } from 'date-fns';
 
 export const Sidebar: React.FC = () => {
@@ -24,7 +24,7 @@ export const Sidebar: React.FC = () => {
   };
   const handleDateChange = (date: Date | null) => {
     if (date) {
-      const formattedDate = format(date, 'yyyy-MM-dd'); 
+      const formattedDate = format(date, 'yyyy-MM-dd');
       dispatch(updateFilters({ date: formattedDate }));
     } else {
       dispatch(updateFilters({ date: null }));
@@ -83,14 +83,14 @@ export const Sidebar: React.FC = () => {
 
       <label>
   Цена до: {filters.price || 0} ₽
-  <input 
-    type="range" 
-    name="price" 
-    min="0" 
-    max="10000" 
+  <input
+    type="range"
+    name="price"
+    min="0"
+    max="10000"
     step="100"
-    value={filters.price || 0} 
-    onChange={handleInputChange} 
+    value={filters.price || 0}
+    onChange={handleInputChange}
   />
 </label>
 
@@ -162,7 +162,7 @@ export const Sidebar: React.FC = () => {
         <input type="checkbox" name="accessibility" checked={filters.accessibility} onChange={handleCheckboxChange} />
       </label>
 
-    
+
 
       <label>
         Организатор:
@@ -187,7 +187,7 @@ export const Sidebar: React.FC = () => {
         </button>
       </div>
 
-    
+
     </div>
   );
 };

@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import styles from './EventItem.module.scss';
-import { RootState, AppDispatch } from '../store/Index';
-import { fetchUsers } from '../store/thunk/AllUserThunk';
-import { fetchEvents } from '../store/thunk/EventThunk';
-import { addToFavorites } from '../store/thunk/FavoriteThunk';
-import moment from 'moment';
-import 'moment/locale/ru';
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import styles from './EventItem.module.scss'
+import { RootState, AppDispatch } from '../store/Index'
+import { fetchUsers } from '../store/thunk/AllUserThunk'
+import { fetchEvents } from '../store/thunk/EventThunk'
+import { addToFavorites } from '../store/thunk/FavoriteThunk'
+import moment from 'moment'
+import 'moment/locale/ru'
 import { isBgColor } from '../src/utils/background'
 
-moment.locale('ru');
+moment.locale('ru')
 
 export const EventItem = () => {
   const { id } = useParams()
@@ -35,27 +35,14 @@ export const EventItem = () => {
     }
   }, [dispatch, event])
 
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}');
-  const userId = userData.id;
-
-
-  const handleAddToFavorites = () => {
-    if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
-    }
-  };
-
-
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}');
-  const userId = userData.id;
-
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}')
+  const userId = userData.id
 
   const handleAddToFavorites = () => {
     if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }));
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }))
     }
-  };
-
+  }
 
   if (eventsLoading) {
     return <div>Загрузка данных...</div>
@@ -113,14 +100,20 @@ export const EventItem = () => {
           <div className={styles.eventCity}>Город: {event.city}</div>
           <div className={styles.eventCity}>Место: {event.district}</div>
           {event.maxPeople ? (
-            <div className={styles.eventCity}>Количество участников: {event.people}/{event.maxPeople}</div>
+            <div className={styles.eventCity}>
+              Количество участников: {event.people}/{event.maxPeople}
+            </div>
           ) : (
-            <div className={styles.eventCity}>Количество участников: {event.people}</div>
+            <div className={styles.eventCity}>
+              Количество участников: {event.people}
+            </div>
           )}
           <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
-          {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
-</div>
+            Начало: {moment(event.start_date).format('D MMMM YYYY, HH:mm')}
+            {event.end_date
+              ? ` до ${moment(event.end_date).format('HH:mm')}`
+              : ''}
+          </div>
 
           <div className={styles.eventButtonContainer}>
             <button
