@@ -38,16 +38,22 @@ function testConnection() {
         }
     });
 }
-testConnection();
-const eventRout = require('./routs/EventRout');
-const searchRout = require('./routs/SearchRout');
-const getUsers = require('./routs/GetAllUser');
-server.use('/events', eventRout);
-server.use('/search', searchRout);
-server.use('/', registration, loginRouter, logout, uploadRoute);
-server.use('/events', CreateEventRout);
-server.use('/users', getUsers);
-server.use('/favorites', favorites);
+
+testConnection()
+
+const eventRout = require('./routs/EventRout')
+const searchRout = require('./routs/SearchRout')
+const getUsers = require('./routs/GetAllUser')
+const favorites = require('./routs/Favorite')
+const userEvent = require('./routs/UserEvent')
+server.use('/events', eventRout)
+server.use('/search', searchRout)
+server.use('/', registration, loginRouter, logout, uploadRoute)
+server.use('/events', CreateEventRout)
+server.use('/users', getUsers)
+server.use('/favorites', favorites)
+server.use('/user-event', userEvent)
+
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`);

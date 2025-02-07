@@ -1,18 +1,20 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect, useMemo} from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./HeadPage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSearch } from "../store/thunk/SearchThunk";
+import { fetchEvents } from "../store/thunk/EventThunk";
 import { RootState, AppDispatch } from "../store/Index";
-import { useDebounce } from "../hooks/useDebounce";
-import { Sidebar } from "./SideBar";
 import moment from "moment";
 import "moment/locale/ru";
+import { Sidebar } from "./SideBar";
+import React from "react";
 import { getAllFavorites } from "../store/thunk/FavoriteThunk";
 import { Favorite } from "../interface/EventFetch";
+
+
 moment.updateLocale("ru", {
   months: [
-    "Января", "Февраля", "Марта", "Апреля", "Маия", "Июня",
+    "Января", "Февраля", "Марта", "Апреля", "Мая", "Июня",
     "Июля", "Августа", "Сентября", "Октября", "Ноября", "Декабря"
   ],
   monthsShort: [
@@ -61,34 +63,91 @@ export const HeadPage = () => {
   }, [dispatch])
 
   useEffect(() => {
-    if (debouncedFilters.city || debouncedFilters.date || debouncedFilters.title) {
-      handleFetch();
-    } else {
-      dispatch(fetchSearch({ city: "", date: "", title: "" }));
-    }
-  }, [debouncedFilters, dispatch, handleFetch]);
+    dispatch(fetchEvents()); 
+  }, [dispatch]);
 
-  if (loading) {
-    return <div>Загрузка...</div>;
-  }
 
-  if (!isLoggedIn) {
-    return <div className={styles.authMessage}>Пожалуйста, авторизуйтесь для просмотра событий.</div>;
-  }
+  const filteredEvents = useMemo(() => {
+    return events.filter(event => {
+      const matchesTitle = filters.title
+        ? event.title.toLowerCase().includes(filters.title.toLowerCase())
+        : true;
+      const matchesCity = filters.city
+        ? event.city.toLowerCase().includes(filters.city.toLowerCase())
+        : true;
+      const matchesDate = filters.date
+        ? event.start_date.startsWith(filters.date)
+        : true;
+        const matchesPrice =
+         !filters.price || Number(filters.price) === 0
+         ? true
+         : (event.price ?? 0) <= Number(filters.price);
 
-  if (error) {
-    return <div>Произошла ошибка: {error}</div>;
-  }
+        const matchesType = filters.event_type
+        ? (event.event_type ?? "").toLowerCase().includes(filters.event_type.toLowerCase())
+        : true;
+       
+        const matchesAge = filters.age_restriction
+        ? (event.age_restriction ?? 0) >= Number(filters.age_restriction)
+        : true;
 
-  if (events.length === 0) {
-    return <div>Нет доступных событий</div>;
-  }
+        const matchesDuration = filters.duration
+  ? (event.duration ?? 0) >= Number(filters.duration)
+  : true;
+      const matchesDistrict = filters.district
+        ? event.district?.toLowerCase().includes(filters.district.toLowerCase()) || false
+        : true;
+        const matchesFormat = filters.format
+        ? (event.format ?? '').toLowerCase().includes(filters.format.toLowerCase())
+        : true;
+        const matchesSeats = filters.available_seats
+        ? (event.available_seats ?? 0) >= Number(filters.available_seats)
+        : true;
+        const matchesLanguage = filters.language
+        ? (event.language ?? "").toLowerCase().trim() === filters.language.toLowerCase().trim()
+        : true;
+      const matchesAccessibility = filters.accessibility
+        ? event.accessibility === filters.accessibility
+        : true;
+        const matchesRating = filters.rating
+        ? (event.rating ?? 0) >= Number(filters.rating)
+        : true;
+        const matchesOrganizer = filters.organizer
+        ? event.organizer?.toLowerCase().includes(filters.organizer.toLowerCase()) || false
+        : true;
+        const matchesPopularity =
+        !filters.popularity || Number(filters.popularity) === 0
+          ? true
+          : (event.popularity ?? 0) >= Number(filters.popularity);
+  
+      return (
+        matchesTitle &&
+        matchesCity &&
+        matchesDate &&
+        matchesPrice &&
+        matchesType &&
+        matchesAge &&
+        matchesDuration &&
+        matchesDistrict &&
+        matchesFormat &&
+        matchesSeats &&
+        matchesLanguage &&
+        matchesAccessibility &&
+        matchesRating &&
+        matchesOrganizer &&
+        matchesPopularity
+      );
+    });
+  }, [events, filters]);
 
+
+  if (loading) return <div>Загрузка...</div>;
+  if (error) return <div>Произошла ошибка: {error}</div>;
+  
   return (
     <div className={styles.headPageContainer}>
-     
-      {/* {isLoggedIn && <Sidebar onFilterChange={handleFilterChange} />} */}
-      <h1 className={styles.pageTitle}>Список событий</h1>
+        <Sidebar />
+      <h1 className={styles.pageTitle}>Все события</h1>
       <div className={styles.eventList}>
         {events.map((event) => (
           <NavLink

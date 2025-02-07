@@ -1,116 +1,193 @@
-import styles from "./Sidebar.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store/Index";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../store/Index';
+import { updateFilters } from '../store/slice/SearchSlice';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import styles from './Sidebar.module.scss';
+import { parse, format } from 'date-fns';
 
-export const Sidebar = ({ onFilterChange }) => {
+export const Sidebar: React.FC = () => {
   const dispatch = useDispatch();
-  const filters = useSelector((state: RootState) => state.search.events);
+  const filters = useSelector((state: RootState) => state.search.filters);
 
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const updatedFilters = {
-      ...filters,
-      [name]: type === "checkbox" ? checked : value,
-    };
-
-    dispatch({ type: "search/updateFilters", payload: updatedFilters }); 
-    onFilterChange(updatedFilters);
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateFilters({ [event.target.name]: event.target.value }));
   };
 
-  const resetFilters = () => {
-    const initialFilters = {
-      date: "",
-      eventType: "",
-      price: "",
-      ageRestriction: "",
-      duration: "",
-      district: "",
-      format: "",
-      upcomingDays: "",
-      language: "",
-      availableSeats: "",
-      accessibility: false,
-      rating: "",
-      organizer: "",
-      popularity: "",
-    };
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateFilters({ [event.target.name]: event.target.checked }));
+  };
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(updateFilters({ [event.target.name]: event.target.value }));
+  };
+  const handleDateChange = (date: Date | null) => {
+    if (date) {
+      const formattedDate = format(date, 'yyyy-MM-dd'); 
+      dispatch(updateFilters({ date: formattedDate }));
+    } else {
+      dispatch(updateFilters({ date: null }));
+    }
+  };
+  const parsedDate = filters.date ? parse(filters.date, 'yyyy-MM-dd', new Date()) : null;
 
-    dispatch({ type: "search/updateFilters", payload: initialFilters }); 
-    onFilterChange(initialFilters);
+  const resetFilters = () => {
+    dispatch(updateFilters({
+      title: '',
+      city: '',
+      date: undefined,
+      price: '',
+      event_type: '',
+      age_restriction: '',
+      duration: '',
+      district: '',
+      format: '',
+      available_seats: '',
+      language: '',
+      accessibility: false,
+      rating: '',
+      organizer: '',
+      popularity: ''
+    }));
   };
 
   return (
-    <aside className={styles.sidebar}>
-      <h3 className={styles.header}>Фильтры</h3>
+    <div className={styles.sidebar}>
+      <h3 className={styles.header}>Фильтр событий</h3>
 
-      <label>Дата события:</label>
-      <input type="date" name="date" value={filters} onChange={handleChange} />
+      <label>
+        Название события:
+        <input type="text" name="title" value={filters.title} onChange={handleInputChange} />
+      </label>
 
-      <label>Тип события:</label>
-      <select name="eventType" value={filters.eventType} onChange={handleChange}>
-        <option value="">Любой</option>
-        <option value="концерт">Концерт</option>
-        <option value="выставка">Выставка</option>
-        <option value="конференция">Конференция</option>
-        <option value="тренинг">Тренинг</option>
-      </select>
+      <label>
+        Город:
+        <input type="text" name="city" value={filters.city} onChange={handleInputChange} />
+      </label>
 
-      <label>Цена билета:</label>
-      <input type="number" name="price" placeholder="До какой суммы?" value={filters.price} onChange={handleChange} />
+      <div className={styles.labelWrapper}>
+  <span>Дата:</span>
+  <DatePicker
+    selected={parsedDate || null}
+    onChange={handleDateChange}
+    dateFormat="dd-MM-yyyy"
+    placeholderText="Выберите день и месяц"
+    className={styles.searchInput}
+  />
+</div>
+      <label>
+        Тип события:
+        <input type="text" name="event_type" value={filters.event_type} onChange={handleInputChange} />
+      </label>
 
-      <label>Возрастное ограничение:</label>
-      <select name="ageRestriction" value={filters.ageRestriction} onChange={handleChange}>
-        <option value="">Все</option>
-        <option value="0">0+</option>
-        <option value="6">6+</option>
-        <option value="12">12+</option>
-        <option value="18">18+</option>
-      </select>
+      <label>
+  Цена до: {filters.price || 0} ₽
+  <input 
+    type="range" 
+    name="price" 
+    min="0" 
+    max="10000" 
+    step="100"
+    value={filters.price || 0} 
+    onChange={handleInputChange} 
+  />
+</label>
 
-      <label>Длительность (в минутах):</label>
-      <input type="number" name="duration" placeholder="Продолжительность" value={filters.duration} onChange={handleChange} />
+      <label>
+  Возрастное ограничение от: <strong>{filters.age_restriction || "Все"}</strong>
+  <input
+    type="range"
+    name="age_restriction"
+    min="0"
+    max="18"
+    step="1"
+    value={filters.age_restriction || 0}
+    onChange={handleInputChange}
+  />
+</label>
+<label>
+  Длительность от (минуты): {filters.duration || 0}
+  <input
+    type="range"
+    name="duration"
+    min="0"
+    max="300"
+    step="10"
+    value={filters.duration || 0}
+    onChange={handleInputChange}
+  />
+</label>
+<label>
+  Рейтинг (от): {filters.rating || 0}
+  <input
+    type="range"
+    name="rating"
+    min="0"
+    max="5"
+    step="0.1"
+    value={filters.rating || 0}
+    onChange={handleInputChange}
+  />
+</label>
+      <label>
+        Район:
+        <input type="text" name="district" value={filters.district} onChange={handleInputChange} />
+      </label>
 
-      <label>Район города:</label>
-      <input type="text" name="district" placeholder="Введите район" value={filters.district} onChange={handleChange} />
+      <label>
+        Формат:
+        <input type="text" name="format" value={filters.format} onChange={handleInputChange} />
+      </label>
 
-      <label>Формат:</label>
-      <select name="format" value={filters.format} onChange={handleChange}>
-        <option value="">Любой</option>
-        <option value="онлайн">Онлайн</option>
-        <option value="офлайн">Офлайн</option>
-      </select>
+      <label>
+        Доступные места:
+        <input type="number" name="available_seats" value={filters.available_seats} onChange={handleInputChange} />
+      </label>
 
-      <label>Ближайшие дни:</label>
-      <input type="number" name="upcomingDays" placeholder="Например, 7" value={filters.upcomingDays} onChange={handleChange} />
+      <label>
+  Язык:
+  <select name="language" value={filters.language} onChange={handleSelectChange}>
+    <option value="">Любой</option>
+    <option value="Русский">Русский</option>
+    <option value="Английский">Английский</option>
+    <option value="Немецкий">Немецкий</option>
+    <option value="Французский">Французский</option>
+    <option value="Испанский">Испанский</option>
+    <option value="Китайский">Китайский</option>
+  </select>
+</label>
+      <label>
+        Доступность для маломобильных:
+        <input type="checkbox" name="accessibility" checked={filters.accessibility} onChange={handleCheckboxChange} />
+      </label>
 
-      <label>Язык:</label>
-      <select name="language" value={filters.language} onChange={handleChange}>
-        <option value="">Любой</option>
-        <option value="русский">Русский</option>
-        <option value="английский">Английский</option>
-      </select>
+    
 
-      <label>Осталось мест не менее:</label>
-      <input type="number" name="availableSeats" placeholder="Минимум мест" value={filters.availableSeats} onChange={handleChange} />
+      <label>
+        Организатор:
+        <input type="text" name="organizer" value={filters.organizer} onChange={handleInputChange} />
+      </label>
 
-      <label>Доступ для инвалидов:</label>
-      <input type="checkbox" name="accessibility" checked={filters.accessibility} onChange={handleChange} />
+      <label>
+  Посещаемость (от): {filters.popularity || 0}
+  <input
+    type="range"
+    name="popularity"
+    min="0"
+    max="500"
+    step="10"
+    value={filters.popularity || 0}
+    onChange={handleInputChange}
+  />
+</label>
+      <div className={styles.buttonGroup}>
+        <button className={styles.resetButton} onClick={resetFilters}>
+          Очистить фильтры
+        </button>
+      </div>
 
-      <label>Рейтинг (от 1 до 5):</label>
-      <input type="number" name="rating" placeholder="Минимальный рейтинг" min="1" max="5" value={filters.rating} onChange={handleChange} />
-
-      <label>Организатор:</label>
-      <input type="text" name="organizer" placeholder="Название компании" value={filters.organizer} onChange={handleChange} />
-
-      <label>Популярность:</label>
-      <select name="popularity" value={filters.popularity} onChange={handleChange}>
-        <option value="">Любая</option>
-        <option value="топ">Топовые</option>
-        <option value="новые">Новые</option>
-      </select>
-
-      <button className={styles.resetButton} onClick={resetFilters}>Сбросить фильтры</button>
-    </aside>
+    
+    </div>
   );
 };

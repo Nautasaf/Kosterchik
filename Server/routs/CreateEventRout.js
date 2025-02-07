@@ -3,8 +3,9 @@ const router = express.Router()
 const { Event, EventUser } = require('../db/models')
 
 router.post('/', async (req, res) => {
+  console.log("📥 Полученные данные на сервере:", req.body);
+
   try {
-    console.log('Полученные данные:', req.body) 
     const {
       title,
       description,
@@ -68,9 +69,9 @@ router.post('/', async (req, res) => {
     // Возвращаем созданное событие
     res.status(201).json(newEvent)
   } catch (error) {
-    console.error('Ошибка при создании события:', error)
-    res.status(500).json({ message: 'Ошибка сервера' })
+    console.error("❌ Ошибка при создании события:", error);
+    res.status(500).json({ message: "Ошибка сервера", error });
   }
-})
+});
 
 module.exports = router

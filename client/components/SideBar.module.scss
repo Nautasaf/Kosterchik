@@ -1,42 +1,135 @@
 .sidebar {
   position: fixed;
-  top: 60px;
-  left: 0;
-  width: 220px;
-  height: 90vh;
-  background-color: #2c3e50;
+  top: 120px;
+  left: -243px;
+  width: 250px;
+  height: 85vh;
+  border-right: 5px solid #ff0000;
+  // border-bottom: 5px solid #ff0000;
+  border-radius: 4px;
+  background-color: white;
   color: white;
   padding: 15px;
   box-sizing: border-box;
   z-index: 10;
-  overflow-y: auto;
-  font-size: 14px; 
+  transition: left 0.3s ease;
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  scrollbar-width: none;
+  scrollbar-color: none; 
+}
+
+.sidebar:hover {
+  left: 0;
+}
+.sidebar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 20px; 
+  height: 100%;
+  background: transparent;
 }
 
 .header {
   font-size: 18px;
   margin-bottom: 12px;
   text-align: center;
+  color:  #ff0000;
 }
+
 
 label {
   display: block;
-  margin-top: 8px;
+  margin-top: 0px;
   font-weight: bold;
   font-size: 13px;
+  color: #ff0000;
+}
+.labelWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+span{
+  color: #ff0000;
 }
 
 input,
 select {
-  width: 100%;
-  padding: 4px;
+  width: 90%;
+
+  padding: 8px;
   margin-top: 4px;
   border: none;
   border-radius: 4px;
   font-size: 12px;
+  background-color: grey;
+  color: white;
 }
 
 input[type="checkbox"] {
   width: auto;
   margin-right: 8px;
+}
+input::placeholder,
+select::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+/* Кнопка "Применить фильтры" */
+button {
+  background-color:#ff0000;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 12px;
+}
+
+
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+  background-color: grey;
+  color: white;
+  border-radius: 4px;
+  border: none;
+}
+
+
+input,
+select,
+button {
+  margin-bottom: 5px;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    top: 0;
+    bottom: 0;
+  }
+  
+ 
+  .header {
+    font-size: 16px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  input,
+  select,
+  button {
+    font-size: 14px;
+  }
 }

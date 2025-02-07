@@ -4,7 +4,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 
 export const fetchUserEvents = createAsyncThunk(
-  'userEvents/fetchUserEvents',
+  "UserEvent/fetchUserEvents",
   async (userId: number, { rejectWithValue }) => {
     try {
       const response = await fetch(`${apiUrl}/events/user-event`, {
@@ -15,20 +15,14 @@ export const fetchUserEvents = createAsyncThunk(
         body: JSON.stringify({ userId }), 
       });
 
-      if (!response.ok) {
-        throw new Error('Ошибка при получении данных');
-      }
+      if (!response.ok) throw new Error("Failed to fetch user events");
 
       const data = await response.json();
-     
-
-
+    
       return data;
     } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
-      }
-      return rejectWithValue('Произошла неизвестная ошибка');
+      console.error("Error fetching user events:", error);
+      return rejectWithValue(error.message);
     }
   }
 );

@@ -1,12 +1,12 @@
 export interface Event {
-  id: number;
+  id: number ;
   title: string;
   description: string;
   city: string;
   start_date: string;
   end_date: string;
   userId: number;
-  maxPeople: number | null
+  maxPeople: number | undefined
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;

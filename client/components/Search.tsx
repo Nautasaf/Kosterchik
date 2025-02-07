@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect} from 'react'
 import styles from './Search.module.scss'
-import { setCity, setDate, setTitle } from '../store/slice/SearchSlice'
+import { updateFilters } from "../store/slice/SearchSlice";
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/Index'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import React from 'react';
+import { format, parse } from 'date-fns';
+
 
 export const Search: React.FC = () => {
   const [isVisible, setIsVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
   const dispatch = useDispatch<AppDispatch>()
-  const { city, date, title } = useSelector(
-    (state: RootState) => state.search.filters,
-  )
+     const filters = useSelector((state: RootState) => state.search.filters);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,18 +35,24 @@ export const Search: React.FC = () => {
   }, [lastScrollY])
 
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setCity(event.target.value))
+    dispatch(updateFilters({ city: event.target.value }))
   }
 
-  const handleDateChange = (date: Date | null) => {
-    if (date) {
-      const formattedDate = `${date.getDate()}-${date.getMonth() + 1}`
-      dispatch(setDate(formattedDate))
-    }
-  }
+   
+    const handleDateChange = (date: Date | null) => {
+      if (date) {
+        const formattedDate = format(date, 'yyyy-MM-dd'); 
+        dispatch(updateFilters({ date: formattedDate }));
+      } else {
+        dispatch(updateFilters({ date: null }));
+      }
+    };
+  
+    const parsedDate = filters.date ? parse(filters.date, 'yyyy-MM-dd', new Date()) : null;
+  
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setTitle(event.target.value))
+    dispatch(updateFilters({ title: event.target.value }))
   }
 
   return (
@@ -57,33 +64,28 @@ export const Search: React.FC = () => {
       <input
         type='text'
         placeholder='Введите город'
-        value={city}
+        value={filters.city}
         onChange={handleCityChange}
         className={styles.searchInput}
       />
       <input
         type='text'
-        value={title}
+        value={filters.title}
         placeholder='Введите событие'
         onChange={handleTitleChange}
         className={styles.searchInput}
       />
 
-      <DatePicker
-        selected={
-          date
-            ? new Date(
-                `${new Date().getFullYear()}-${date.split('-')[1]}-${
-                  date.split('-')[0]
-                }`,
-              )
-            : null
-        }
+
+<DatePicker
+        selected={parsedDate || null}
         onChange={handleDateChange}
-        dateFormat='dd-MM'
-        placeholderText='Выберите день и месяц'
+        dateFormat="dd-MM-yyyy"
+        placeholderText="Выберите день и месяц"
         className={styles.searchInput}
-        popperPlacement='bottom'
+    
+        // popperPlacement="bottom"
+        // isClearable
       />
     </div>
   )

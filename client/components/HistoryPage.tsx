@@ -1,28 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store/Index";
-import { fetchFavorites,  removeFromFavorites } from "../store/thunk/FavoriteThunk";
+import { fetchFavorites, removeFromFavorites } from "../store/thunk/FavoriteThunk";
 import { fetchUserEvents } from "../store/thunk/UserEventThunk"; 
 import styles from "./FavoritesPage.module.scss";
 
 export const HistoryPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const userData = JSON.parse(localStorage.getItem("userss") || "{}");
   const userId = userData.id;
+
   const { favorites, loading: favoritesLoading } = useSelector((state: RootState) => state.Favorites);
   const { events: userEvents, loading: userEventsLoading } = useSelector((state: RootState) => state.UserEvent);
-  console.log(favorites);
+ 
 
   useEffect(() => {
-    if (userId) {
-      dispatch(fetchFavorites(userId));
-      dispatch(fetchUserEvents(userId));
-    }
+
+      dispatch(fetchFavorites(userId))
+  
+      dispatch(fetchUserEvents(userId))
+      
   }, [dispatch, userId]);
 
   const handleRemoveFavorite = (eventId: number) => {
     dispatch(removeFromFavorites({ userId, eventId })).then(() => {
-      dispatch(fetchFavorites(userId)); // Перезагружаем избранные после удаления
+      dispatch(fetchFavorites(userId)); 
     });
   };
 
@@ -37,7 +39,7 @@ export const HistoryPage: React.FC = () => {
         ) : userEvents.length > 0 ? (
           <ul>
             {userEvents.map((event) => (
-              <li key={event.id} className={styles["event-item"]}>
+              <li key={event.id} className={styles["favorite-item"]}>
                 <h3>{event.title}</h3>
                 <p>{event.description}</p>
                 <p>{event.city}</p>

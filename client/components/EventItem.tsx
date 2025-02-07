@@ -54,7 +54,7 @@ export const EventItem = () => {
 
   const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
   const userId = userData.id; 
-  // console.log(userId );
+  
   
   const handleAddToFavorites = () => {
     if (event) {

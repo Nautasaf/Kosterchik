@@ -1,57 +1,93 @@
-import { createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { SearchState, Event } from '../../interface/EventFetch';
-import {  fetchSearch } from '../thunk/SearchThunk';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+
+
+interface Filters {
+  city: string;
+  date?: string | null; 
+  title: string;
+  price: string;
+  event_type: string;
+  accessibility: boolean;
+  age_restriction: string;
+  available_seats: string;
+  district: string;
+  duration: string;
+  format: string;
+  language: string;
+  organizer: string;
+  popularity: string;
+  rating: string;
+}
+
+interface Event {
+  popularity: number;
+  organizer: string;
+  rating: number;
+  accessibility: boolean;
+  language: string;
+  available_seats: number;
+  format: string;
+  duration: number;
+  age_restriction: number;
+  event_type: string;
+  price: number;
+  id: string | number;
+  title: string;
+  description: string;
+  city: string;
+  district?: string; 
+  start_date: string;
+  end_date?: string;
+  maxPeople: number | undefined,
+  people: number;
+}
+
+// Определим тип состояния
+interface SearchState {
+  filters: Filters;
+  events: Event[];
+  loading: boolean;
+  error: string | null;
+}
+
+// Начальное состояние
 const initialState: SearchState = {
-    events: [],
-    loading: false,
-    error: null,
-    filters: {
-      city: '',
-      date: '',
-      title: '',
-    },
-  };
+  filters: {
+    city: "",
+    date: "",
+    title: "",
+    price: "",
+    event_type: "",
+    accessibility: false,
+    age_restriction: "",
+    available_seats: "",
+    district: "",
+    duration: "",
+    format: "",
+    language: "",
+    organizer: "",
+    popularity: "",
+    rating: "",
+  },
+  events: [],
+  loading: false,
+  error: null,
+};
 
 const searchSlice = createSlice({
-    name: 'search',
-    initialState,
-    reducers: {
-      setCity: (state,  action: PayloadAction<string>) => {
-        state.filters.city = action.payload;
-      },
-      setDate: (state, action: PayloadAction<string>) => {
-        state.filters.date = action.payload;
-      },
-      setTitle: (state, action: PayloadAction<string>) => {
-        state.filters.title = action.payload;
-      },
-      resetFilters: (state) => {
-        state.filters = {
-          city: '',
-          date: '',
-          title: '',
-        }; 
-      },
+  name: "search",
+  initialState,
+  reducers: {
+    updateFilters: (state, action: PayloadAction<Partial<Filters>>) => {
+      state.filters = { ...state.filters, ...action.payload };
     },
-    
-    extraReducers: (builder) => {
-      builder
-        .addCase(fetchSearch.pending, (state) => {
-          state.loading = true;
-          state.error = null;
-        })
-        .addCase(fetchSearch.fulfilled, (state, action: PayloadAction<Event[]>) => {
-            state.loading = false;
-            state.events = action.payload; 
-          })
-        .addCase(fetchSearch.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.payload as string;
-        });
+    resetFilters: (state) => {
+      state.filters = { ...initialState.filters };
     },
-  });
+  },
   
- 
-  export const { setCity, setDate, setTitle, resetFilters } = searchSlice.actions;
-  export default searchSlice.reducer;
+});
+
+export const { updateFilters, resetFilters } = searchSlice.actions;
+export default searchSlice.reducer;

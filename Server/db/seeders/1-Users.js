@@ -46,6 +46,16 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date(),
       },
+      {
+        id: 4,
+        username: 'admin4232323',
+        email: 'admin999@example.com',
+        password: 'hashed_password',
+        city: 'Москва',
+        photoUrl: 'https://example.com/photo.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
     ])
   },
 
