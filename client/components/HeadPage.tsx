@@ -48,6 +48,8 @@ export const HeadPage = () => {
   )
   const filters = useSelector((state: RootState) => state.search.filters)
 
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
+
   useEffect(() => {
     dispatch(fetchEvents())
   }, [dispatch])
@@ -134,6 +136,13 @@ export const HeadPage = () => {
     })
   }, [events, filters])
 
+  if (!isLoggedIn) {
+    return (
+      <div className={styles.authMessage}>
+        Пожалуйста, авторизуйтесь для просмотра событий.
+      </div>
+    )
+  }
   if (loading) return <div>Загрузка...</div>
   if (error) return <div>Произошла ошибка: {error}</div>
 

@@ -17,7 +17,7 @@ interface AuthState {
   error: string | null;
 }
 const savedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-const savedUser = localStorage.getItem('userss') ? JSON.parse(localStorage.getItem('userss')!) : null; 
+const savedUser = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')!) : null;
 
 const initialState: AuthState = {
   isLoggedIn: savedIsLoggedIn,
@@ -34,14 +34,14 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.error = null;
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userss', JSON.stringify(action.payload)); 
+      localStorage.setItem('user', JSON.stringify(action.payload));
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.user = null;
       state.error = null;
       localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem('userss');
+      localStorage.removeItem('user');
     },
   },
 });

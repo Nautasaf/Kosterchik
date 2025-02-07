@@ -40,6 +40,7 @@ const CreateEvent: React.FC = () => {
   const [description, setDescription] = useState('')
   const [requirements, setRequirements] = useState('')
   const [background, setBackground] = useState('#ffffff')
+  const [file, setFile] = useState<File | null>(null)
   const [maxPeople, setMaxPeople] = useState(0)
   const [start_date, setStart_date] = useState('')
   const [end_date, setEnd_date] = useState('')
@@ -50,12 +51,8 @@ const CreateEvent: React.FC = () => {
   const [district, setDistrict] = useState('')
   const [format, setFormat] = useState('')
   const [language, setLanguage] = useState('')
-  const [accessibility, setAccessibility] = useState(false)
+  // const [accessibility, setAccessibility] = useState(false)
   const [organizer, setOrganizer] = useState('')
-
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}');
-  const userId = userData.id;
-  console.log(userId );  const [file, setFile] = useState<File | null>(null)
 
   const uploadBackground = async (file) => {
     const formData = new FormData()
@@ -74,7 +71,7 @@ const CreateEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!userId) {
+    if (!user.id) {
       alert('Необходимо авторизоваться для создания события.')
       return
     }
@@ -102,28 +99,6 @@ const CreateEvent: React.FC = () => {
     formData.append('background', backgroundUrl) // Загружаем файл
 
     console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
-    const eventData: IEventData = {
-      title,
-      description,
-      city,
-      date,
-      userId,
-      imageUrl: user.photoUrl,
-      background,
-      requirements,
-      maxPeople,
-      start_date,
-      end_date,
-      price,
-      event_type,
-      age_restriction,
-      duration,
-      district,
-      format,
-      language,
-      accessibility,
-      organizer,
-    }
 
     try {
       await dispatch(createEvent(formData)).unwrap()

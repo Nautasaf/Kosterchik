@@ -112,8 +112,7 @@ const EditEventPage: React.FC = () => {
             onChange={handleChange}
           />
         </div>
-
-        {/* Максимальное число человек */}
+        
         <div className={styles.formGroup}>
           <label>Максимальное количество человек:</label>
           <textarea
