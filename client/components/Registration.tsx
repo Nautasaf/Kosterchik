@@ -229,7 +229,7 @@ export const Registration: React.FC = () => {
           value={phone}
           onChange={handleInputChange}
           className={style.formInput}
-          required
+         
         />
       </div>
       <button type='submit' className={style.formButton}>

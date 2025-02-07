@@ -1,5 +1,5 @@
 export interface Event {
-  id: number;
+  id: number ;
   title: string;
   description: string;
   city: string;
@@ -7,7 +7,7 @@ export interface Event {
   end_date: string;
   userId: number;
   people: number;
-  maxPeople: number | null
+  maxPeople: number | undefined
   createdAt: string;
   updatedAt: string;
   imageUrl?: string;

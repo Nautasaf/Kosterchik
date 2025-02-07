@@ -9,21 +9,19 @@ export const HistoryPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const userData = JSON.parse(localStorage.getItem("userss") || "{}");
   const userId = userData.id;
-  console.log(userId);
+
   const { favorites, loading: favoritesLoading } = useSelector((state: RootState) => state.Favorites);
   const { events: userEvents, loading: userEventsLoading } = useSelector((state: RootState) => state.UserEvent);
+ 
 
   useEffect(() => {
-    if (userId) {
+
       dispatch(fetchFavorites(userId))
-        .then(() => console.log("Favorites fetched successfully"))
-        .catch((error) => console.error("Error fetching favorites:", error));
   
       dispatch(fetchUserEvents(userId))
-        .then(() => console.log("User events fetched successfully"))
-        .catch((error) => console.error("Error fetching user events:", error));
-    }
+      
   }, [dispatch, userId]);
+
   const handleRemoveFavorite = (eventId: number) => {
     dispatch(removeFromFavorites({ userId, eventId })).then(() => {
       dispatch(fetchFavorites(userId)); 
@@ -41,7 +39,7 @@ export const HistoryPage: React.FC = () => {
         ) : userEvents.length > 0 ? (
           <ul>
             {userEvents.map((event) => (
-              <li key={event.id} className={styles["event-item"]}>
+              <li key={event.id} className={styles["favorite-item"]}>
                 <h3>{event.title}</h3>
                 <p>{event.description}</p>
                 <p>{event.city}</p>
