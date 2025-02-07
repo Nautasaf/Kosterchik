@@ -3,45 +3,30 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #bad0d3;
-  border-radius: 12px;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5);
+  background: white;
   text-align: center;
-  border: 2px solid #dcdcdc;
+  border: 1px solid #e5e5e5;
   font-family: 'Montserrat', sans-serif;
   transition: all 0.3s ease;
+  border-top: white;
 }
 
+/* Контейнер поиска */
 .searchContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px;
+  justify-content: center; /* Добавлено для выравнивания по центру */
+  gap: 15px;
   position: sticky;
-  top: 90px;
+  top: 80px;
   z-index: 1000;
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-.searchInput {
-  width: 40vw;
-  max-width: 250px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  outline: none;
-  background-color: white;
-  color: grey;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-
-  &:focus {
-    border-color: grey;
-  }
-}
-
+/* Скрытый и видимый поиск */
 .hidden {
-  transform: translateY(-100%);
+  transform: translateY(-120%);
   opacity: 0;
   pointer-events: none;
 }
@@ -51,81 +36,67 @@
   opacity: 1;
 }
 
-.searchButton {
+/* Инпуты */
+.searchInput {
   width: 40vw;
-  max-width: 230px;
-  padding: 12px;
-  background: linear-gradient(45deg, #1565c0, #64b5f6);
-  color: white;
+  max-width: 280px;
+  padding: 14px;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
+  font-size: 18px;
+  outline: none;
+  background: #f9f9f9;
+  color: #333;
   transition: all 0.3s ease;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-
-  &:hover {
-    background: linear-gradient(45deg, #0d47a1, #42a5f5);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-  }
 }
 
+.searchInput:focus {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Дата-пикер */
 .react-datepicker {
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .react-datepicker__day {
-  padding: 5px;
-  font-size: 14px;
+  padding: 6px;
+  font-size: 15px;
   text-align: center;
   cursor: pointer;
 }
 
 .react-datepicker__day--today {
-  background-color: #007bff;
-  color: #fff;
+  background: #000;
+  color: white;
   border-radius: 50%;
 }
 
 .react-datepicker__day--selected {
-  background-color: #28a745;
-  color: #fff;
+  background: #d00000;
+  color: white;
   border-radius: 50%;
 }
 
-.react-datepicker__current-month {
-  font-weight: bold;
-}
-
-.react-datepicker-popper {
-  z-index: 9999;
-}
-
-.react-datepicker__month-text {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.react-datepicker__navigation {
-  background-color: #f8f9fa;
-  border-radius: 50%;
-  padding: 5px;
-}
-
+/* Адаптация под мобильные устройства */
 @media (max-width: 768px) {
-  .profileContainer, .searchContainer {
+  .profileContainer,
+  .searchContainer {
     width: 95vw;
   }
 
-  .searchInput, .searchButton {
-    width: 80vw;
+  .searchInput,
+  .searchButton {
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .searchInput, .searchButton {
-    width: 90vw;
+  .searchInput,
+  .searchButton {
+    width: 100%;
   }
 }

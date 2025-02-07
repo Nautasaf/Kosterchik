@@ -1,13 +1,14 @@
-import { useEffect, useMemo} from "react";
-import { NavLink } from "react-router-dom";
-import styles from "./HeadPage.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchEvents } from "../store/thunk/EventThunk";
-import { RootState, AppDispatch } from "../store/Index";
-import moment from "moment";
-import "moment/locale/ru";
-import { Sidebar } from "./SideBar";
-import React from "react";
+import { useEffect, useMemo} from 'react'
+import { NavLink } from 'react-router-dom'
+import styles from './HeadPage.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchEvents } from '../store/thunk/EventThunk'
+import { RootState, AppDispatch } from '../store/Index'
+import moment from 'moment'
+import 'moment/locale/ru'
+import { Sidebar } from './SideBar'
+import React from 'react'
+import { isBgColor } from '../src/utils/background'
 
 
 moment.updateLocale("ru", {
@@ -22,12 +23,24 @@ moment.updateLocale("ru", {
 });
 
 export const HeadPage = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
+  const { events, loading, error, filters } = useSelector(
+    (state: RootState) => state.search,
+  )
+
+  const debouncedFilters = useDebounce(filters, 1000)
+
+  const handleFetch = useCallback(() => {
+    dispatch(fetchSearch(debouncedFilters))
+  }, [debouncedFilters, dispatch])
+
   const dispatch = useDispatch<AppDispatch>();
   const { events, loading, error } = useSelector((state: RootState) => state.Events);
   const filters = useSelector((state: RootState) => state.search.filters);
-  
+
   useEffect(() => {
-    dispatch(fetchEvents()); 
+    dispatch(fetchEvents());
   }, [dispatch]);
 
 
@@ -50,7 +63,7 @@ export const HeadPage = () => {
         const matchesType = filters.event_type
         ? (event.event_type ?? "").toLowerCase().includes(filters.event_type.toLowerCase())
         : true;
-       
+
         const matchesAge = filters.age_restriction
         ? (event.age_restriction ?? 0) >= Number(filters.age_restriction)
         : true;
@@ -83,7 +96,7 @@ export const HeadPage = () => {
         !filters.popularity || Number(filters.popularity) === 0
           ? true
           : (event.popularity ?? 0) >= Number(filters.popularity);
-  
+
       return (
         matchesTitle &&
         matchesCity &&
@@ -107,7 +120,7 @@ export const HeadPage = () => {
 
   if (loading) return <div>Загрузка...</div>;
   if (error) return <div>Произошла ошибка: {error}</div>;
-  
+
   return (
     <div className={styles.headPageContainer}>
         <Sidebar />
@@ -119,11 +132,27 @@ export const HeadPage = () => {
           filteredEvents.map((event) => (
             <NavLink to={`/event/${event.id}`} key={event.id} className={styles.eventItem}>
               <h2 className={styles.eventTitle}>{event.title}</h2>
+              {isBgColor(event.background || '') ? (
+              <div
+                className={styles.eventImage}
+                style={{ backgroundColor: event.background }}
+              ></div>
+            ) : (
+              <img
+                className={styles.eventImage}
+                src={
+                  event.background
+                    ? `http://localhost:3000${event.background}`
+                    : '/default-background.jpg'
+                }
+                alt={event.title}
+              />
+            )}
               <p className={styles.eventInfo}>{event.description}</p>
               <p className={styles.eventCity}>Город: {event.city}</p>
               <p className={styles.eventCity}>Место: {event.district}</p>
               <div className={styles.eventDate}>
-                Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+                Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
                 {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
               </div>
             </NavLink>
@@ -131,5 +160,5 @@ export const HeadPage = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}

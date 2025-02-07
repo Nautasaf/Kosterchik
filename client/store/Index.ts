@@ -24,7 +24,7 @@ export const store = configureStore({
     AllUsers: AllUserReduser,
     event: eventReducer,
     Favorites: favoritesReducer,
-    UserEvent: userEventReducer
+    UserEvent: userEventReducer,
   },
 })
 

@@ -2,27 +2,40 @@
   max-width: 1200px;
   margin: 30px auto;
   padding: 30px;
-  background-color: #bad0d3;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid #dcdcdc;
+  background-color: #c6c5c5; /* Светлый фон, как в других компонентах */
+  border-radius: 16px; /* Увеличенное скругление углов */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  border: 1px solid #e0e0e0; /* Тонкая граница */
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif; /* Системные шрифты */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.profilePhoto {
+  width: 150px;  /* Уменьшаем ширину */
+  height: 150px; /* Уменьшаем высоту */
+  border-radius: 50%; /* Делаем круглым */
+  object-fit: cover; /* Чтобы картинка не искажалась */
 }
 
 .eventTitle {
   font-size: 2.5rem;
   margin-bottom: 25px;
-  color: #2d2d2d;
-  font-weight: 500;
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  color: #ffffff; /* Цвет заголовка */
+  font-weight: 600;
+  letter-spacing: -0.5px; /* Уменьшение расстояния между буквами */
 }
 
 .eventImage {
-  width: 100%;
-  height: auto;
+  width: 600px;
+  height: 350px;
   border-radius: 10px;
   margin-bottom: 25px;
+  border: 1px solid #e0e0e0; /* Тонкая граница */
 }
 
 .eventColumns {
@@ -42,7 +55,8 @@
 .eventDescription,
 .eventCity {
   font-size: 1.2rem;
-  color: #555;
+  color: #666; /* Серый цвет текста */
+  line-height: 1.5; /* Увеличенный межстрочный интервал */
 }
 
 .eventButtonContainer {
@@ -55,30 +69,36 @@
 
 .eventButton {
   padding: 12px 20px;
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
+  background-color: #6e6f70; /* Простой цвет фона */
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 8px; /* Скругление углов */
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.05em;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
   width: 45%;
+
+  &:hover {
+    background-color: #333; /* Темнее при наведении */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
+  }
+
+  &:active {
+    background-color: #2d2d2d; /* Еще темнее при нажатии */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
+  }
 }
 
-.eventButton:hover {
-  box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
+/* Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+  .eventColumns {
+    flex-direction: column; /* Один столбец на мобильных устройствах */
+  }
+
+  .eventButton {
+    width: 100%; /* Кнопки занимают всю ширину */
+  }
 }
 
-.eventButton:active {
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
-}
-
-.eventButton:nth-child(1) {
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
-}
-
-.eventButton:nth-child(2) {
-  background: linear-gradient(45deg, #494a4b, #a4e9e9);
-}

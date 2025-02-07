@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from './MyEventsModal.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, AppDispatch } from '../../store/Index' // Путь может отличаться
-import { deleteEvent } from '../../store/slice/EventSlice' // Импортируйте thunk для удаления
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store/Index'
+import { deleteEvent } from '../../store/slice/EventSlice'
 import { useNavigate } from 'react-router-dom'
 
 interface MyEventsModalProps {
@@ -14,13 +14,25 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  // Функция для обработки удаления события
+  // Локальное состояние для списка событий
+  const [localEvents, setLocalEvents] = useState(events)
+
+  // Обновляем локальный список при изменении `events`
+  useEffect(() => {
+    setLocalEvents(events)
+  }, [events])
+
+  // Функция удаления события
   const handleDeleteEvent = async (eventId: number) => {
     if (window.confirm('Вы уверены, что хотите удалить это событие?')) {
       try {
         await dispatch(deleteEvent(eventId)).unwrap()
         alert('Событие успешно удалено!')
-        onClose() // Закрываем модальное окно после удаления
+
+        // Убираем удаленное событие из локального списка
+        setLocalEvents((prevEvents) =>
+          prevEvents.filter((event) => event.id !== eventId),
+        )
       } catch (error) {
         console.error('Ошибка при удалении события:', error)
         alert('Произошла ошибка при удалении события.')
@@ -28,10 +40,10 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
     }
   }
 
-  // Функция для обработки редактирования события
+  // Функция редактирования события
   const handleEditEvent = (eventId: number) => {
-    navigate(`/edit-event/${eventId}`) // Переход на страницу редактирования
-    onClose() // Закрываем модальное окно
+    navigate(`/edit-event/${eventId}`)
+    onClose()
   }
 
   return (
@@ -42,23 +54,27 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
           Закрыть
         </button>
         <ul>
-          {events.map((event) => (
-            <li key={event.id}>
-              {event.title}
-              <button
-                className={styles.editButton}
-                onClick={() => handleEditEvent(event.id)}
-              >
-                Редактировать
-              </button>
-              <button
-                className={styles.deleteButton}
-                onClick={() => handleDeleteEvent(event.id)}
-              >
-                Удалить
-              </button>
-            </li>
-          ))}
+          {localEvents.length > 0 ? (
+            localEvents.map((event) => (
+              <li key={event.id}>
+                {event.title}
+                <button
+                  className={styles.editButton}
+                  onClick={() => handleEditEvent(event.id)}
+                >
+                  Редактировать
+                </button>
+                <button
+                  className={styles.deleteButton}
+                  onClick={() => handleDeleteEvent(event.id)}
+                >
+                  Удалить
+                </button>
+              </li>
+            ))
+          ) : (
+            <p>У вас пока нет событий.</p>
+          )}
         </ul>
       </div>
     </div>

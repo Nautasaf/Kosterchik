@@ -44,9 +44,29 @@ router.put('/profile/photo', upload.single('avatar'), async (req, res) => {
   }
 })
 
+router.post(
+  '/uploads/background',
+  upload.single('backgroundImage'),
+  async (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: '====> Файл не загружен!!!!!' })
+    }
+    const fileUrl = `/uploads/${req.file.filename}`
+
+    return res.status(200).json({ imageUrl: fileUrl })
+  },
+)
+
 router.get('/uploads/:filename', (req, res) => {
+  console.log('uploads!!!')
+
   const { filename } = req.params
   const filePath = path.join(`${__dirname}/../uploads`, filename)
+
+  if (!fs.existsSync(filePath)) {
+    return res.status(404).send('!!!Файл не найден!!!')
+  }
+
   res.sendFile(filePath, (err) => {
     if (err) {
       console.error('Ошибка при отправке файла:', err)
