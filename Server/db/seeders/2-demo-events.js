@@ -85,6 +85,7 @@ module.exports = {
         age_restriction: 12,
         duration: 180,
         district: 'Онлайн',
+
         format: 'онлайн',
         available_seats: 500,
         language: 'русский',
@@ -98,6 +99,7 @@ module.exports = {
         requirements: 'Компьютер с интернетом',
         title: 'Фестиваль уличной еды',
         description: 'Тематическая встреча с уличной едой',
+       
         city: 'Казань',
         createdAt: new Date(),
         updatedAt: new Date(),

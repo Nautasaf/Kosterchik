@@ -1,0 +1,110 @@
+.pageWrapper {
+    width: 100%;
+    overflow-x: hidden;
+}
+  
+.header {
+    text-align: center;
+    padding: 20px;
+}
+  
+.title {
+    font-size: 24px;
+    margin: 0;
+    padding: 0;
+}
+  
+.sliderContainer {
+    display: flex;
+    justify-content: center;
+    overflow-x: auto;
+    padding: 40px 0;
+    max-width: 100%;
+    max-height: 90%;
+    position: relative;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.eventsSlider {
+    display: flex;
+    gap: 20px;
+    padding: 10px;
+    max-width: 100%;
+
+}
+.eventItem {
+    min-width: 600px;
+    height: 60vh;
+    background-color: #f9f9f9;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.eventLink {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; 
+    flex-grow: 1;
+    padding: 20px;
+    position: absolute;
+    inset: 0;
+}
+  
+.eventTitle {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+  
+.eventInfo {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+  
+.eventCity,
+.eventDistrict {
+    font-size: 16px;
+    color: #777;
+}
+  
+.eventDate {
+    font-size: 16px;
+    color: #555;
+}
+
+.eventItem > * {
+    margin-top: auto;
+}
+
+.noEvents {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+}
+  
+
+@media (max-width: 768px) {
+    .eventItem {
+        min-width: 400px; 
+    }
+    
+    .eventTitle {
+        font-size: 22px;
+    }
+  
+    .eventInfo {
+        font-size: 16px;
+    }
+}
