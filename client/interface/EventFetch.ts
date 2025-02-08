@@ -27,9 +27,11 @@ export interface Event {
   rating?: number;
   organizer?: string;
   popularity?: number;
+  category:string;
 }  
   
    export interface EventsState {
+    filter(arg0: (event: Event ) => boolean): unknown;
     events: Event[];
     loading: boolean;
     error: string | null;

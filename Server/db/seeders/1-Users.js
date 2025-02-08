@@ -56,11 +56,22 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        username: 'testuser',
-        email: 'test@example.com',
+       
+        username: 'admin423332323',
+        email: 'admin99999@example.com',
         password: 'hashed_password',
-        city: 'Санкт-Петербург',
-        photoUrl: 'https://example.com/photo2.jpg',
+        city: 'Москва',
+        photoUrl: 'https://example.com/photo.jpg',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+       
+        username: 'admin423322232323',
+        email: 'admin999999@example.com',
+        password: 'hashed_password',
+        city: 'Москва',
+        photoUrl: 'https://example.com/photo.jpg',
         createdAt: new Date(),
         updatedAt: new Date(),
       },

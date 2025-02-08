@@ -13,6 +13,7 @@ import CreateEvent from '../components/createEvent/CreateEvent'
 import {FavoritesPage} from "../components/FavoritesPage.tsx"
 import{HistoryPage} from "../components/HistoryPage.tsx"
 import EditEventPage from '../components/EditEventPage/EditEventPage'
+import {CategoryPage }from "../components/CategoryPage.tsx"
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: '/edit-event/:eventId',
         element: <EditEventPage />,
+      },
+      {
+        path:"/eventType/:eventType", 
+        element: <CategoryPage  />, 
       },
     ],
   },

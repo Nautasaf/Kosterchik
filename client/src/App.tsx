@@ -10,6 +10,7 @@ import { setUser } from '../store/slice/UserSlice'
 import { resetFilters } from '../store/slice/SearchSlice'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { HeaderBar } from '../components/HeaderPage'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -92,7 +93,7 @@ function App() {
           </>
         )}
       </nav>
-
+      {isLoggedIn && location.pathname === '/' && <HeaderBar/>}
       {/* Показываем Search только если мы НЕ на странице /profile */}
       {isLoggedIn && location.pathname === '/' && <Search />}
 
