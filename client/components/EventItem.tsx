@@ -9,6 +9,7 @@ import { addToFavorites, getAllFavorites } from '../store/thunk/FavoriteThunk'
 import moment from 'moment'
 import 'moment/locale/ru'
 import { isBgColor } from '../src/utils/background'
+import { Favorite } from '../interface/EventFetch'
 
 moment.locale('ru')
 
@@ -36,7 +37,7 @@ export const EventItem = () => {
   // Получаем количество уже участвующих
   const handleGetFavorites = (eventId : number) => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    const favCounter : number = copyFav.filter((fav) => fav.eventId === eventId).length;
+    const favCounter : number = copyFav.filter((fav : Favorite) => fav.eventId === eventId).length;
     return favCounter
   }
 

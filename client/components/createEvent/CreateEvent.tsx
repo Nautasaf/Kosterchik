@@ -57,7 +57,7 @@ const CreateEvent: React.FC = () => {
   // const [accessibility, setAccessibility] = useState(false)
   const [organizer, setOrganizer] = useState('')
 
-  const uploadBackground = async (file) => {
+  const uploadBackground = async (file : File) => {
     const formData = new FormData()
 
     formData.append('backgroundImage', file)
