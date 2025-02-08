@@ -11,6 +11,7 @@ import { resetFilters } from '../store/slice/SearchSlice'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { HeaderBar } from '../components/HeaderPage'
+import { IoExitOutline } from 'react-icons/io5'
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(false)
@@ -54,6 +55,7 @@ function App() {
           onClick={handleResetFilters}
         >
           К<span className={styles.highlightO}>О</span>стерчик
+          <img src='/camp-fire.png' alt='Логотип' className={styles.logo} />
         </NavLink>
 
         {isLoggedIn ? (
@@ -68,7 +70,7 @@ function App() {
             </NavLink>
 
             <button onClick={handleLogout} className={styles.logoutButton}>
-              Выйти
+              <IoExitOutline size={24} />
             </button>
           </>
         ) : (
@@ -95,7 +97,9 @@ function App() {
       </nav>
       {isLoggedIn && location.pathname === '/' && <HeaderBar/>}
       {/* Показываем Search только если мы НЕ на странице /profile */}
-      {isLoggedIn && location.pathname === '/' && <Search />}
+      {isLoggedIn && location.pathname === '/' && (
+        <Search isDarkMode={isDarkMode} />
+      )}
 
       <div className={styles.outletContainer}>
         <Outlet />

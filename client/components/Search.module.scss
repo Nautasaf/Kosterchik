@@ -1,14 +1,13 @@
-
-.profileContainer, .searchContainer {
-  max-width: 800px;
-  margin: 0 auto;
+/* Общий контейнер профиля и поиска */
+.profileContainer,
+.searchContainer {
+  max-width: 50%;
   padding: 30px;
-  background: white;
+  background: rgb(255, 255, 255);
   text-align: center;
-  border: 1px solid #e5e5e5;
   font-family: 'Montserrat', sans-serif;
   transition: all 0.3s ease;
-  border-top: white;
+  margin-left: 500px;
 }
 
 /* Контейнер поиска */
@@ -45,13 +44,21 @@
   border-radius: 8px;
   font-size: 18px;
   outline: none;
-  background: #f9f9f9;
-  color: #333;
   transition: all 0.3s ease;
 }
 
+.lightModeInput {
+  background: #ffffff;
+  color: #787878;
+}
+
+.darkModeInput {
+  background: #3c3c3c;
+  color: #fff;
+}
+
 .searchInput:focus {
-  background: white;
+  background: rgb(104, 104, 104);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
@@ -71,7 +78,7 @@
 
 .react-datepicker__day--today {
   background: #000;
-  color: white;
+  color: rgb(255, 255, 255);
   border-radius: 50%;
 }
 
@@ -99,4 +106,15 @@
   .searchButton {
     width: 100%;
   }
+}
+
+/* Темы */
+.lightMode {
+  background: #ffffff;
+  color: #000000;
+}
+
+.darkMode {
+  background: #030325;
+  color: #ffffff;
 }

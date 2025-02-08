@@ -48,17 +48,17 @@ export const HeadPage = () => {
   const { events, loading, error } = useSelector((state: RootState) => state.Events);
   const filters = useSelector((state: RootState) => state.search.filters);
   const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
-  
+
   useEffect(() => {
-    dispatch(fetchEvents()); 
+    dispatch(fetchEvents());
   }, [dispatch]);
 
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   )
 
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
-  const userId = userData.id; 
+  const userData = JSON.parse(localStorage.getItem('userss') || '{}');
+  const userId = userData.id;
 
   const handleGetFavorites = (eventId : number) => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
@@ -179,13 +179,13 @@ export const HeadPage = () => {
       <div className={styles.eventList}>
         {filteredEvents.map((event) => (
           <NavLink
-             
+
             to={`/event/${event.id}`}
-             
+
             key={event.id}
-             
+
             className={styles.eventItem}
-            
+
           >
             <h2 className={styles.eventTitle}>{event.title}</h2>
               {isBgColor(event.background || '') ? (
@@ -206,7 +206,7 @@ export const HeadPage = () => {
               )}
             <p className={styles.eventInfo}>{event.description}</p>
 
-            {event.maxPeople ? 
+            {event.maxPeople ?
               (
                 <p className={styles.eventInfo}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</p>
               ) : (
@@ -220,7 +220,7 @@ export const HeadPage = () => {
             ) : (
               <div className={styles.eventInfo}>Вы можете присоединиться к этому мероприятию</div>
             )}
-            
+
             <p className={styles.eventCity}>Город: {event.city}</p>
             <p className={styles.eventCity}>Место: {event.district}</p>
             <div className={styles.eventDate}>

@@ -1,64 +1,63 @@
 /* Общий стиль для всего приложения */
-.appContainer {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
-}
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Контейнер всего приложения */
 .appContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  justify-content: center;
+  align-items: center;
   transition: background 0.5s ease, color 0.5s ease;
-  justify-content: space-between;
 }
 
-/* Светлая тема */
+/* Темы */
 .lightMode {
   background: #ffffff;
   color: #000000;
 }
 
-/* Темная тема */
 .darkMode {
   background: #030325;
   color: #ffffff;
 }
 
+.logo{
+  width: 25px; /* Размер изображения */
+  height: auto;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
 /* Навигация */
 .navMenu {
-  font-family: 'Segoe UI', sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 20px;
   position: sticky;
   top: 0;
+  width: auto;
   z-index: 1000;
-  transition: background 0.3s ease, border-color 0.3s ease;
+  transition: background 0.3s ease;
+  gap: 15px;
 }
 
-/* Темная тема - фон навигации */
-.darkMode .navMenu {
-  background: #030325;
-}
-
-/* Светлая тема - фон навигации */
 .lightMode .navMenu {
   background: #ffffff;
+}
+
+.darkMode .navMenu {
+  background: #030325;
 }
 
 /* Ссылки */
 .navLink {
   text-decoration: none;
-  margin: 0 30px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: 0.1em;
   position: relative;
@@ -66,110 +65,66 @@ body {
   color: inherit;
 }
 
-/* Буква "О" в "КOстерчик" должна быть красной */
+/* Красная "О" в "КOстерчик" */
 .highlightO {
   color: #ff0000;
   font-weight: bold;
 }
 
-/* При наведении ссылки цвет остается тем же, но появляется красное подчеркивание */
-.navLink:hover {
-  color: inherit;
-}
-
-/* Подчеркивание при наведении теперь КРАСНОЕ */
-.navLink::after {
+/* Красное подчеркивание при наведении */
+.navLink::after,
+.navLinkActive::after {
   content: '';
   display: block;
   width: 100%;
   height: 2px;
-  background: #ff0000; /* Красное подчеркивание */
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+  background: #ff0000;
   position: absolute;
   bottom: -5px;
   left: 0;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
-.navLink:hover::after {
+
+.navLink:hover::after,
+.navLinkActive::after {
   transform: scaleX(1);
 }
 
-/* Активная ссылка */
-.navLinkActive {
-  color: #761919;
-}
-
-/* Темная тема - цвет ссылок */
-.darkMode .navLink {
-  color: #ffffff;
-}
-
-/* Светлая тема - цвет ссылок */
-.lightMode .navLink {
-  color: #000000;
-}
-
-/* Кнопка переключения темы */
-.themeToggle {
+/* Кнопки выхода и переключения темы */
+.themeToggle, .logoutButton {
   background: none;
   border: none;
   font-size: 18px;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.3s ease, background 0.3s ease;
   padding: 5px 10px;
   border-radius: 5px;
+  white-space: nowrap;
+  min-width: unset;
+  width: auto;
+  display: inline-block;
 }
 
-/* Темная тема - кнопка переключения */
-.darkMode .themeToggle {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.darkMode .themeToggle:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-/* Светлая тема - кнопка переключения */
-.lightMode .themeToggle {
+.lightMode .themeToggle, .lightMode .logoutButton {
   color: #000000;
   background: rgba(0, 0, 0, 0.1);
 }
 
-.lightMode .themeToggle:hover {
+.lightMode .themeToggle:hover, .lightMode .logoutButton:hover {
   background: rgba(0, 0, 0, 0.2);
 }
 
-/* Кнопка "Выйти" */
-.logoutButton {
-  background: none;
-  border: none;
-  font-size: 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-/* Светлая тема — кнопка "Выйти" */
-.lightMode .logoutButton {
-  color: #000000;
-}
-
-.lightMode .logoutButton:hover {
-  color: #e05c5c;
-}
-
-/* Темная тема — кнопка "Выйти" */
-.darkMode .logoutButton {
+.darkMode .themeToggle, .darkMode .logoutButton {
   color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
 }
 
-.darkMode .logoutButton:hover {
-  color: #e05c5c;
+.darkMode .themeToggle:hover, .darkMode .logoutButton:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
-/* Контент */
+/* Контент по центру */
 .outletContainer {
   flex: 1;
   display: flex;
@@ -182,16 +137,19 @@ body {
 
 /* Футер */
 .footer {
-  background: white;
-  color: black;
   text-align: center;
   padding: 20px 0;
   font-size: 16px;
+  width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   margin-top: auto;
 }
 
-/* Темная тема - футер */
+.lightMode .footer {
+  background: #ffffff;
+  color: #000000;
+}
+
 .darkMode .footer {
   background: #121212;
   color: #ffffff;

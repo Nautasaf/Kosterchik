@@ -1,10 +1,10 @@
 .sidebar {
   position: fixed;
   top: 120px;
-  left: -243px;
-  width: 250px;
+  left: 10px;
+  width: 400px;
   height: 85vh;
-  border-right: 5px solid #ff0000;
+  border-right: 5px solid #b1afaf;
   // border-bottom: 5px solid #ff0000;
   border-radius: 4px;
   background-color: white;
@@ -13,21 +13,21 @@
   box-sizing: border-box;
   z-index: 10;
   transition: left 0.3s ease;
-  overflow-y: auto; 
-  overflow-x: hidden; 
+  overflow-y: auto;
+  overflow-x: hidden;
   scrollbar-width: none;
-  scrollbar-color: none; 
+  scrollbar-color: none;
 }
 
-.sidebar:hover {
-  left: 0;
-}
+// .sidebar:hover {
+//   left: 0;
+// }
 .sidebar::before {
   content: "";
   position: absolute;
   top: 0;
   left: 100%;
-  width: 20px; 
+  width: 20px;
   height: 100%;
   background: transparent;
 }
@@ -36,7 +36,7 @@
   font-size: 18px;
   margin-bottom: 12px;
   text-align: center;
-  color:  #ff0000;
+  color:  #0d0d0d;
 }
 
 
@@ -45,7 +45,7 @@ label {
   margin-top: 0px;
   font-weight: bold;
   font-size: 13px;
-  color: #ff0000;
+  color: #040404;
 }
 .labelWrapper {
   display: flex;
@@ -53,7 +53,7 @@ label {
   gap: 4px;
 }
 span{
-  color: #ff0000;
+  color: #000000;
 }
 
 input,
@@ -80,7 +80,7 @@ select::placeholder {
 }
 /* Кнопка "Применить фильтры" */
 button {
-  background-color:#ff0000;
+  background-color:#843c3c;
   color: white;
   padding: 10px;
   width: 100%;
@@ -117,8 +117,8 @@ button {
     top: 0;
     bottom: 0;
   }
-  
- 
+
+
   .header {
     font-size: 16px;
   }

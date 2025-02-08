@@ -1,20 +1,15 @@
 .eventItem {
-  max-width: 1200px;
-  margin: 30px auto;
+  max-width: 800px;
+  margin: 0 auto;
   padding: 30px;
-  background-color: #d5d5d5; /* Светлый фон, как в других компонентах */
-  border-radius: 16px; /* Увеличенное скругление углов */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
-  border: 1px solid #e0e0e0; /* Тонкая граница */
+  background-color: #f8f8f8;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: 1px solid #e0e0e0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif; /* Системные шрифты */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    'Helvetica Neue', Arial, sans-serif;
 }
-
 .profilePhoto {
   width: 150px;  /* Уменьшаем ширину */
   height: 150px; /* Уменьшаем высоту */
@@ -25,7 +20,7 @@
 .eventTitle {
   font-size: 2.5rem;
   margin-bottom: 25px;
-  color: #ffffff; /* Цвет заголовка */
+  color: #080808; /* Цвет заголовка */
   font-weight: 600;
   letter-spacing: -0.5px; /* Уменьшение расстояния между буквами */
 }
@@ -69,10 +64,10 @@
 
 .eventButton {
   padding: 12px 20px;
-  background-color: #6e6f70; /* Простой цвет фона */
+  background-color: #6e6f70;
   color: white;
   border: none;
-  border-radius: 8px; /* Скругление углов */
+  border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
   font-weight: 600;
@@ -81,23 +76,23 @@
   width: 45%;
 
   &:hover {
-    background-color: #333; /* Темнее при наведении */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
+    background-color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   &:active {
-    background-color: #2d2d2d; /* Еще темнее при нажатии */
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
+    background-color: #2d2d2d;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 }
 
-/* Адаптация под мобильные устройства */
+
 @media (max-width: 768px) {
   .eventColumns {
-    flex-direction: column; /* Один столбец на мобильных устройствах */
+    flex-direction: column;
   }
 
   .eventButton {
-    width: 100%; /* Кнопки занимают всю ширину */
+    width: 100%;
   }
 }
