@@ -1,6 +1,6 @@
 export interface Event {
-    longitude: any;
-    latitude: any;
+  longitude: any;
+  latitude: any;
   id: number ;
   title: string;
   description: string;
@@ -10,8 +10,8 @@ export interface Event {
   end_date: string;
   userId: number;
   maxPeople: number | undefined
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
   imageUrl?: string;
   background?: string;
   requirements?: string;

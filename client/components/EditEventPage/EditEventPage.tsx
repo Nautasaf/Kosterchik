@@ -5,6 +5,7 @@ import { editEvent } from '../../store/slice/EventSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import styles from './EditEventPage.module.scss';
 import MapPicker from "../MapPicker";
+import { Event } from '../../interface/EventFetch';
 
 const EditEventPage: React.FC = () => {
   const defaultEvent:Event = {
@@ -19,6 +20,8 @@ const EditEventPage: React.FC = () => {
     date: 'string',
     createdAt: 'string',
     updatedAt: 'string',
+    longitude: 1,
+    latitude: 1
   }
 
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -60,25 +63,6 @@ const EditEventPage: React.FC = () => {
     formData.append('backgroundImage', file);
 
     try {
-      const response = await fetch('http://localhost:3000/uploads/background', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-      return data.imageUrl;
-    } catch (error) {
-      console.error('Ошибка загрузки фонового изображения', error);
-      alert('Не удалось загрузить изображение!');
-      return null;
-    }
-  };
-
-  const uploadBackground = async (file: File) => {
-    const formData = new FormData();
-    formData.append('backgroundImage', file);
-
-    try {
       const response = await fetch(`${apiUrl}/uploads/background`, {
         method: 'POST',
         body: formData,
@@ -95,11 +79,21 @@ const EditEventPage: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let backgroundUrl = eventData.background;
+
+    if (file) {
+      const uploadedUrl = await uploadBackground(file);
+      if (!uploadedUrl) return;
+      backgroundUrl = uploadedUrl;
+    }
+
     try {
       const updatedData = {
         ...eventData,
         latitude: location ? location.lat : 55.751244,
         longitude: location ? location.lng : 37.618423,
+        background: backgroundUrl
       };
       await dispatch(
         editEvent({ eventId: Number(eventId), updatedData })

@@ -7,30 +7,30 @@ import { createEvent } from "../../store/slice/EventSlice";
 import { AppDispatch } from "../../store/Index";
 import MapPicker from "../MapPicker";
 
-interface IEventData {
-  title: string;
-  description: string;
-  city: string;
-  date: string;
-  userId: number;
-  imageUrl: string;
-  background: string;
-  requirements: string;
-  latitude: number;
-  longitude: number;
-  maxPeople: number
-  start_date: string
-  end_date: string
-  price: number
-  event_type: string
-  age_restriction: number
-  duration: number
-  district: string
-  format: string
-  language: string
-  accessibility: boolean
-  organizer: string
-}
+// interface IEventData {
+//   title: string;
+//   description: string;
+//   city: string;
+//   date: string;
+//   userId: number;
+//   imageUrl: string;
+//   background: string;
+//   requirements: string;
+//   latitude: number;
+//   longitude: number;
+//   maxPeople: number
+//   start_date: string
+//   end_date: string
+//   price: number
+//   event_type: string
+//   age_restriction: number
+//   duration: number
+//   district: string
+//   format: string
+//   language: string
+//   accessibility: boolean
+//   organizer: string
+// }
 
 const CreateEvent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -98,22 +98,69 @@ const CreateEvent: React.FC = () => {
       }
     }
 
-    const formData = new FormData()
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('city', city)
-    formData.append('date', date)
-    formData.append('userId', user.id.toString())
-    formData.append('imageUrl', user.photoUrl)
-    formData.append('requirements', requirements)
-    formData.append('background', requirements)
-    formData.append('latitude', location.lat) // Загружаем файл
-    formData.append('longitude', location.lng) // Загружаем файл
+  //   const formData = new FormData()
+  //   formData.append('title', title)
+  //   formData.append('description', description)
+  //   formData.append('city', city)
+  //   formData.append('date', date)
+  //   formData.append('userId', user.id.toString())
+  //   formData.append('imageUrl', user.photoUrl)
+  //   formData.append('requirements', requirements)
+    
+  //   maxPeople: number
+  // start_date: string
+  // end_date: string
+  // price: number
+  // event_type: string
+  // age_restriction: number
+  // duration: number
+  // district: string
+  // format: string
+  // language: string
+  // accessibility: boolean
+  // organizer: string
+  //   formData.append('maxPeople', maxPeople)
+  //   formData.append('start_date', start_date)
+  //   formData.append('city', city)
+  //   formData.append('city', city)
+  //   formData.append('city', city)
+  //   formData.append('city', city)
+  //   formData.append('city', city)
+  //   formData.append('city', city)
 
-    console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
+  //   formData.append('background', backgroundUrl)// Загружаем файл
+  //   formData.append('latitude', String(location.lat)) 
+  //   formData.append('longitude', String(location.lng)) 
+
+  //   console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
+
+  const eventData = {
+    title,
+    description,
+    city,
+    date,
+    userId: user.id,
+    imageUrl: user.photoUrl,
+    requirements,
+    maxPeople,
+    start_date,
+    end_date,
+    price,
+    event_type,
+    age_restriction,
+    duration,
+    district,
+    format,
+    language,
+    organizer,
+    background: backgroundUrl,
+    longitude: location.lng,
+    latitude: location.lat,
+    
+  }
 
     try {
-      await dispatch(createEvent(formData)).unwrap()
+      await dispatch(createEvent(eventData)).unwrap()
       alert('Событие успешно создано!')
       navigate('/')
     } catch (error) {

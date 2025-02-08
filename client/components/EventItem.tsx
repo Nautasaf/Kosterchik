@@ -10,6 +10,8 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import { isBgColor } from '../src/utils/background'
 import { Favorite } from '../interface/EventFetch'
+import { Map, Placemark, YMaps } from 'react-yandex-maps'
+import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
 
 moment.locale('ru')
 
@@ -172,12 +174,12 @@ export const EventItem = () => {
           <div className={styles.eventButtonContainer}>
             <button
               className={styles.eventButton}
-              onClick={() => console.log("Задать вопрос")}>
+              onClick={() => setShowRoute(true)}>
               Задать вопрос
             </button>
 
             {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-              <button className={styles.eventButton} onClick={() => {handleAddToFavorites, setShowRoute(true)}}>
+              <button className={styles.eventButton} onClick={handleAddToFavorites}>
                 Отказаться
               </button>
             ) : handleGetFavorites(event.id) === event.maxPeople ? (
@@ -189,6 +191,8 @@ export const EventItem = () => {
                 Я готов
               </button>
             )}
+
+              
 
             <button
               className={styles.eventButton}

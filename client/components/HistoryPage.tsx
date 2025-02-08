@@ -7,7 +7,7 @@ import styles from "./FavoritesPage.module.scss";
 
 export const HistoryPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const userData = JSON.parse(localStorage.getItem("userss") || "{}");
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = userData.id;
 
   const { favorites, loading: favoritesLoading } = useSelector((state: RootState) => state.Favorites);

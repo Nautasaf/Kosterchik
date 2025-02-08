@@ -5,28 +5,34 @@ import axios from 'axios';
 const apiUrl = import.meta.env.VITE_API_URL;
 
 interface Event {
-  id?: number
-  title: string
-  description: string
-  city: string
-  date: string
-  userId: number
-  imageUrl: string
-  background: string
-  backgroundColor: string
-  requirements: string
-  maxPeople: number
-  start_date: string
-  end_date: string
-  price: number
-  event_type: string
-  age_restriction: number
-  duration: number
-  district: string
-  format: string
-  language: string
-  accessibility: boolean
-  organizer: string
+  longitude: any;
+  latitude: any;
+  id: number ;
+  title: string;
+  description: string;
+  city: string;
+  date?: string;
+  start_date: string;
+  end_date: string;
+  userId: number;
+  maxPeople: number | undefined
+  createdAt?: string;
+  updatedAt?: string;
+  imageUrl?: string;
+  background?: string;
+  requirements?: string;
+  price?: number;
+  event_type?: string;
+  age_restriction?: number;
+  duration?: number;
+  district?: string;
+  format?: string;
+  available_seats?: number;
+  language?: string;
+  accessibility?: boolean;
+  rating?: number;
+  organizer?: string;
+  popularity?: number;
 }
 
 interface EventState {

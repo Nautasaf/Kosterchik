@@ -56,7 +56,6 @@ module.exports = {
         updatedAt: new Date(),
       },
       {
-        id: 2,
         username: 'testuser',
         email: 'test@example.com',
         password: 'hashed_password',
