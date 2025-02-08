@@ -5,6 +5,7 @@ const FileStore = require('session-file-store')(session)
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 const sessionConfig = {
   store: new FileStore(),
@@ -48,7 +49,7 @@ const serverConfig = (server) => {
   server.use(express.urlencoded({ extended: true }))
   server.use(cors(corsOptions));
   server.options('*', cors(corsOptions));
-  server.use(express.static('public'))
+  server.use(express.static(path.join(__dirname, 'uploads')))
   server.use(bodyParser.json())
   server.use(cookieParser(process.env.SESSION_SECRET || 'secret'))
   server.use(session(sessionConfig))

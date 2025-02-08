@@ -21,7 +21,7 @@ interface IEventData {
   price: number
   event_type: string
   age_restriction: number
-  duration: number 
+  duration: number
   district: string
   format: string
   language: string
@@ -40,6 +40,7 @@ const CreateEvent: React.FC = () => {
   const [description, setDescription] = useState('')
   const [requirements, setRequirements] = useState('')
   const [background, setBackground] = useState('#ffffff')
+  const [file, setFile] = useState<File | null>(null)
   const [maxPeople, setMaxPeople] = useState(0)
   const [start_date, setStart_date] = useState('')
   const [end_date, setEnd_date] = useState('')
@@ -50,45 +51,57 @@ const CreateEvent: React.FC = () => {
   const [district, setDistrict] = useState('')
   const [format, setFormat] = useState('')
   const [language, setLanguage] = useState('')
-  const [accessibility, setAccessibility] = useState(false)
+  // const [accessibility, setAccessibility] = useState(false)
   const [organizer, setOrganizer] = useState('')
 
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}'); 
-  const userId = userData.id; 
-  console.log(userId );
+  const uploadBackground = async (file) => {
+    const formData = new FormData()
+
+    formData.append('backgroundImage', file)
+
+    const response = await fetch('http://localhost:3000/uploads/background', {
+      method: 'POST',
+      body: formData,
+    })
+
+    const data = await response.json()
+    return data.imageUrl
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!userId) {
+    if (!user.id) {
       alert('Необходимо авторизоваться для создания события.')
       return
     }
 
-    const eventData: IEventData = {
-      title,
-      description,
-      city,
-      date,
-      userId,
-      imageUrl: user.photoUrl,
-      background,
-      requirements,
-      maxPeople,
-      start_date,
-      end_date,
-      price,
-      event_type,
-      age_restriction,
-      duration,
-      district,
-      format,
-      language,
-      accessibility,
-      organizer,
+    let backgroundUrl = background
+
+    if (file) {
+      try {
+        backgroundUrl = await uploadBackground(file)
+      } catch (error) {
+        console.error('Ошибка загрузки фонового изображения', error)
+        alert('Не удалось загрузить фоновое изображение!')
+        return
+      }
     }
 
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('description', description)
+    formData.append('city', city)
+    formData.append('date', date)
+    formData.append('userId', user.id.toString())
+    formData.append('imageUrl', user.photoUrl)
+    formData.append('requirements', requirements)
+    formData.append('background', backgroundUrl) // Загружаем файл
+
+    console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
+
     try {
-      await dispatch(createEvent(eventData)).unwrap()
+      await dispatch(createEvent(formData)).unwrap()
       alert('Событие успешно создано!')
       navigate('/')
     } catch (error) {
@@ -96,7 +109,6 @@ const CreateEvent: React.FC = () => {
       alert('Произошла ошибка при создании события.')
     }
   }
-
   return (
     <div className={styles.createEventContainer}>
       <h2>Создать событие</h2>
@@ -266,6 +278,13 @@ const CreateEvent: React.FC = () => {
             type='color'
             value={background}
             onChange={(e) => setBackground(e.target.value)}
+          />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Фоновое изображение:</label>
+          <input
+            type='file'
+            onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
           />
         </div>
         <button type='submit' className={styles.submitButton}>

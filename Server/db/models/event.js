@@ -34,11 +34,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: true,
       },
-      start_date: { // 🗓 Дата начала события
+      start_date: {
+        // 🗓 Дата начала события
         type: DataTypes.DATE,
         allowNull: true,
       },
-      end_date: { // 🗓 Дата окончания события (может быть null)
+      end_date: {
+        // 🗓 Дата окончания события (может быть null)
         type: DataTypes.DATE,
         allowNull: true,
       },
@@ -50,11 +52,13 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      background: { // 🎨 Фон события
+      background: {
+        // 🎨 Фон события
         type: DataTypes.STRING,
         allowNull: true,
       },
-      requirements: { // 📌 Требования к участникам
+      requirements: {
+        // 📌 Требования к участникам
         type: DataTypes.TEXT,
         allowNull: true,
       },
@@ -63,48 +67,59 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      price: { // 💰 Цена билета (null = бесплатно)
+      price: {
+        // 💰 Цена билета (null = бесплатно)
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      event_type: { // 🎭 Тип события (концерт, выставка, конференция и т.д.)
+      event_type: {
+        // 🎭 Тип события (концерт, выставка, конференция и т.д.)
         type: DataTypes.STRING,
         allowNull: true,
       },
-      age_restriction: { // 🔞 Возрастное ограничение (0+, 6+, 12+, 18+)
+      age_restriction: {
+        // 🔞 Возрастное ограничение (0+, 6+, 12+, 18+)
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      duration: { // ⏳ Длительность в минутах
+      duration: {
+        // ⏳ Длительность в минутах
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      district: { // 📍 Район города (для крупных городов)
+      district: {
+        // 📍 Район города (для крупных городов)
         type: DataTypes.STRING,
         allowNull: true,
       },
-      format: { // 🏠 Формат (онлайн / оффлайн)
+      format: {
+        // 🏠 Формат (онлайн / оффлайн)
         type: DataTypes.STRING,
         allowNull: true,
       },
-      language: { // 🌍 Язык события
+      language: {
+        // 🌍 Язык события
         type: DataTypes.STRING,
         allowNull: true,
       },
-      accessibility: { // ♿ Доступность для людей с ОВЗ
+      accessibility: {
+        // ♿️ Доступность для людей с ОВЗ
         type: DataTypes.BOOLEAN,
         allowNull: true,
       },
-      rating: { // ⭐ Средний рейтинг события
+      rating: {
+        // ⭐️ Средний рейтинг события
         type: DataTypes.FLOAT,
         allowNull: true,
         defaultValue: 0.0,
       },
-      organizer: { // 🏢 Организатор события
+      organizer: {
+        // 🏢 Организатор события
         type: DataTypes.STRING,
         allowNull: true,
       },
-      popularity: { // 🔥 Популярность (число посещений)
+      popularity: {
+        // 🔥 Популярность (число посещений)
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0,
@@ -114,7 +129,7 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: 'Event',
       timestamps: true, // createdAt и updatedAt
-    }
-  );
-  return Event;
-};
+    },
+  )
+  return Event
+}

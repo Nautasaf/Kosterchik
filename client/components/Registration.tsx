@@ -9,7 +9,6 @@ import {
   setAge,
   setGender,
   setPhone,
-  resetForm,
 } from '../store/slice/RegistrationSlice'
 import type { AppDispatch, RootState } from '../store/Index'
 import style from './Registration.module.scss'
@@ -229,7 +228,7 @@ export const Registration: React.FC = () => {
           value={phone}
           onChange={handleInputChange}
           className={style.formInput}
-         
+
         />
       </div>
       <button type='submit' className={style.formButton}>

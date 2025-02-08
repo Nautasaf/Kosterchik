@@ -1,21 +1,21 @@
-/* Общие стили */
 .containerProfile {
   max-width: 800px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #bad0d3;
-  border-radius: 12px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  background-color: #f8f8f8; /* Светлый фон, как в других компонентах */
+  border-radius: 16px; /* Увеличенное скругление углов */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
   text-align: center;
-  border: 2px solid #dcdcdc;
-  font-family: 'Montserrat', sans-serif; /* Подключите стиль шрифта Montserrat для элегантности */
+  border: 1px solid #e0e0e0; /* Тонкая граница */
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif; /* Системные шрифты */
 
   h2 {
     font-size: 28px;
     margin-bottom: 25px;
-    color: #2d2d2d;
+    color: #2d2d2d; /* Цвет заголовка */
     font-weight: 600;
-    text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+    letter-spacing: -0.5px; /* Уменьшение расстояния между буквами */
   }
 
   .profileInfo {
@@ -27,9 +27,9 @@
     p {
       font-size: 16px;
       margin-bottom: 12px;
-      color: #666;
+      color: #666; /* Серый цвет текста */
       font-weight: 500;
-      text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+      line-height: 1.5; /* Увеличенный межстрочный интервал */
     }
   }
 
@@ -50,27 +50,41 @@
       letter-spacing: 0.05em;
       transition: all 0.3s ease;
       width: 45%;
+      background-color: #494a4b; /* Простой цвет фона */
+      color: white;
+
+      &:hover {
+        background-color: #333; /* Темнее при наведении */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
+      }
+
+      &:active {
+        background-color: #2d2d2d; /* Еще темнее при нажатии */
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
+      }
     }
 
     .button1 {
-      background: linear-gradient(45deg, #494a4b, #a4e9e9);
-      color: white;
-      box-shadow: 10px 10px 10px rgba(100, 103, 106, 0.3);
+      background-color: #494a4b; /* Цвет первой кнопки */
 
       &:hover {
-        background: linear-gradient(45deg,  #494a4b, #a4e9e9);
-        box-shadow: 10px 10px 10px rgba(51, 52, 54, 0.4);
+        background-color: #333;
+      }
+
+      &:active {
+        background-color: #2d2d2d;
       }
     }
 
     .button2 {
-      background: linear-gradient(45deg,#494a4b, #a4e9e9);
-      color: white;
-      box-shadow: 10px 10px 10px rgba(50, 55, 51, 0.3);
+      background-color: #494a4b; /* Цвет первой кнопки */
 
       &:hover {
-        background: linear-gradient(45deg, #494a4b, #a4e9e9);
-        box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.4);
+        background-color: #333;
+      }
+
+      &:active {
+        background-color: #2d2d2d;
       }
     }
   }

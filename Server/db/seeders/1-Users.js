@@ -15,7 +15,7 @@ module.exports = {
         email: 'admin@example.com',
         password: 'hashed_password',
         city: 'Москва',
-        photoUrl: 'https://example.com/photo.jpg',
+        photoUrl: 'https://i.pinimg.com/originals/69/4d/f5/694df546540be1559bd06dbb83ce21fe.jpg',
         createdAt: new Date(),
         updatedAt: new Date(),
       },

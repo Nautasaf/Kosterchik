@@ -10,6 +10,7 @@ const EditEventPage: React.FC = () => {
   const navigate = useNavigate();
   const { eventId } = useParams();
   const [eventData, setEventData] = useState<any>({});
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (eventId) {
@@ -29,10 +30,40 @@ const EditEventPage: React.FC = () => {
     }
   };
 
+  const uploadBackground = async (file: File) => {
+    const formData = new FormData();
+    formData.append('backgroundImage', file);
+
+    try {
+      const response = await fetch('http://localhost:3000/uploads/background', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      return data.imageUrl;
+    } catch (error) {
+      console.error('Ошибка загрузки фонового изображения', error);
+      alert('Не удалось загрузить изображение!');
+      return null;
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let backgroundUrl = eventData.background;
+
+    if (file) {
+      const uploadedUrl = await uploadBackground(file);
+      if (!uploadedUrl) return;
+      backgroundUrl = uploadedUrl;
+    }
+
+    const updatedData = { ...eventData, background: backgroundUrl };
+
     try {
-      await dispatch(editEvent({ eventId: Number(eventId), updatedData: eventData })).unwrap();
+      await dispatch(editEvent({ eventId: Number(eventId), updatedData })).unwrap();
       alert('Событие успешно обновлено!');
       navigate('/');
     } catch (error) {
@@ -53,54 +84,26 @@ const EditEventPage: React.FC = () => {
     <div className={styles.editEventContainer}>
       <h2 className={styles.editEventHeader}>Редактирование события</h2>
       <form onSubmit={handleSubmit} className={styles.editEventForm}>
-        {/* Название */}
         <div className={styles.formGroup}>
           <label>Название:</label>
-          <input
-            type="text"
-            name="title"
-            value={eventData.title || ''}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" name="title" value={eventData.title || ''} onChange={handleChange} required />
         </div>
 
-        {/* Описание */}
         <div className={styles.formGroup}>
           <label>Описание:</label>
-          <textarea
-            name="description"
-            value={eventData.description || ''}
-            onChange={handleChange}
-            required
-          />
+          <textarea name="description" value={eventData.description || ''} onChange={handleChange} required />
         </div>
 
-        {/* Город */}
         <div className={styles.formGroup}>
           <label>Город:</label>
-          <input
-            type="text"
-            name="city"
-            value={eventData.city || ''}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" name="city" value={eventData.city || ''} onChange={handleChange} required />
         </div>
 
-        {/* Дата */}
         <div className={styles.formGroup}>
           <label>Дата:</label>
-          <input
-            type="date"
-            name="date"
-            value={eventData.date || ''}
-            onChange={handleChange}
-            required
-          />
+          <input type="date" name="date" value={eventData.date || ''} onChange={handleChange} required />
         </div>
 
-        {/* Требования */}
         <div className={styles.formGroup}>
           <label>Требования:</label>
           <textarea
@@ -109,8 +112,7 @@ const EditEventPage: React.FC = () => {
             onChange={handleChange}
           />
         </div>
-
-        {/* Максимальное число человек */}
+        
         <div className={styles.formGroup}>
           <label>Максимальное количество человек:</label>
           <textarea
@@ -120,21 +122,17 @@ const EditEventPage: React.FC = () => {
           />
         </div>
 
-        {/* Цвет фона */}
         <div className={styles.formGroup}>
           <label>Цвет фона:</label>
-          <input
-            type="color"
-            name="background"
-            value={eventData.background || '#ffffff'}
-            onChange={handleChange}
-          />
+          <input type="color" name="background" value={eventData.background || '#ffffff'} onChange={handleChange} />
         </div>
 
-        {/* Кнопка сохранения */}
-        <button type="submit" className={styles.editEventButton}>
-          Сохранить изменения
-        </button>
+        <div className={styles.formGroup}>
+          <label>Фоновое изображение:</label>
+          <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} />
+        </div>
+
+        <button type="submit" className={styles.editEventButton}>Сохранить изменения</button>
       </form>
     </div>
   );
