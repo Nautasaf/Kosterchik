@@ -12,17 +12,23 @@ import { isBgColor } from '../src/utils/background'
 
 moment.locale('ru')
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const EventItem = () => {
   const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
-  const [organizer, setOrganizer] = useState<any>(null)
+  const [organizer, setOrganizer] = useState<any>(null) //Добавить типизацию
 
   const { events, loading: eventsLoading } = useSelector(
     (state: RootState) => state.Events,
   )
+
+  //Если так и не будет использоваться – убрать
   const { users, loading: usersLoading } = useSelector(
     (state: RootState) => state.AllUsers,
   )
+
+  // Получаем массив объектов, кто куда подал заявку на участие
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   )
@@ -57,8 +63,9 @@ export const EventItem = () => {
     }
   }, [dispatch, event])
 
-  const userData = JSON.parse(localStorage.getItem('userss') || '{}')
+  const userData = JSON.parse(localStorage.getItem('user') || '{}')
   const userId = userData.id
+  
 
   const handleAddToFavorites = () => {
     if (event) {
@@ -87,7 +94,7 @@ export const EventItem = () => {
           className={styles.eventImage}
           src={
             event.background
-              ? `http://localhost:3000${event.background}`
+              ? `${apiUrl}${event.background}`
               : '/default-background.jpg'
           }
           alt={event.title}
@@ -103,7 +110,7 @@ export const EventItem = () => {
                 className={styles.profilePhoto}
                 src={
                   organizer.photoUrl
-                    ? `http://localhost:3000${organizer.photoUrl}`
+                    ? `${apiUrl}${organizer.photoUrl}`
                     : '/default-background.jpg'
                 }
                 alt='avatar'
@@ -137,11 +144,9 @@ export const EventItem = () => {
             <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}</div>
           )}
           <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format('D MMMM YYYY, HH:mm')}
-            {event.end_date
-              ? ` до ${moment(event.end_date).format('HH:mm')}`
-              : ''}
-          </div>
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+          {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+</div>
 
           <div className={styles.eventButtonContainer}>
             <button

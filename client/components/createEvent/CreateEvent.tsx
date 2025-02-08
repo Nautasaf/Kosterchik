@@ -34,6 +34,9 @@ const CreateEvent: React.FC = () => {
   const navigate = useNavigate()
   const user = useSelector((state: RootState) => state.user)
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
+
   const [title, setTitle] = useState('')
   const [date, setDate] = useState('')
   const [city, setCity] = useState(user.city || '')
@@ -59,7 +62,7 @@ const CreateEvent: React.FC = () => {
 
     formData.append('backgroundImage', file)
 
-    const response = await fetch('http://localhost:3000/uploads/background', {
+    const response = await fetch(`${apiUrl}/uploads/background`, {
       method: 'POST',
       body: formData,
     })

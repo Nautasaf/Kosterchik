@@ -4,9 +4,10 @@ import { useDispatch } from 'react-redux'
 import { AppDispatch } from '../../store/Index'
 import { deleteEvent } from '../../store/slice/EventSlice'
 import { useNavigate } from 'react-router-dom'
+import { Event } from '../../interface/EventFetch'
 
 interface MyEventsModalProps {
-  events: any[]
+  events: Event[]
   onClose: () => void
 }
 

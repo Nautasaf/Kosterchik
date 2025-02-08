@@ -53,7 +53,7 @@ export const addToFavorites = createAsyncThunk(
 // Удаление события из избранного
 export const removeFromFavorites = createAsyncThunk(
   "favorites/removeFromFavorites",
-  async ({ userId, eventId }: { userId: number; eventId: number }, { dispatch, rejectWithValue }) => {
+  async ({ userId, eventId }: { userId: number; eventId: number }, { rejectWithValue }) => {
     try {
       console.log(`Удаление из избранного: userId=${userId}, eventId=${eventId}`);
       
@@ -91,7 +91,6 @@ export const getAllFavorites = createAsyncThunk(
       return data;
     } catch (error) {
       console.error("Ошибка при получении всех фаворитов:", error);
-      return rejectWithValue(error.message);
     }
   }
 );

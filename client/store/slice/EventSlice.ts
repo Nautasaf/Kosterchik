@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { RootState } from '../store/Index';
+// RootState здесь не используется, можно убрать
 
 const apiUrl = import.meta.env.VITE_API_URL;
 

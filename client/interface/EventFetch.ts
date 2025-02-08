@@ -3,6 +3,7 @@ export interface Event {
   title: string;
   description: string;
   city: string;
+  date?: string;
   start_date: string;
   end_date: string;
   userId: number;
@@ -44,6 +45,14 @@ export interface Event {
   }
 
   export interface Favorite {
+    id: number;
+    userId: number;
+    eventId: number;
+    createdAt: string;
+    updatedAt: string;
+  }
+
+  export interface IEventUser {
     id: number;
     userId: number;
     eventId: number;

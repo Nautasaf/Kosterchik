@@ -10,6 +10,8 @@ import { Sidebar } from './SideBar'
 import { getAllFavorites } from '../store/thunk/FavoriteThunk'
 import { isBgColor } from '../src/utils/background'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 moment.updateLocale('ru', {
   months: [
     'Января',
@@ -196,7 +198,7 @@ export const HeadPage = () => {
                   className={styles.eventImage}
                   src={
                     event.background
-                      ? `http://localhost:3000${event.background}`
+                      ? `${apiUrl}${event.background}`
                       : '/default-background.jpg'
                   }
                   alt={event.title}

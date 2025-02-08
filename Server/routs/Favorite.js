@@ -61,7 +61,6 @@ router.get('/:userId', async (req, res) => {
 router.get('/', async (req, res) => {
   try { 
     const favorites = await UserFavorite.findAll();
-    console.log(favorites);
     
     if (!favorites.length) {
       return res.status(404).json({ message: 'Нет избранных событий' });

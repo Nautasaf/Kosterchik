@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import MyEventsModal from '../MyEvent/MyEventsModal'
 import axios from 'axios'
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
@@ -17,7 +19,7 @@ const ProfilePage: React.FC = () => {
     const fetchUserEvents = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/events/user/${user.id}`,
+          `${apiUrl}/events/user/${user.id}`,
         )
         setUserEvents(response.data.events)
       } catch (error) {

@@ -1,15 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../store/Index';
+import { useDispatch } from 'react-redux'; // useSelector убирайте
+import { AppDispatch } from '../../store/Index'; // RootState Убирайте
 import { editEvent } from '../../store/slice/EventSlice';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Event } from '../../interface/EventFetch';
 import styles from './EditEventPage.module.scss';
 
 const EditEventPage: React.FC = () => {
+  const defaultEvent:Event = {
+    id: 1 ,
+    title: 'string',
+    description: 'string',
+    city: 'string',
+    start_date: 'string',
+    end_date: 'string',
+    userId: 1,
+    maxPeople: 10,
+    date: 'string',
+    createdAt: 'string',
+    updatedAt: 'string',
+  }
+
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const { eventId } = useParams();
-  const [eventData, setEventData] = useState<any>({});
+  const [eventData, setEventData] = useState<Event>(defaultEvent);
   const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
@@ -20,7 +37,7 @@ const EditEventPage: React.FC = () => {
 
   const fetchEventById = async (id: number) => {
     try {
-      const response = await fetch(`http://localhost:3000/events/${id}`);
+      const response = await fetch(`${apiUrl}/events/${id}`);
       if (!response.ok) throw new Error('Ошибка при получении события');
       const data = await response.json();
       setEventData(data);
@@ -74,7 +91,7 @@ const EditEventPage: React.FC = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setEventData((prevData: any) => ({
+    setEventData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
