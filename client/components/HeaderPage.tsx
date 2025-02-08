@@ -6,16 +6,17 @@ import React from 'react';
 export const HeaderBar = () => {
 
   const categories = [
-    { path: 'ski', name: 'Лыжи' },
-    { path: 'bars', name: 'Бары' },
-    {  path: 'exhibition',  name:'Выставка' },
-    { path: 'parties', name: 'Вечеринки' },
-    { path: 'museums', name: 'Музеи' },
-    { path: 'football', name: 'Футбол' },
-    { path: 'cinema', name: 'Кино' }, 
-    { path: 'concerts', name: 'Концерты' },
     { path: 'restaurants', name: 'Рестораны' },
-    { path: 'theaters', name: 'Театры' },
+    { path: 'concerts', name: 'Концерты' },
+    { path: 'exhibitions', name: 'Выставка' },
+    { path: 'extreme', name: 'Экстрим' },
+    { path: 'theaters', name: 'Театр' },
+    { path: 'sports', name: 'Спортивное событие' },
+    { path: 'festivals', name: 'Фестиваль' },
+    { path: 'seminars', name: 'Семинар' },
+    { path: 'bars', name: 'Бар' },
+    { path: 'shashlyk', name: 'Шашлык' },
+    { path: 'lectures', name: 'Лекция' },
   ];
 
   return (

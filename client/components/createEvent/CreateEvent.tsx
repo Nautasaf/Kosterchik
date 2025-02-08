@@ -61,7 +61,7 @@ const CreateEvent: React.FC = () => {
   const [district, setDistrict] = useState('')
   const [format, setFormat] = useState('')
   const [language, setLanguage] = useState('')
-  // const [accessibility, setAccessibility] = useState(false)
+ 
   const [organizer, setOrganizer] = useState('')
 
   const uploadBackground = async (file : File) => {
@@ -98,42 +98,6 @@ const CreateEvent: React.FC = () => {
       }
     }
 
-  //   const formData = new FormData()
-  //   formData.append('title', title)
-  //   formData.append('description', description)
-  //   formData.append('city', city)
-  //   formData.append('date', date)
-  //   formData.append('userId', user.id.toString())
-  //   formData.append('imageUrl', user.photoUrl)
-  //   formData.append('requirements', requirements)
-    
-  //   maxPeople: number
-  // start_date: string
-  // end_date: string
-  // price: number
-  // event_type: string
-  // age_restriction: number
-  // duration: number
-  // district: string
-  // format: string
-  // language: string
-  // accessibility: boolean
-  // organizer: string
-  //   formData.append('maxPeople', maxPeople)
-  //   formData.append('start_date', start_date)
-  //   formData.append('city', city)
-  //   formData.append('city', city)
-  //   formData.append('city', city)
-  //   formData.append('city', city)
-  //   formData.append('city', city)
-  //   formData.append('city', city)
-
-  //   formData.append('background', backgroundUrl)// Загружаем файл
-  //   formData.append('latitude', String(location.lat)) 
-  //   formData.append('longitude', String(location.lng)) 
-
-  //   console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
-
   const eventData = {
     title,
     description,
@@ -166,6 +130,12 @@ const CreateEvent: React.FC = () => {
     } catch (error) {
       console.error("Ошибка при создании события:", error);
       alert("Произошла ошибка при создании события.");
+    }
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    if (name === "eventType") {
+      setEvent_type(value);
     }
   };
 
@@ -252,41 +222,64 @@ const CreateEvent: React.FC = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Цена билета:</label>
-          <input
-            type='number'
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Тип события(Концерт, выставка и т.д.):</label>
-          <input
-            type='text'
-            value={event_type}
-            onChange={(e) => setEvent_type(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Возрастное ограничение:</label>
-          <input
-            type='number'
-            value={age_restriction}
-            onChange={(e) => setAge_registration(Number(e.target.value))}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Длительность:</label>
-          <input
-            type='number'
-            value={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
-            required
-          />
-        </div>
+  <label>Цена билета ₽:</label>
+  <input
+    type='text'
+    value={price}
+    onChange={(e) => {
+      const value = e.target.value;
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setPrice(numericValue ? Number(numericValue) : 0);
+    }}
+    required
+  />
+</div>
+
+  <label>
+    <p>Тип события:</p>
+    <select name="eventType" value={event_type} onChange={handleSelectChange}>
+      <option value="">Любой</option>
+      <option value="Ресторан">Рестораны</option>
+      <option value="Экстрим">Экстрим</option>
+      <option value="Шашлык">Шашлык</option>
+      <option value="Концерт">Концерт</option>
+      <option value="Выставка">Выставка</option>
+      <option value="Театр">Театр</option>
+      <option value="Спортивное событие">Спортивное событие</option>
+      <option value="Фестиваль">Фестиваль</option>
+      <option value="Семинар">Семинар</option>
+      <option value="Бар">Бар</option>
+      <option value="Лекция">Лекция</option>
+    </select>
+  </label>
+  
+<div className={styles.formGroup}>
+  <label>Возрастное ограничение:</label>
+  <input
+    type="text" 
+    value={age_restriction}
+    onChange={(e) => {
+      const value = e.target.value;
+      const numericValue = value.replace(/[^0-9]/g, ''); 
+      setAge_registration(numericValue ? Number(numericValue) : 0); 
+    }}
+    required
+  />
+</div>
+
+<div className={styles.formGroup}>
+  <label>Длительность минуты:</label>
+  <input
+    type="text"
+    value={duration}
+    onChange={(e) => {
+      const value = e.target.value;
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setDuration(numericValue ? Number(numericValue) : 0);
+    }}
+    required
+  />
+</div>
         <div className={styles.formGroup}>
           <label>Район города:</label>
           <input
@@ -297,23 +290,33 @@ const CreateEvent: React.FC = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Формат(Онлайн/оффлайн):</label>
-          <input
-            type='text'
-            value={format}
-            onChange={(e) => setFormat(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Язык события:</label>
-          <input
-            type='text'
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            required
-          />
-        </div>
+  <label>Формат (Онлайн/оффлайн):</label>
+  <select
+    value={format}
+    onChange={(e) => setFormat(e.target.value)}
+    required
+  >
+    <option value="">Выберите формат</option>
+    <option value="Онлайн">Онлайн</option>
+    <option value="Оффлайн">Оффлайн</option>
+  </select>
+</div>
+<div className={styles.formGroup}>
+  <label>Язык события:</label>
+  <select
+    value={language}
+    onChange={(e) => setLanguage(e.target.value)}
+    required
+  >
+    <option value="">Выберите язык</option>
+    <option value="Русский">Русский</option>
+    <option value="Английский">Английский</option>
+    <option value="Немецкий">Немецкий</option>
+    <option value="Французский">Французский</option>
+    <option value="Испанский">Испанский</option>
+    <option value="Китайский">Китайский</option>
+  </select>
+</div>
         {/* <div className={styles.formGroup}>
           <label>Доступность для людей с ОВЗ:</label>
           <input
@@ -329,7 +332,7 @@ const CreateEvent: React.FC = () => {
             type='text'
             value={organizer}
             onChange={(e) => setOrganizer(e.target.value)}
-            required
+            
           />
         </div>
         <div className={styles.formGroup}>

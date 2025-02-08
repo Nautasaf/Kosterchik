@@ -76,10 +76,22 @@ export const Sidebar: React.FC = () => {
     className={styles.searchInput}
   />
 </div>
-      <label>
-        Тип события:
-        <input type="text" name="event_type" value={filters.event_type} onChange={handleInputChange} />
-      </label>
+<label>
+  Тип события:
+  <select name="event_type" value={filters.event_type} onChange={handleSelectChange}>
+    <option value="">Любой</option>
+    <option value="Ресторан">Рестораны</option>
+    <option value="Концерт">Концерт</option>
+    <option value="Выставка">Выставка</option>
+    <option value="Театр">Театр</option>
+    <option value="Спортивное событие">Спортивное событие</option>
+    <option value="Фестиваль">Фестиваль</option>
+    <option value="Семинар">Семинар</option>
+    <option value="Бар">Бар</option>
+    <option value="Шашлык">Шашлык</option>
+    <option value="Лекция">Лекция</option>
+  </select>
+</label>
 
       <label>
   Цена до: {filters.price || 0} ₽
@@ -136,16 +148,15 @@ export const Sidebar: React.FC = () => {
       </label>
 
       <label>
-        Формат:
-        <input type="text" name="format" value={filters.format} onChange={handleInputChange} />
-      </label>
+  Формат события:
+  <select name="format" value={filters.format} onChange={handleSelectChange}>
+    <option value="">Любой</option>
+    <option value="Онлайн">Онлайн</option>
+    <option value="Оффлайн">Оффлайн</option>
+  </select>
+</label>
 
-      <label>
-        Доступные места:
-        <input type="number" name="available_seats" value={filters.available_seats} onChange={handleInputChange} />
-      </label>
-      {/* ToDo: value={event.maxPeople - handleGetFavorites} */}
-
+     //todo available_seats убрать из бд и сидов 
       <label>
   Язык:
   <select name="language" value={filters.language} onChange={handleSelectChange}>

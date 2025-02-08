@@ -10,20 +10,22 @@ export const CategoryPage = () => {
   const { eventType } = useParams(); 
   const eventsState = useSelector((state: RootState) => state.Events); 
  
+console.log(eventType);
 
   const events = Array.isArray(eventsState.events) ? eventsState.events : [];
 
   const categoryMapping: Record<string, string> = {
-    ski: 'Лыжи',
-    bars: 'Бар',
-    exhibition: 'Выставка',
-    parties: 'Вечеринка',
-    museums: 'Музеи',
-    football: 'Футбол',
-    cinema: 'Кино', 
-    concerts: 'Концерт',
     restaurants: 'Ресторан',
+    concerts: 'Концерт',
+    exhibitions: 'Выставка',
+    extreme: 'Экстрим',
     theaters: 'Театр',
+    sports: 'Спортивное событие',
+    festivals: 'Фестиваль',
+    seminars: 'Семинар',
+    bars: 'Бар',
+    shashlyk: 'Шашлык',
+    lectures: 'Лекция',
   };
 
   
