@@ -1,18 +1,18 @@
-'use strict'
-const { Model } = require('sequelize')
+'use strict';
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
       // (1) Event принадлежит одному User (создателю)
-      Event.belongsTo(models.User, { foreignKey: 'userId' })
+      Event.belongsTo(models.User, { foreignKey: 'userId' });
       // (2) Event <-> User (участники)
       Event.belongsToMany(models.User, {
         through: models.EventUser,
         foreignKey: 'eventId',
-      })
+      });
       // (3) Event -> Message (один-ко-многим)
-      Event.hasMany(models.Message, { foreignKey: 'eventId' })
+      Event.hasMany(models.Message, { foreignKey: 'eventId' });
     }
   }
 
@@ -124,12 +124,23 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: 0,
       },
+      latitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 55.751244,
+      },
+      longitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 37.618423,
+      },
     },
     {
       sequelize,
       modelName: 'Event',
       timestamps: true, // createdAt и updatedAt
     },
-  )
-  return Event
-}
+  );
+
+  return Event;
+};

@@ -37,7 +37,7 @@ module.exports = {
         description: 'Обзор самых актуальных трендов и технологий в сфере AI.',
         city: 'Санкт-Петербург',
         date: new Date('2025-02-20T18:00:00'),
-        userId: 1,
+        userId: 2,
         imageUrl: '1682774567890-def456.jpg',
         maxPeople: 4,
         start_date: new Date('2025-04-05T18:00:00Z'),

@@ -26,8 +26,10 @@ export const EventItem = () => {
 
   //Если так и не будет использоваться – убрать
   const { users, loading: usersLoading } = useSelector(
-    (state: RootState) => state.AllUsers,
-  )
+    (state: RootState) => state.AllUsers
+  );
+
+  const [showRoute, setShowRoute] = useState(false);
 
   // Получаем массив объектов, кто куда подал заявку на участие
   const allFavorites = useSelector(
@@ -51,10 +53,10 @@ export const EventItem = () => {
   }, [dispatch])
 
   useEffect(() => {
-    dispatch(fetchEvents())
-  }, [dispatch])
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
-  const event = events.find((e) => e.id.toString() === id)
+  const event = events.find((e) => e.id.toString() === id);
 
   useEffect(() => {
     if (event) {
@@ -62,7 +64,7 @@ export const EventItem = () => {
         setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
       })
     }
-  }, [dispatch, event])
+  }, [dispatch, event]);
 
   const userData = JSON.parse(localStorage.getItem('user') || '{}')
   const userId = userData.id
@@ -79,8 +81,13 @@ export const EventItem = () => {
   }
 
   if (!event) {
-    return <div>Событие не найдено</div>
+    return <div>Событие не найдено</div>;
   }
+
+  const eventCoordinates =
+    event.latitude && event.longitude
+      ? ([event.latitude, event.longitude] as [number, number])
+      : null;
 
   return (
     <div className={styles.eventItem}>
@@ -146,19 +153,31 @@ export const EventItem = () => {
           )}
           <div className={styles.eventDate}>
             Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
-          {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
-</div>
+            {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+          </div>
+
+          {eventCoordinates && (
+            <div className={styles.mapContainer}>
+              <YMaps>
+                <Map
+                  state={{ center: eventCoordinates, zoom: 10 }}
+                  width="100%"
+                  height="300px">
+                  <Placemark geometry={eventCoordinates} />
+                </Map>
+              </YMaps>
+            </div>
+          )}
 
           <div className={styles.eventButtonContainer}>
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Задать вопрос')}
-            >
+              onClick={() => console.log("Задать вопрос")}>
               Задать вопрос
             </button>
 
             {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
+              <button className={styles.eventButton} onClick={() => {handleAddToFavorites, setShowRoute(true)}}>
                 Отказаться
               </button>
             ) : handleGetFavorites(event.id) === event.maxPeople ? (
@@ -173,13 +192,18 @@ export const EventItem = () => {
 
             <button
               className={styles.eventButton}
-              onClick={() => console.log('Участники')}
-            >
+              onClick={() => console.log("Участники")}>
               Участники
             </button>
           </div>
         </div>
       </div>
+      {showRoute && eventCoordinates && (
+        <SubscriptionMap
+          eventCoordinates={eventCoordinates}
+          onClose={() => setShowRoute(false)}
+        />
+      )}
     </div>
-  )
-}
+  );
+};

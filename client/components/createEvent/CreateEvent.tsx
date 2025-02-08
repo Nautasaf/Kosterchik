@@ -1,20 +1,23 @@
-import React, { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../../store/Index'
-import { useNavigate } from 'react-router-dom'
-import styles from './CreateEvent.module.scss'
-import { createEvent } from '../../store/slice/EventSlice'
-import { AppDispatch } from '../../store/Index'
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store/Index";
+import { useNavigate } from "react-router-dom";
+import styles from "./CreateEvent.module.scss";
+import { createEvent } from "../../store/slice/EventSlice";
+import { AppDispatch } from "../../store/Index";
+import MapPicker from "../MapPicker";
 
 interface IEventData {
-  title: string
-  description: string
-  city: string
-  date: string
-  userId: number
-  imageUrl: string
-  background: string
-  requirements: string
+  title: string;
+  description: string;
+  city: string;
+  date: string;
+  userId: number;
+  imageUrl: string;
+  background: string;
+  requirements: string;
+  latitude: number;
+  longitude: number;
   maxPeople: number
   start_date: string
   end_date: string
@@ -37,12 +40,16 @@ const CreateEvent: React.FC = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
 
-  const [title, setTitle] = useState('')
-  const [date, setDate] = useState('')
-  const [city, setCity] = useState(user.city || '')
-  const [description, setDescription] = useState('')
-  const [requirements, setRequirements] = useState('')
-  const [background, setBackground] = useState('#ffffff')
+  const [title, setTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [city, setCity] = useState(user.city || "");
+  const [description, setDescription] = useState("");
+  const [requirements, setRequirements] = useState("");
+  const [background, setBackground] = useState("#ffffff");
+  const [location, setLocation] = useState<{ lat: number; lng: number }>({
+    lat: 55.751244,
+    lng: 37.618423,
+  });
   const [file, setFile] = useState<File | null>(null)
   const [maxPeople, setMaxPeople] = useState(0)
   const [start_date, setStart_date] = useState('')
@@ -72,11 +79,11 @@ const CreateEvent: React.FC = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!user.id) {
-      alert('Необходимо авторизоваться для создания события.')
-      return
+      alert("Необходимо авторизоваться для создания события.");
+      return;
     }
 
     let backgroundUrl = background
@@ -99,7 +106,9 @@ const CreateEvent: React.FC = () => {
     formData.append('userId', user.id.toString())
     formData.append('imageUrl', user.photoUrl)
     formData.append('requirements', requirements)
-    formData.append('background', backgroundUrl) // Загружаем файл
+    formData.append('background', requirements)
+    formData.append('latitude', location.lat) // Загружаем файл
+    formData.append('longitude', location.lng) // Загружаем файл
 
     console.log('Отправляемые данные:', Array.from(formData.entries())) // Проверяем данные перед отправкой
 
@@ -108,10 +117,11 @@ const CreateEvent: React.FC = () => {
       alert('Событие успешно создано!')
       navigate('/')
     } catch (error) {
-      console.error('Ошибка при создании события:', error)
-      alert('Произошла ошибка при создании события.')
+      console.error("Ошибка при создании события:", error);
+      alert("Произошла ошибка при создании события.");
     }
-  }
+  };
+
   return (
     <div className={styles.createEventContainer}>
       <h2>Создать событие</h2>
@@ -119,7 +129,7 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Название события:</label>
           <input
-            type='text'
+            type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -128,7 +138,7 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Дата события:</label>
           <input
-            type='date'
+            type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
             required
@@ -152,7 +162,7 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Город:</label>
           <input
-            type='text'
+            type="text"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
@@ -278,7 +288,7 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Цвет фона карточки:</label>
           <input
-            type='color'
+            type="color"
             value={background}
             onChange={(e) => setBackground(e.target.value)}
           />
@@ -290,12 +300,19 @@ const CreateEvent: React.FC = () => {
             onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
           />
         </div>
-        <button type='submit' className={styles.submitButton}>
+        <div className={styles.formGroup}>
+          <label>Выберите место проведения:</label>
+          <MapPicker
+            onLocationSelect={(coords) => setLocation(coords)}
+            initialCoordinates={location}
+          />
+        </div>
+        <button type="submit" className={styles.submitButton}>
           Создать событие
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default CreateEvent
+export default CreateEvent;

@@ -1,6 +1,6 @@
-const express = require('express')
-const router = express.Router()
-const { Event, EventUser } = require('../db/models')
+const express = require('express');
+const router = express.Router();
+const { Event, EventUser } = require('../db/models');
 
 router.post('/', async (req, res) => {
   console.log("📥 Полученные данные на сервере:", req.body);
@@ -27,15 +27,15 @@ router.post('/', async (req, res) => {
       language,
       accessibility,
       organizer,
-    } = req.body
+      latitude,
+      longitude,
+    } = req.body;
    
-    // Проверяем, что userId передан и он не равен null
     if (!userId) {
-      return res.status(400).json({ message: 'Ошибка: userId не указан' })
+      return res.status(400).json({ message: 'Ошибка: userId не указан' });
     }
-    console.log('userId===>', userId)
+    console.log('userId===>', userId);
 
-    // Создаем событие в базе данных
     const newEvent = await Event.create({
       title,
       description,
@@ -58,20 +58,20 @@ router.post('/', async (req, res) => {
       language,
       accessibility,
       organizer,
-    })
+      latitude,
+      longitude,
+    });
 
-    // Добавляем создателя события в таблицу EventUser
     await EventUser.create({
       userId: userId,
       eventId: newEvent.id,
-    })
+    });
 
-    // Возвращаем созданное событие
-    res.status(201).json(newEvent)
+    res.status(201).json(newEvent);
   } catch (error) {
     console.error("❌ Ошибка при создании события:", error);
     res.status(500).json({ message: "Ошибка сервера", error });
   }
 });
 
-module.exports = router
+module.exports = router;

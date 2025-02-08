@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux'; // useSelector убирайте
-import { AppDispatch } from '../../store/Index'; // RootState Убирайте
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store/Index';
 import { editEvent } from '../../store/slice/EventSlice';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Event } from '../../interface/EventFetch';
 import styles from './EditEventPage.module.scss';
+import MapPicker from "../MapPicker";
 
 const EditEventPage: React.FC = () => {
   const defaultEvent:Event = {
@@ -25,9 +25,12 @@ const EditEventPage: React.FC = () => {
 
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { eventId } = useParams();
+  const { eventId } = useParams<{ eventId: string }>();
   const [eventData, setEventData] = useState<Event>(defaultEvent);
   const [file, setFile] = useState<File | null>(null);
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(
+    null
+  );
 
   useEffect(() => {
     if (eventId) {
@@ -38,9 +41,14 @@ const EditEventPage: React.FC = () => {
   const fetchEventById = async (id: number) => {
     try {
       const response = await fetch(`${apiUrl}/events/${id}`);
-      if (!response.ok) throw new Error('Ошибка при получении события');
+      if (!response.ok) throw new Error("Ошибка при получении события");
       const data = await response.json();
       setEventData(data);
+      if (data.latitude && data.longitude) {
+        setLocation({ lat: data.latitude, lng: data.longitude });
+      } else {
+        setLocation({ lat: 55.751244, lng: 37.618423 });
+      }
     } catch (error) {
       console.error('Ошибка:', error);
       alert('Не удалось загрузить данные события.');
@@ -66,30 +74,47 @@ const EditEventPage: React.FC = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    let backgroundUrl = eventData.background;
-
-    if (file) {
-      const uploadedUrl = await uploadBackground(file);
-      if (!uploadedUrl) return;
-      backgroundUrl = uploadedUrl;
-    }
-
-    const updatedData = { ...eventData, background: backgroundUrl };
+  const uploadBackground = async (file: File) => {
+    const formData = new FormData();
+    formData.append('backgroundImage', file);
 
     try {
-      await dispatch(editEvent({ eventId: Number(eventId), updatedData })).unwrap();
-      alert('Событие успешно обновлено!');
-      navigate('/');
+      const response = await fetch(`${apiUrl}/uploads/background`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+      return data.imageUrl;
     } catch (error) {
-      console.error('Ошибка при обновлении события:', error);
-      alert('Произошла ошибка при обновлении события.');
+      console.error('Ошибка загрузки фонового изображения', error);
+      alert('Не удалось загрузить изображение!');
+      return null;
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const updatedData = {
+        ...eventData,
+        latitude: location ? location.lat : 55.751244,
+        longitude: location ? location.lng : 37.618423,
+      };
+      await dispatch(
+        editEvent({ eventId: Number(eventId), updatedData })
+      ).unwrap();
+      alert("Событие успешно обновлено!");
+      navigate("/");
+    } catch (error) {
+      console.error("Ошибка при обновлении события:", error);
+      alert("Произошла ошибка при обновлении события.");
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setEventData((prevData) => ({
       ...prevData,
@@ -103,29 +128,43 @@ const EditEventPage: React.FC = () => {
       <form onSubmit={handleSubmit} className={styles.editEventForm}>
         <div className={styles.formGroup}>
           <label>Название:</label>
-          <input type="text" name="title" value={eventData.title || ''} onChange={handleChange} required />
+          <input
+            type="text"
+            name="title"
+            value={eventData.title || ""}
+            onChange={handleChange}
+            required
+          />
         </div>
-
         <div className={styles.formGroup}>
           <label>Описание:</label>
-          <textarea name="description" value={eventData.description || ''} onChange={handleChange} required />
+          <textarea
+            name="description"
+            value={eventData.description || ""}
+            onChange={handleChange}
+            required
+          />
         </div>
-
         <div className={styles.formGroup}>
           <label>Город:</label>
-          <input type="text" name="city" value={eventData.city || ''} onChange={handleChange} required />
+          <input
+            type="text"
+            name="city"
+            value={eventData.city || ""}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className={styles.formGroup}>
           <label>Дата:</label>
           <input type="date" name="date" value={eventData.date || ''} onChange={handleChange} required />
         </div>
-
         <div className={styles.formGroup}>
           <label>Требования:</label>
           <textarea
             name="requirements"
-            value={eventData.requirements || ''}
+            value={eventData.requirements || ""}
             onChange={handleChange}
           />
         </div>
@@ -138,7 +177,6 @@ const EditEventPage: React.FC = () => {
             onChange={handleChange}
           />
         </div>
-
         <div className={styles.formGroup}>
           <label>Цвет фона:</label>
           <input type="color" name="background" value={eventData.background || '#ffffff'} onChange={handleChange} />
@@ -148,8 +186,16 @@ const EditEventPage: React.FC = () => {
           <label>Фоновое изображение:</label>
           <input type="file" onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)} />
         </div>
-
-        <button type="submit" className={styles.editEventButton}>Сохранить изменения</button>
+        <div className={styles.formGroup}>
+          <label>Место проведения:</label>
+          <MapPicker
+            onLocationSelect={(coords) => setLocation(coords)}
+            initialCoordinates={location || { lat: 55.751244, lng: 37.618423 }}
+          />
+        </div>
+        <button type="submit" className={styles.editEventButton}>
+          Сохранить изменения
+        </button>
       </form>
     </div>
   );
