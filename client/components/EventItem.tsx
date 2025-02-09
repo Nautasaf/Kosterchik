@@ -5,13 +5,14 @@ import styles from './EventItem.module.scss'
 import { RootState, AppDispatch } from '../store/Index'
 import { fetchUsers } from '../store/thunk/AllUserThunk'
 import { fetchEvents } from '../store/thunk/EventThunk'
-import { addToFavorites, getAllFavorites } from '../store/thunk/FavoriteThunk'
+import { addToFavorites, getAllFavorites, removeFromFavorites } from '../store/thunk/FavoriteThunk'
 import moment from 'moment'
 import 'moment/locale/ru'
 import { isBgColor } from '../src/utils/background'
-import { Favorite } from '../interface/EventFetch'
 import { Map, Placemark, YMaps } from 'react-yandex-maps'
 import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
+import { handleCountFavorites, handleUserAlreadyAddedToFavorites } from '../scripts/FavoriteScripts'
+import { Favorite } from '../interface/EventFetch'
 
 moment.locale('ru')
 
@@ -27,9 +28,9 @@ export const EventItem = () => {
   )
 
   //Если так и не будет использоваться – убрать
-  const { users, loading: usersLoading } = useSelector(
-    (state: RootState) => state.AllUsers
-  );
+  // const { users, loading: usersLoading } = useSelector(
+  //   (state: RootState) => state.AllUsers
+  // );
 
   const [showRoute, setShowRoute] = useState(false);
 
@@ -38,21 +39,25 @@ export const EventItem = () => {
     (state: RootState) => state.Favorites.favorites
   )
 
-  // Получаем количество уже участвующих
-  const handleGetFavorites = (eventId : number) => {
-    const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    const favCounter : number = copyFav.filter((fav : Favorite) => fav.eventId === eventId).length;
-    return favCounter
+  const [localFavorites, setLocalFavorites] = useState<Favorite[]>([]);
+
+  useEffect(() => {
+    setLocalFavorites(allFavorites);
+  }, [allFavorites]);
+
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId }))
+        .then(() => dispatch(getAllFavorites()));
+    }
   }
 
-  // Функция для проверки, участвует ли пользователь в событии
-  const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number): boolean => {
-    return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
-  };
-  
-  useEffect(() => {
-    dispatch(getAllFavorites())
-  }, [dispatch])
+  const handleRemoveFromFavorites = () => {
+    if (event) {
+      dispatch(removeFromFavorites({eventId: event.id, userId: userId}))
+        .then(() => dispatch(getAllFavorites()));
+    }
+  }
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -62,6 +67,7 @@ export const EventItem = () => {
 
   useEffect(() => {
     if (event) {
+      dispatch(getAllFavorites()) //Добавил вытягивание всех "фаворитов"
       dispatch(fetchUsers(event.userId)).then((res) => {
         setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
       })
@@ -70,13 +76,7 @@ export const EventItem = () => {
 
   const userData = JSON.parse(localStorage.getItem('user') || '{}')
   const userId = userData.id
-  
 
-  const handleAddToFavorites = () => {
-    if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }))
-    }
-  }
 
   if (eventsLoading) {
     return <div>Загрузка данных...</div>
@@ -138,21 +138,7 @@ export const EventItem = () => {
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>Город: {event.city}</div>
           <div className={styles.eventCity}>Место: {event.district}</div>
-          {event.maxPeople ? (
-            <>
-              <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</div>
-              
-              {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-                <div className={styles.eventCity}>Вы уже участвуете в этом мероприятии</div>
-              ) : handleGetFavorites(event.id) === event.maxPeople ? (
-                <div className={styles.eventCity}>В этом мероприятии уже максимальное количество участвующих</div>
-              ) : (
-                <div className={styles.eventCity}>Вы можете присоединиться к этому мероприятию</div>
-              )}
-            </>
-          ) : (
-            <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}</div>
-          )}
+          
           <div className={styles.eventDate}>
             Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
             {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
@@ -171,6 +157,25 @@ export const EventItem = () => {
             </div>
           )}
 
+          {event.maxPeople ? (
+            <>
+              <div className={styles.eventCity}>Количество участников: {handleCountFavorites(event.id, localFavorites)}/{event.maxPeople}</div>
+              
+              {handleUserAlreadyAddedToFavorites(event.id, userId, localFavorites) ? (
+                <div className={styles.eventCity}>Вы уже участвуете в этом мероприятии</div>
+              ) : handleCountFavorites(event.id, allFavorites) === event.maxPeople ? (
+                <div className={styles.eventCity}>В этом мероприятии уже максимальное количество участвующих</div>
+              ) : (
+                <div className={styles.eventCity}>Вы можете присоединиться к этому мероприятию</div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className={styles.eventCity}>Вы можете присоединиться к этому мероприятию</div>
+              <div className={styles.eventCity}>Количество участников: {handleCountFavorites(event.id, localFavorites)}</div>
+            </>
+          )}
+
           <div className={styles.eventButtonContainer}>
             <button
               className={styles.eventButton}
@@ -178,12 +183,12 @@ export const EventItem = () => {
               Задать вопрос
             </button>
 
-            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
+            {handleUserAlreadyAddedToFavorites(event.id, userId, localFavorites) ? (
+              <button className={styles.eventButton} onClick={handleRemoveFromFavorites}>
                 Отказаться
               </button>
-            ) : handleGetFavorites(event.id) === event.maxPeople ? (
-              <button className={styles.eventButton}>
+            ) : handleCountFavorites(event.id, localFavorites) === event.maxPeople ? (
+              <button className={styles.eventInactiveButton}>
                 Нет мест
               </button>
             ) : (
@@ -191,8 +196,6 @@ export const EventItem = () => {
                 Я готов
               </button>
             )}
-
-              
 
             <button
               className={styles.eventButton}

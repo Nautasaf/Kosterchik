@@ -6,6 +6,7 @@ import styles from "./CreateEvent.module.scss";
 import { createEvent } from "../../store/slice/EventSlice";
 import { AppDispatch } from "../../store/Index";
 import MapPicker from "../MapPicker";
+import { addToFavorites } from "../../store/thunk/FavoriteThunk";
 
 // interface IEventData {
 //   title: string;
@@ -120,11 +121,11 @@ const CreateEvent: React.FC = () => {
     background: backgroundUrl,
     longitude: location.lng,
     latitude: location.lat,
-    
   }
 
     try {
-      await dispatch(createEvent(eventData)).unwrap()
+      const createdEvent = await dispatch(createEvent(eventData)).unwrap()
+      await dispatch(addToFavorites({ eventId: createdEvent.id, userId: user.id }))
       alert('Событие успешно создано!')
       navigate('/')
     } catch (error) {
@@ -212,25 +213,17 @@ const CreateEvent: React.FC = () => {
             required
           />
         </div>
+        
         <div className={styles.formGroup}>
-          <label>Требования к участникам:</label>
+          <label>Цена билета ₽:</label>
           <input
             type='text'
-            value={requirements}
-            onChange={(e) => setRequirements(e.target.value)}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-  <label>Цена билета ₽:</label>
-  <input
-    type='text'
-    value={price}
-    onChange={(e) => {
-      const value = e.target.value;
-      const numericValue = value.replace(/[^0-9]/g, '');
-      setPrice(numericValue ? Number(numericValue) : 0);
-    }}
+            value={price}
+            onChange={(e) => {
+              const value = e.target.value;
+              const numericValue = value.replace(/[^0-9]/g, '');
+              setPrice(numericValue ? Number(numericValue) : 0);
+            }}
     required
   />
 </div>

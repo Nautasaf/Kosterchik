@@ -23,6 +23,14 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
     setLocalEvents(events)
   }, [events])
 
+  const handleNavigateToEvent = (id: number) => () => {
+    if (id) {
+      navigate(`/event/${id}`);
+    } else {
+      console.error('Invalid event ID');
+    }
+  };
+
   // Функция удаления события
   const handleDeleteEvent = async (eventId: number) => {
     if (window.confirm('Вы уверены, что хотите удалить это событие?')) {
@@ -50,25 +58,31 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        <h2>Мои события</h2>
         <button className={styles.closeButton} onClick={onClose}>
-          Закрыть
+        ❌       
         </button>
+        <h2>Мои события</h2>
         <ul>
           {localEvents.length > 0 ? (
             localEvents.map((event) => (
-              <li key={event.id}>
+              <li key={event.id} onClick={handleNavigateToEvent(event.id)}>
                 {event.title}
                 <div className='blockButton'>
                 <button
                   className={styles.editButton}
-                  onClick={() => handleEditEvent(event.id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
+                    handleEditEvent(event.id)
+                  }}
                 >
                   Редактировать
                 </button>
                 <button
                   className={styles.deleteButton}
-                  onClick={() => handleDeleteEvent(event.id)}
+                  onClick={(e) => {
+                    e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
+                    handleDeleteEvent(event.id)
+                  }}
                 >
                   Удалить
                 </button>

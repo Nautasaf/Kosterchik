@@ -56,6 +56,7 @@ export const createEvent = createAsyncThunk(
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
+      
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || 'Ошибка при создании события');
