@@ -1,4 +1,5 @@
 export interface Event {
+  markerIcon: any;
   longitude: any;
   latitude: any;
   id: number ;

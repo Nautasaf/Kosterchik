@@ -10,14 +10,10 @@ const MapPicker: React.FC<MapPickerProps> = ({
   onLocationSelect,
   initialCoordinates,
 }) => {
-  const defaultCoords = initialCoordinates || {
-    lat: 55.751244,
-    lng: 37.618423,
-  };
   const [markerCoords, setMarkerCoords] = useState<{
     lat: number;
     lng: number;
-  }>(defaultCoords);
+  }>(initialCoordinates || { lat: 55.751244, lng: 37.618423 });
 
   const handleMapClick = (e: any) => {
     const coords = e.get("coords");
@@ -26,15 +22,11 @@ const MapPicker: React.FC<MapPickerProps> = ({
     onLocationSelect(newCoords);
   };
 
-  const mapState = {
-    center: [markerCoords.lat, markerCoords.lng],
-    zoom: 10,
-  };
-
   return (
-    <YMaps>
+    <YMaps
+      query={{ apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673", lang: "ru_RU" }}>
       <Map
-        state={mapState}
+        state={{ center: [markerCoords.lat, markerCoords.lng], zoom: 10 }}
         width="100%"
         height="400px"
         onClick={handleMapClick}>

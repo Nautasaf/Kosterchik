@@ -24,7 +24,7 @@ const sessionConfig = {
 const corsOptions = {
   origin(origin, callback) {
     // Список разрешенных доменов
-    const allowedOrigins = ['http://localhost:5173', 'https://kosterchik.ru', 'https://api.kosterchik.ru'];
+    const allowedOrigins = ['http://localhost:5173', 'https://kosterchik.ru', 'https://api.kosterchik.ru', 'https://api-maps.yandex.ru'];
 
     // Нормализация origin (удаление лишних пробелов)
     const normalizedOrigin = origin?.trim();

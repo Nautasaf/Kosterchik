@@ -1,116 +1,110 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './EventItem.module.scss'
-import { RootState, AppDispatch } from '../store/Index'
-import { fetchUsers } from '../store/thunk/AllUserThunk'
-import { fetchEvents } from '../store/thunk/EventThunk'
-import { addToFavorites, getAllFavorites } from '../store/thunk/FavoriteThunk'
-import moment from 'moment'
-import 'moment/locale/ru'
-import { isBgColor } from '../src/utils/background'
-import { Favorite } from '../interface/EventFetch'
-import { Map, Placemark, YMaps } from 'react-yandex-maps'
-import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
-
-moment.locale('ru')
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { YMaps, Map, Placemark } from "react-yandex-maps";
+import moment from "moment";
+import "moment/locale/ru";
+import styles from "./EventItem.module.scss";
+import { RootState, AppDispatch } from "../store/Index";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../store/thunk/AllUserThunk";
+import { fetchEvents } from "../store/thunk/EventThunk";
+import { addToFavorites, getAllFavorites } from "../store/thunk/FavoriteThunk";
+import { isBgColor } from "../src/utils/background";
+import SubscriptionMap from "./SubscriptionMaps/SubscriptionMaps";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const EventItem = () => {
-  const { id } = useParams()
-  const dispatch = useDispatch<AppDispatch>()
-  const [organizer, setOrganizer] = useState<any>(null) //Добавить типизацию
+const EventItem: React.FC = () => {
+  // Извлекаем id события из параметров маршрута
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
 
-  const { events, loading: eventsLoading } = useSelector(
-    (state: RootState) => state.Events,
-  )
-
-  //Если так и не будет использоваться – убрать
-  const { users, loading: usersLoading } = useSelector(
-    (state: RootState) => state.AllUsers
-  );
-
+  // Состояния для организатора и отображения маршрута
+  const [organizer, setOrganizer] = useState<any>(null);
   const [showRoute, setShowRoute] = useState(false);
 
-  // Получаем массив объектов, кто куда подал заявку на участие
+  // Получаем события из Redux
+  const { events, loading: eventsLoading } = useSelector(
+    (state: RootState) => state.Events
+  );
+
+  // Избранное: получаем список и считаем количество участников
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
-  )
-
-  // Получаем количество уже участвующих
-  const handleGetFavorites = (eventId : number) => {
+  );
+  const handleGetFavorites = (eventId: number): number => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    const favCounter : number = copyFav.filter((fav : Favorite) => fav.eventId === eventId).length;
-    return favCounter
-  }
-
-  // Функция для проверки, участвует ли пользователь в событии
-  const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number): boolean => {
-    return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
+    return copyFav.filter((fav: any) => fav.eventId === eventId).length;
   };
-  
+
+  // Загружаем избранное и события при инициализации компонента
   useEffect(() => {
-    dispatch(getAllFavorites())
-  }, [dispatch])
+    dispatch(getAllFavorites());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchEvents());
   }, [dispatch]);
 
+  // Ищем событие по id
   const event = events.find((e) => e.id.toString() === id);
 
+  // Если событие найдено, загружаем данные организатора
   useEffect(() => {
     if (event) {
       dispatch(fetchUsers(event.userId)).then((res) => {
-        setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
-      })
+        setOrganizer(res.payload);
+      });
     }
   }, [dispatch, event]);
 
-  const userData = JSON.parse(localStorage.getItem('user') || '{}')
-  const userId = userData.id
-  
+  // Получаем данные текущего пользователя из localStorage
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const userId = userData.id;
 
+  // Обработчик для добавления события в избранное
   const handleAddToFavorites = () => {
     if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }))
+      dispatch(addToFavorites({ eventId: event.id, userId }));
+      setShowRoute(true);
     }
-  }
+  };
 
   if (eventsLoading) {
-    return <div>Загрузка данных...</div>
+    return <div>Загрузка данных...</div>;
   }
 
   if (!event) {
     return <div>Событие не найдено</div>;
   }
 
+  // Вычисляем координаты события (если заданы)
   const eventCoordinates =
     event.latitude && event.longitude
       ? ([event.latitude, event.longitude] as [number, number])
       : null;
 
+  // Для отладки можно вывести в консоль координаты
+  console.log("Event coordinates:", eventCoordinates);
+
   return (
     <div className={styles.eventItem}>
       <h2 className={styles.eventTitle}>{event.title}</h2>
-      {isBgColor(event.background || '') ? (
+      {isBgColor(event.background || "") ? (
         <div
           className={styles.eventImage}
-          style={{ backgroundColor: event.background }}
-        ></div>
+          style={{ backgroundColor: event.background }}></div>
       ) : (
         <img
           className={styles.eventImage}
           src={
             event.background
               ? `${apiUrl}${event.background}`
-              : '/default-background.jpg'
+              : "/default-background.jpg"
           }
           alt={event.title}
         />
       )}
-
       <div className={styles.eventColumns}>
         <div className={styles.eventColumn}>
           <div className={styles.containerProfile}>
@@ -121,9 +115,9 @@ export const EventItem = () => {
                 src={
                   organizer.photoUrl
                     ? `${apiUrl}${organizer.photoUrl}`
-                    : '/default-background.jpg'
+                    : "/default-background.jpg"
                 }
-                alt='avatar'
+                alt="avatar"
               />
             )}
             <div className={styles.profileInfo}>
@@ -133,75 +127,51 @@ export const EventItem = () => {
             </div>
           </div>
         </div>
-
         <div className={styles.eventColumn}>
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>Город: {event.city}</div>
           <div className={styles.eventCity}>Место: {event.district}</div>
           {event.maxPeople ? (
             <>
-              <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</div>
-              
-              {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-                <div className={styles.eventCity}>Вы уже участвуете в этом мероприятии</div>
-              ) : handleGetFavorites(event.id) === event.maxPeople ? (
-                <div className={styles.eventCity}>В этом мероприятии уже максимальное количество участвующих</div>
-              ) : (
-                <div className={styles.eventCity}>Вы можете присоединиться к этому мероприятию</div>
-              )}
-            </>
-          ) : (
-            <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}</div>
-          )}
-          <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
-            {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
-          </div>
-
-          {eventCoordinates && (
-            <div className={styles.mapContainer}>
-              <YMaps>
-                <Map
-                  state={{ center: eventCoordinates, zoom: 10 }}
-                  width="100%"
-                  height="300px">
-                  <Placemark geometry={eventCoordinates} />
-                </Map>
-              </YMaps>
-            </div>
-          )}
-
-          <div className={styles.eventButtonContainer}>
-            <button
-              className={styles.eventButton}
-              onClick={() => setShowRoute(true)}>
-              Задать вопрос
-            </button>
-
-            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
-                Отказаться
-              </button>
-            ) : handleGetFavorites(event.id) === event.maxPeople ? (
-              <button className={styles.eventButton}>
-                Нет мест
-              </button>
-            ) : (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
+              <div className={styles.eventCity}>
+                Количество участников: {handleGetFavorites(event.id)}/
+                {event.maxPeople}
+              </div>
+              <button
+                className={styles.eventButton}
+                onClick={handleAddToFavorites}>
                 Я готов
               </button>
-            )}
-
-              
-
-            <button
-              className={styles.eventButton}
-              onClick={() => console.log("Участники")}>
-              Участники
-            </button>
+            </>
+          ) : (
+            <div className={styles.eventCity}>
+              Количество участников: {handleGetFavorites(event.id)}
+            </div>
+          )}
+          <div className={styles.eventDate}>
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
+            {event.end_date
+              ? ` до ${moment(event.end_date).format("HH:mm")}`
+              : ""}
           </div>
         </div>
       </div>
+      // EventItem.tsx
+      {eventCoordinates && (
+        <div className={styles.mapContainer}>
+          <YMaps query={{ apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673" }}>
+            <Map
+              state={{ center: eventCoordinates, zoom: 13 }}
+              width="100%"
+              height="300px">
+              <Placemark
+                geometry={eventCoordinates}
+                options={{ preset: "islands#darkblueCircleIcon" }}
+              />
+            </Map>
+          </YMaps>
+        </div>
+      )}
       {showRoute && eventCoordinates && (
         <SubscriptionMap
           eventCoordinates={eventCoordinates}
@@ -211,3 +181,5 @@ export const EventItem = () => {
     </div>
   );
 };
+
+export default EventItem;

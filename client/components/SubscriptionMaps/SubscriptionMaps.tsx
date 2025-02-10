@@ -13,8 +13,9 @@ const SubscriptionMap: React.FC<SubscriptionMapProps> = ({
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null);
   const [ymapsApi, setYmapsApi] = useState<any>(null);
   const mapRef = useRef<any>(null);
-  const routeRef = useRef<any>(null);
+  const [route, setRoute] = useState<any>(null);
 
+  // Получаем геолокацию пользователя
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -35,24 +36,23 @@ const SubscriptionMap: React.FC<SubscriptionMapProps> = ({
     }
   }, []);
 
+  // Создаём маршрут, когда доступны все необходимые данные
   useEffect(() => {
     if (ymapsApi && mapRef.current && userCoords && eventCoordinates) {
-      // Удаляем предыдущий маршрут, если он существует
-      if (routeRef.current) {
-        mapRef.current.geoObjects.remove(routeRef.current);
+      if (route) {
+        mapRef.current.geoObjects.remove(route);
       }
-      // Создаем новый маршрут через апишку
-      routeRef.current = new ymapsApi.multiRouter.MultiRoute(
+      const newRoute = new ymapsApi.multiRouter.MultiRoute(
         {
           referencePoints: [userCoords, eventCoordinates],
           params: { results: 1 },
         },
         { boundsAutoApply: true }
       );
-      // Добавляем маршрут на карту
-      mapRef.current.geoObjects.add(routeRef.current);
+      mapRef.current.geoObjects.add(newRoute);
+      setRoute(newRoute);
     }
-  }, [ymapsApi, userCoords, eventCoordinates]);
+  }, [ymapsApi, userCoords, eventCoordinates, route]);
 
   return (
     <div
@@ -77,7 +77,12 @@ const SubscriptionMap: React.FC<SubscriptionMapProps> = ({
         <button onClick={onClose} style={{ marginBottom: "10px" }}>
           Закрыть
         </button>
-        <YMaps query={{ lang: "ru_RU", load: "package.full" }}>
+        <YMaps
+          query={{
+            apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673",
+            lang: "ru_RU",
+            load: "package.full,package.multiRouter",
+          }}>
           <Map
             instanceRef={(instance) => {
               mapRef.current = instance;
@@ -87,14 +92,16 @@ const SubscriptionMap: React.FC<SubscriptionMapProps> = ({
             height="400px"
             onLoad={(ymaps) => {
               console.log("API загружен", ymaps);
-              setYmapsApi(ymaps);
+              if (ymaps.multiRouter) {
+                setYmapsApi(ymaps);
+              } else {
+                console.error("Модуль multiRouter не найден в API");
+              }
             }}>
-            {/* Метка для места проведения события (красная) */}
             <Placemark
               geometry={eventCoordinates}
               options={{ preset: "islands#redDotIcon" }}
             />
-            {/* Если координаты пользователя получены – метка для пользователя (синяя) */}
             {userCoords && (
               <Placemark
                 geometry={userCoords}
