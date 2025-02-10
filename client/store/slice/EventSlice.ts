@@ -59,7 +59,10 @@ export const createEvent = createAsyncThunk(
       
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при создании события');
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при создании события');
     }
   },
 );
@@ -75,7 +78,10 @@ export const editEvent = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при редактировании события');
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при редактировании события');
     }
   },
 );
@@ -90,7 +96,10 @@ export const deleteEvent = createAsyncThunk(
       });
       return eventId;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при удалении события');
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при удалении события');
     }
   },
 );

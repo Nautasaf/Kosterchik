@@ -1,28 +1,18 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import styles from './Participants.module.scss'
-import { useNavigate } from "react-router-dom"
-import { AppDispatch, RootState } from "../../store/Index"
+import { RootState } from "../../store/Index"
 import React, { useEffect, useMemo, useState } from "react"
 import { Event, Favorite } from "../../interface/EventFetch"
-import axios from "axios"
 import { handleCountFavorites, handleEventFavorites } from "../../scripts/FavoriteScripts"
-
-const apiUrl = import.meta.env.VITE_API_URL;
 
 interface ParticipantsModalProps {
   event: Event
   onClose: () => void
 }
 
-const ParticipantsModal: React.FC<ParticipantsModalProps> = ({ event, onClose }) => {
-  const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
-
-  const user = useSelector((state: RootState) => state.user)
-  
+const ParticipantsModal: React.FC<ParticipantsModalProps> = ({ event, onClose }) => {  
   // Локальное состояние для списков событий и участников
   const [localFavorites, setLocalFavorites] = useState<Favorite[]>([]);
-  const [userEvents, setUserEvents] = useState<Event[]>([])
 
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
@@ -35,23 +25,6 @@ const ParticipantsModal: React.FC<ParticipantsModalProps> = ({ event, onClose })
   useEffect(() => {
     setLocalFavorites(allFavorites);
   }, [allFavorites]);
-
-  useEffect(() => {
-    const fetchUserEvents = async () => {
-      try {
-        const response = await axios.get(
-          `${apiUrl}/events/user/${user.id}`,
-        )
-        setUserEvents(response.data.events)
-      } catch (error) {
-        console.error('Ошибка при получении событий пользователя:', error)
-      }
-    }
-
-    if (user.id) {
-      fetchUserEvents()
-    }
-  }, [user.id])
 
   if (!allFavorites || allFavorites.length === 0) {
     return (

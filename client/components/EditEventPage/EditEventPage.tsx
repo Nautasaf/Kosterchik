@@ -18,6 +18,7 @@ const EditEventPage: React.FC = () => {
     userId: 1,
     maxPeople: 10,
     date: 'string',
+    category: 'Шашлыки',
     createdAt: 'string',
     updatedAt: 'string',
     longitude: 1,

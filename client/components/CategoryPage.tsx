@@ -1,7 +1,6 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/Index';
-import React from 'react';
 import style from "./CategoryPage.module.scss";
 import moment from "moment";
 import "moment/locale/ru";

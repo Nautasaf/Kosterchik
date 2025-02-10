@@ -3,10 +3,10 @@ import { fetchEvents } from '../thunk/EventThunk';
 import{EventsState} from '../../interface/EventFetch'
 
 const initialState: EventsState = {
-    events: [],
-    loading: false,
-    error: null,
-  };
+  events: [],
+  loading: false,
+  error: null,
+};
 
 
 const eventsSlice = createSlice({

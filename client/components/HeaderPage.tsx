@@ -1,7 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css';
 import style from './HeaderPage.module.scss';
 import { NavLink } from 'react-router-dom';
-import React from 'react';
 
 export const HeaderBar = () => {
 

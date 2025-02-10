@@ -21,8 +21,14 @@ export const fetchUserEvents = createAsyncThunk(
     
       return data;
     } catch (error) {
-      console.error("Error fetching user events:", error);
-      return rejectWithValue(error.message);
+      // Проверяем, является ли ошибка экземпляром Error
+      if (error instanceof Error) {
+        console.error("Ошибка при получении событий:", error.message);
+        return rejectWithValue(error.message);
+      } else {
+        console.error("Неизвестная ошибка:", error);
+        return rejectWithValue("Произошла неизвестная ошибка");
+      }
     }
   }
 );

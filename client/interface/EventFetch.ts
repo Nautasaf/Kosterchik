@@ -31,7 +31,6 @@ export interface Event {
 }  
   
    export interface EventsState {
-    filter(arg0: (event: Event ) => boolean): unknown;
     events: Event[];
     loading: boolean;
     error: string | null;

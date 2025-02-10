@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../store/Index';
 import { fetchFavorites, removeFromFavorites } from '../store/thunk/FavoriteThunk';
