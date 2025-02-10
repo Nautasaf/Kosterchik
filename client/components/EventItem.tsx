@@ -49,7 +49,7 @@ export const EventItem = () => {
   const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number): boolean => {
     return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
   };
-  
+
   useEffect(() => {
     dispatch(getAllFavorites())
   }, [dispatch])
@@ -63,14 +63,14 @@ export const EventItem = () => {
   useEffect(() => {
     if (event) {
       dispatch(fetchUsers(event.userId)).then((res) => {
-        setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
+        setOrganizer(res.payload)
       })
     }
   }, [dispatch, event]);
 
   const userData = JSON.parse(localStorage.getItem('user') || '{}')
   const userId = userData.id
-  
+
 
   const handleAddToFavorites = () => {
     if (event) {
@@ -141,7 +141,7 @@ export const EventItem = () => {
           {event.maxPeople ? (
             <>
               <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</div>
-              
+
               {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
                 <div className={styles.eventCity}>Вы уже участвуете в этом мероприятии</div>
               ) : handleGetFavorites(event.id) === event.maxPeople ? (
@@ -154,7 +154,7 @@ export const EventItem = () => {
             <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}</div>
           )}
           <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
             {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
           </div>
 
@@ -192,7 +192,7 @@ export const EventItem = () => {
               </button>
             )}
 
-              
+
 
             <button
               className={styles.eventButton}

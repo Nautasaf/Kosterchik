@@ -2,28 +2,27 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f8f8f8; /* Светлый фон, как в других компонентах */
-  border-radius: 16px; /* Увеличенное скругление углов */
+  background: #ffffff;
+  border-radius: 16px;
   padding: 2rem;
   width: 100%;
   max-width: 400px;
   margin: 0 auto;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
-  border: 1px solid #e0e0e0; /* Тонкая граница */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif; /* Системные шрифты */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 
   .formTitle {
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 1.75rem; /* Увеличенный размер заголовка */
-    color: #2d2d2d; /* Цвет заголовка */
+    font-size: 1.75rem;
+    color: #333333;
     font-weight: 600;
-    letter-spacing: -0.5px; /* Уменьшение расстояния между буквами */
+    letter-spacing: -0.5px;
   }
 
   .formGroup {
-    margin-bottom: 1.5rem; /* Увеличенный отступ */
+    margin-bottom: 1.5rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -33,67 +32,67 @@
       display: block;
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: #666; /* Серый цвет для текста */
+      color: #666666;
       font-weight: 500;
     }
 
     .formInput {
-      width: 80%; /* Ширина инпута */
+      width: 80%;
       padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 8px; /* Скругление углов */
+      border: 1px solid #cccccc;
+      border-radius: 8px;
       font-size: 1rem;
-      color: #333;
-      background-color: #fff;
+      color: #333333;
+      background-color: #f9f9f9;
       transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
       &:focus {
-        border-color: #494a4b; /* Цвет при фокусе */
+        border-color: #007bff;
         outline: none;
-        box-shadow: 0 0 0 3px rgba(73, 74, 75, 0.1); /* Тень при фокусе */
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
       }
 
       &::placeholder {
-        color: #999; /* Цвет плейсхолдера */
+        color: #999999;
       }
     }
   }
 
   .formButton {
-    width: 80%; /* Ширина кнопки */
+    width: 80%;
     padding: 0.75rem;
-    background-color: #494a4b; /* Простой цвет фона */
+    background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 8px; /* Скругление углов */
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
     &:hover {
-      background-color: #333; /* Темнее при наведении */
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
+      background-color: #0056b3;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     &:active {
-      background-color: #2d2d2d; /* Еще темнее при нажатии */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
+      background-color: #004080;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
   }
 
   .formFooter {
     margin-top: 1.5rem;
     text-align: center;
-    color: #666; /* Серый цвет текста */
+    color: #666666;
     font-size: 0.875rem;
 
     .footerLink {
-      color: #007bff; /* Цвет ссылки */
+      color: #007bff;
       text-decoration: none;
 
       &:hover {
-        text-decoration: underline; /* Подчеркивание при наведении */
+        text-decoration: underline;
       }
     }
   }

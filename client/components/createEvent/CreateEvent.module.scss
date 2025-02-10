@@ -1,88 +1,84 @@
 .createEventContainer {
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
   font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+}
 
-  h2 {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-    color: #333;
-    font-weight: 600;
-  }
+.createEventContainer h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
 
-  form {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+.createEventContainer form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  align-items: center;
+}
 
-    .formGroup {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
+.createEventContainer .formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
 
-      label {
-        font-weight: 500;
-        color: #555;
-        font-size: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
+.createEventContainer .formGroup label {
+  font-weight: 600;
+  font-size: 1rem;
+}
 
-      input[type='text'],
-      input[type='date'],
-      textarea,
-      input[type='color'] {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        font-size: 1rem;
-        transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        background-color: #f9f9f9;
-        color: #333;
+.createEventContainer .formGroup input,
+.createEventContainer .formGroup textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
 
-        &:focus {
-          border-color: #007bff;
-          outline: none;
-          box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
-        }
-      }
+.createEventContainer .formGroup input:focus,
+.createEventContainer .formGroup textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
 
-      textarea {
-        resize: vertical;
-        min-height: 100px;
-      }
-    }
-  }
+.createEventContainer .submitButton {
+  grid-column: span 2;
+  width: 100%;
+  padding: 1rem;
+  background: var(--accent-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
 
-  .submitButton {
-    display: block;
-    width: 100%;
-    padding: 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.createEventContainer .submitButton:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
 
-    &:hover {
-      background-color: #0056b3;
-      transform: translateY(-2px);
-    }
-
-    &:active {
-      background-color: #004080;
-      transform: translateY(0);
-    }
-  }
+.createEventContainer .submitButton:active {
+  background: var(--accent-active);
+  transform: translateY(0);
 }
 
 @media (max-width: 768px) {
@@ -91,8 +87,12 @@
     width: 90%;
   }
 
-  .submitButton {
-    font-size: 0.9rem;
+  .createEventContainer form {
+    grid-template-columns: 1fr;
+  }
+
+  .createEventContainer .submitButton {
+    font-size: 1rem;
     padding: 0.75rem;
   }
 }

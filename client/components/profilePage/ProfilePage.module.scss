@@ -1,91 +1,91 @@
 .containerProfile {
+  opacity: 0.9;
   max-width: 800px;
   margin: 0 auto;
   padding: 30px;
-  background-color: #f8f8f8; /* Светлый фон, как в других компонентах */
-  border-radius: 16px; /* Увеличенное скругление углов */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  background: var(--primary-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   text-align: center;
-  border: 1px solid #e0e0e0; /* Тонкая граница */
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif; /* Системные шрифты */
+  border: 1px solid var(--secondary-bg);
+  font-family: 'Inter', sans-serif;
+  transition: background 0.5s ease, color 0.5s ease;
+}
 
-  h2 {
-    font-size: 28px;
-    margin-bottom: 25px;
-    color: #2d2d2d; /* Цвет заголовка */
-    font-weight: 600;
-    letter-spacing: -0.5px; /* Уменьшение расстояния между буквами */
-  }
+.containerProfile h2 {
+  font-size: 28px;
+  margin-bottom: 25px;
+  color: var(--text-color);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
 
-  .profileInfo {
-    margin-top: 30px;
-    text-align: left;
-    padding-left: 30px;
-    padding-right: 30px;
+.profileInfo {
+  margin-top: 30px;
+  text-align: left;
+  padding: 0 30px;
+}
 
-    p {
-      font-size: 16px;
-      margin-bottom: 12px;
-      color: #666; /* Серый цвет текста */
-      font-weight: 500;
-      line-height: 1.5; /* Увеличенный межстрочный интервал */
-    }
-  }
+.profileInfo p {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--text-color);
+  font-weight: 500;
+  line-height: 1.5;
+}
 
-  .buttonsBlock {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-    gap: 10px;
-    flex-wrap: wrap;
+.buttonsBlock {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 
-    button {
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      transition: all 0.3s ease;
-      width: 45%;
-      background-color: #494a4b; /* Простой цвет фона */
-      color: white;
+.buttonsBlock button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  width: 45%;
+  background-color: var(--accent-color);
+  color: white;
+}
 
-      &:hover {
-        background-color: #333; /* Темнее при наведении */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Легкая тень */
-      }
+.buttonsBlock button:hover {
+  background-color: #5146d3;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-      &:active {
-        background-color: #2d2d2d; /* Еще темнее при нажатии */
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Уменьшенная тень */
-      }
-    }
+.buttonsBlock button:active {
+  background-color: #3d34a2;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .button1 {
-      background-color: #494a4b; /* Цвет первой кнопки */
+.button1 {
+  background-color: var(--text-muted);
+}
 
-      &:hover {
-        background-color: #333;
-      }
+.button1:hover {
+  background-color: #6c757d;
+}
 
-      &:active {
-        background-color: #2d2d2d;
-      }
-    }
+.button1:active {
+  background-color: #555b62;
+}
 
-    .button2 {
-      background-color: #494a4b; /* Цвет первой кнопки */
+.button2 {
+  background-color: var(--text-muted);
+}
 
-      &:hover {
-        background-color: #333;
-      }
+.button2:hover {
+  background-color: #6c757d;
+}
 
-      &:active {
-        background-color: #2d2d2d;
-      }
-    }
-  }
+.button2:active {
+  background-color: #555b62;
 }

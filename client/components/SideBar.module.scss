@@ -1,135 +1,152 @@
+/* Общий стиль боковой панели */
 .sidebar {
   position: fixed;
-  top: 120px;
+  top: 200px;
   left: 10px;
-  width: 400px;
-  height: 85vh;
-  border-right: 5px solid #b1afaf;
-  // border-bottom: 5px solid #ff0000;
-  border-radius: 4px;
-  background-color: white;
-  color: white;
-  padding: 15px;
+  width: 300px; /* Уменьшили ширину для минимализма */
+  height: 70vh;
+  border-right: 2px solid var(--border-color); /* Используем переменную для цвета границы */
+  border-radius: 8px;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  padding: 1rem;
   box-sizing: border-box;
   z-index: 10;
-  transition: left 0.3s ease;
+  transition: left 0.3s ease, box-shadow 0.3s ease;
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
-  scrollbar-color: none;
+
+  /* Скрываем скроллбар */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-// .sidebar:hover {
-//   left: 0;
-// }
-.sidebar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 100%;
-  width: 20px;
-  height: 100%;
-  background: transparent;
-}
-
+/* Заголовок боковой панели */
 .header {
-  font-size: 18px;
-  margin-bottom: 12px;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
   text-align: center;
-  color:  #0d0d0d;
+  color: var(--text-color);
+  font-weight: 600;
 }
 
-
-label {
-  display: block;
-  margin-top: 0px;
-  font-weight: bold;
-  font-size: 13px;
-  color: #040404;
-}
+/* Группа метки и поля ввода */
 .labelWrapper {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-span{
-  color: #000000;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
+/* Метка */
+label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Поля ввода и селекторы */
 input,
 select {
-  width: 90%;
-
-  padding: 8px;
-  margin-top: 4px;
+  width: 100%;
+  padding: 0.75rem;
   border: none;
-  border-radius: 4px;
-  font-size: 12px;
-  background-color: grey;
-  color: white;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  background-color: var(--input-bg);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    background-color: var(--accent-light-bg);
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2); /* Акцентный цвет */
+    outline: none;
+  }
+
+  &::placeholder {
+    color: var(--text-muted);
+    opacity: 0.8;
+  }
 }
 
+/* Чекбоксы */
 input[type="checkbox"] {
   width: auto;
-  margin-right: 8px;
+  margin-right: 0.5rem;
 }
-input::placeholder,
-select::placeholder {
-  color: white;
-  opacity: 0.7;
-}
+
 /* Кнопка "Применить фильтры" */
 button {
-  background-color:#843c3c;
-  color: white;
-  padding: 10px;
   width: 100%;
+  padding: 0.75rem;
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
   border: none;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  margin-top: 12px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+
+  &:hover {
+    background-color: #5c54d3; /* Темный оттенок акцентного цвета */
+    transform: scale(1.02);
+  }
+
+  &:active {
+    background-color: #4c43b3; /* Еще темнее при нажатии */
+  }
 }
 
-
-
-input[type="text"],
-input[type="number"],
-input[type="date"] {
-  background-color: grey;
-  color: white;
-  border-radius: 4px;
-  border: none;
+/* Темы */
+.lightMode {
+  --primary-bg: #f8f6f6;
+  --secondary-bg: #f8f9fa;
+  --text-color: #333;
+  --text-muted: #6c757d;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #f0f0ff;
+  --input-bg: #f8f9fa;
+  --border-color: #ddd;
 }
 
-
-input,
-select,
-button {
-  margin-bottom: 5px;
+.darkMode {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --text-muted: #868e96;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #2a2a4a;
+  --input-bg: #2a2a2a;
+  --border-color: #444;
 }
 
-
+/* Адаптивность */
 @media (max-width: 768px) {
   .sidebar {
     width: 100%;
     height: auto;
     top: 0;
     bottom: 0;
+    border-radius: 0;
+    padding: 1rem;
   }
 
-
   .header {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   label {
-    font-size: 12px;
+    font-size: 0.8rem;
   }
 
   input,
   select,
   button {
-    font-size: 14px;
+    font-size: 0.9rem;
   }
 }

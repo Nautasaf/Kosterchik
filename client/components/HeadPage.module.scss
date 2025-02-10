@@ -1,14 +1,14 @@
 /* Основной контейнер страницы */
 .headPageContainer {
+  margin-left: 250px;
   max-width: 1200px;
-  margin-left: 300px;
-  padding: 40px;
-  background-color: #f8f8f8; /* Светлый фон для минимализма */
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05); /* Мягкая тень */
+  padding: 2rem;
+  background-color: var(--primary-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   text-align: center;
-  border: 1px solid #e0e0e0; /* Тонкая граница */
-  font-family: 'Montserrat', sans-serif;
+  border: 1px solid var(--border-color);
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 
@@ -20,115 +20,137 @@
   height: 100vh;
   width: 100%;
   font-size: 1.5rem;
-  color: #fff;
+  color: var(--text-color);
   font-weight: 600;
   text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
-    url('/jXU0dJZ5oEs.jpg') center/cover no-repeat;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/jXU0dJZ5oEs.jpg') center/cover no-repeat;
 }
 
 /* Заголовок страницы */
 .pageTitle {
-  font-size: 42px;
+  font-size: 2.25rem;
   font-weight: 600;
-  color: #2d2d2d;
-  margin-bottom: 40px;
-  letter-spacing: -1px; /* Уменьшение расстояния между буквами */
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+  letter-spacing: -1px;
 }
 
-/* Список событий */
+/* Список событий (всегда два столбца) */
 .eventList {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* Всегда два столбца */
-  gap: 30px;
-  margin-top: 20px;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
 /* Карточка события */
 .eventItem {
-  background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* Мягкая тень */
+  background-color: var(--secondary-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s;
   cursor: pointer;
   text-decoration: none;
-  border: 1px solid #e0e0e0; /* Тонкая граница */
+  border: 1px solid var(--border-color);
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); /* Увеличенная тень при наведении */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
   }
 }
 
 /* Изображение события */
 .eventImage {
   width: 100%;
-  height: 200px;
+  height: 150px; /* Уменьшили высоту для минимализма */
   object-fit: cover;
-  border-bottom: 1px solid #e0e0e0; /* Тонкая граница */
+  border-bottom: 1px solid var(--border-color);
 }
 
 /* Заголовок события */
 .eventTitle {
-  font-size: 22px;
-  color: #2d2d2d;
-  margin: 20px 20px 10px;
+  font-size: 1.25rem;
+  color: var(--text-color);
+  margin: 1rem;
   font-weight: 600;
 }
 
 /* Информация о событии */
 .eventInfo {
-  font-size: 16px;
-  color: #666;
-  padding: 0 20px;
-  margin-bottom: 15px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  padding: 0 1rem;
+  margin-bottom: 0.75rem;
   line-height: 1.5;
-  height: 60px;
+  height: 48px; /* Уменьшили высоту для минимализма */
   overflow: hidden;
 }
 
 /* Город и дата события */
 .eventCity,
 .eventDate {
-  font-size: 14px;
-  color: #888;
-  margin-left: 20px;
-  margin-bottom: 15px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-left: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #333;
+  --text-muted: #6c757d;
+  --border-color: #ddd;
+}
+
+.darkMode {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --text-muted: #868e96;
+  --border-color: #444;
 }
 
 /* Адаптация под мобильные устройства */
 @media (max-width: 768px) {
   .headPageContainer {
-    padding: 20px;
+    padding: 1rem;
   }
 
   .pageTitle {
-    font-size: 32px;
+    font-size: 1.75rem;
   }
 
+  .eventImage {
+    height: 120px;
+  }
+
+  .eventTitle {
+    font-size: 1.125rem;
+  }
+
+  .eventInfo {
+    font-size: 0.875rem;
+  }
+
+  /* На маленьких экранах один столбец */
   .eventList {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 480px) {
   .pageTitle {
-    font-size: 28px;
+    font-size: 1.5rem;
   }
 
   .eventTitle {
-    font-size: 20px;
+    font-size: 1rem;
   }
 
   .eventInfo {
-    font-size: 14px;
-  }
-}
-
-/* Адаптация под мобильные устройства */
-@media (max-width: 768px) {
-  .eventList {
-    grid-template-columns: repeat(1, 1fr); /* Один столбец на мобильных */
+    font-size: 0.8rem;
   }
 }

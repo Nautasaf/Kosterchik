@@ -155,8 +155,6 @@ export const Sidebar: React.FC = () => {
     <option value="Оффлайн">Оффлайн</option>
   </select>
 </label>
-
-     //todo available_seats убрать из бд и сидов 
       <label>
   Язык:
   <select name="language" value={filters.language} onChange={handleSelectChange}>
