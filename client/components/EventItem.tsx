@@ -69,7 +69,7 @@ export const EventItem = () => {
     if (event) {
       dispatch(getAllFavorites()) //Добавил вытягивание всех "фаворитов"
       dispatch(fetchUsers(event.userId)).then((res) => {
-        setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
+        setOrganizer(res.payload)
       })
     }
   }, [dispatch, event]);
@@ -140,7 +140,7 @@ export const EventItem = () => {
           <div className={styles.eventCity}>Место: {event.district}</div>
           
           <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
             {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
           </div>
 

@@ -14,6 +14,8 @@ import {FavoritesPage} from "../components/FavoritesPage.tsx"
 import{HistoryPage} from "../components/HistoryPage.tsx"
 import EditEventPage from '../components/EditEventPage/EditEventPage'
 import {CategoryPage }from "../components/CategoryPage.tsx"
+import Project from '../components/Project/Project'
+import Developers from '../components/Developers/Developers.tsx'
 
 const router = createBrowserRouter([
   {
@@ -57,8 +59,16 @@ const router = createBrowserRouter([
         element: <EditEventPage />,
       },
       {
-        path:"/eventType/:eventType", 
-        element: <CategoryPage  />, 
+        path:"/eventType/:eventType",
+        element: <CategoryPage  />,
+      },
+      {
+        path:"/project",
+        element: <Project  />,
+      },
+      {
+        path:"/developers",
+        element: <Developers  />,
       },
     ],
   },

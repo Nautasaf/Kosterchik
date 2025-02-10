@@ -10,31 +10,29 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out; /* Плавное появление */
+  animation: fadeIn 0.3s ease-out;
 }
-
 
 .modalContent {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #ffffff; /* Белый фон для светлой темы */
+  background-color: var(--primary-bg);
   padding: 30px;
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.3s ease-out; /* Плавное появление контента */
-  position: relative; /* Для позиционирования крестика */
-  border: 2px solid #dcdcdc;
-  font-family: 'Montserrat', sans-serif;
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+  border: 2px solid var(--secondary-bg);
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Темная тема для модального окна */
 .darkMode .modalContent {
-  background-color: #121212; /* Чёрный фон для тёмной темы */
-  color: #ffffff;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -51,17 +49,16 @@ h2 {
   background-color: transparent;
   border: none;
   font-size: 24px;
-  color: #706e6e;
+  color: var(--text-muted);
   cursor: pointer;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
 .closeButton:hover {
-  color: #ff7875; /* Красный при наведении */
+  color: var(--accent-color);
 }
 
-/* Анимации для появления модального окна */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -82,7 +79,6 @@ h2 {
   }
 }
 
-/* Стили для списка событий */
 ul {
   list-style-type: none;
   padding: 0;
@@ -94,10 +90,10 @@ li {
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--secondary-bg);
   font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #333;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -106,13 +102,12 @@ li:last-child {
 }
 
 li:hover {
-  background-color: #f7f7f7; /* Светло-серый при наведении */
+  background-color: var(--secondary-bg);
   cursor: pointer;
 }
 
-/* Темная тема для списка событий */
 .darkMode li {
-  color: #ffffff;
+  color: var(--text-color);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -150,26 +145,23 @@ li:hover {
 
 /* Стиль кнопки "Редактировать" */
 .editButton {
-  background: linear-gradient(45deg, #2196F3, #42A5F5); /* Градиент синего цвета */
+  background: var(--accent-color);
 }
 
 .editButton:hover {
-  background: linear-gradient(45deg, #1E88E5, #42A5F5); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3); /* Тень синего цвета */
+  background: #5146d3;
+  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3);
 }
 
-/* Стиль кнопки "Удалить" */
 .deleteButton {
-  background: linear-gradient(45deg, #FF5252, #FF7043); /* Градиент красного цвета */
+  background: #ff5252;
 }
 
 .deleteButton:hover {
-  background: linear-gradient(45deg, #F44336, #FF7043); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3); /* Тень красного цвета */
+  background: #f44336;
+  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3);
 }
 
-
-/* Стили для мобильных устройств */
 @media (max-width: 768px) {
   .modalContent {
     padding: 20px;

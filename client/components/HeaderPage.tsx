@@ -1,5 +1,5 @@
 import 'react-toastify/dist/ReactToastify.css';
-import style from './HeaderPage.module.scss'; 
+import style from './HeaderPage.module.scss';
 import { NavLink } from 'react-router-dom';
 import React from 'react';
 
@@ -24,7 +24,7 @@ export const HeaderBar = () => {
       {categories.map((category) => (
         <NavLink
           key={category.path}
-          to={`/eventType/${category.path}`} 
+          to={`/eventType/${category.path}`}
           className={({ isActive }) =>
             `${style.navLink} ${isActive ? style.navLinkActive : ''}`
           }

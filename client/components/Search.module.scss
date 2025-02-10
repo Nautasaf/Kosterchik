@@ -1,22 +1,26 @@
 /* Общий контейнер профиля и поиска */
 .profileContainer,
 .searchContainer {
-  max-width: 50%;
-  padding: 30px;
-  background: rgb(255, 255, 255);
+  max-width: 60%;
+  padding: 1.5rem;
+  background-color: var(--primary-bg);
   text-align: center;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
   transition: all 0.3s ease;
-  margin-left: 500px;
+  margin-left: auto;
+  margin-right: auto; /* Центрирование на странице */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 /* Контейнер поиска */
 .searchContainer {
+  margin-left: 420px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center; /* Добавлено для выравнивания по центру */
-  gap: 15px;
+  justify-content: center;
+  gap: 1rem;
   position: sticky;
   top: 80px;
   z-index: 1000;
@@ -37,84 +41,87 @@
 
 /* Инпуты */
 .searchInput {
-  width: 40vw;
+  width: 100%;
   max-width: 280px;
-  padding: 14px;
+  padding: 1rem;
   border: none;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 1rem;
   outline: none;
   transition: all 0.3s ease;
-}
-
-.lightModeInput {
-  background: #ffffff;
-  color: #787878;
-}
-
-.darkModeInput {
-  background: #3c3c3c;
-  color: #fff;
+  background-color: var(--input-bg);
+  color: var(--text-color);
 }
 
 .searchInput:focus {
-  background: rgb(104, 104, 104);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  background-color: var(--accent-light-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* Дата-пикер */
 .react-datepicker {
-  background: white;
+  background-color: var(--primary-bg);
   border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
 .react-datepicker__day {
-  padding: 6px;
-  font-size: 15px;
+  padding: 0.5rem;
+  font-size: 1rem;
   text-align: center;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .react-datepicker__day--today {
-  background: #000;
-  color: rgb(255, 255, 255);
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
   border-radius: 50%;
 }
 
 .react-datepicker__day--selected {
-  background: #d00000;
-  color: white;
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
   border-radius: 50%;
+}
+
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #565656;
+  --text-muted: #6c757d;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #f0f0ff;
+  --input-bg: #f8f9fa;
+}
+
+.darkMode {
+  --primary-bg: #050505;
+  --secondary-bg: #383838;
+  --text-color: #ffffff;
+  --text-muted: #868e96;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #2a2a4a;
+  --input-bg: #2a2a2a;
 }
 
 /* Адаптация под мобильные устройства */
 @media (max-width: 768px) {
   .profileContainer,
   .searchContainer {
-    width: 95vw;
+    max-width: 100%;
+    padding: 1rem;
   }
 
-  .searchInput,
-  .searchButton {
+  .searchInput {
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .searchInput,
-  .searchButton {
-    width: 100%;
+  .searchInput {
+    font-size: 0.9rem;
+    padding: 0.75rem;
   }
-}
-
-/* Темы */
-.lightMode {
-  background: #ffffff;
-  color: #000000;
-}
-
-.darkMode {
-  background: #030325;
-  color: #ffffff;
 }
