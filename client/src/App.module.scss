@@ -40,10 +40,18 @@ html, body {
   color: var(--text-muted);
 }
 
+.userControls {
+  margin-left: 350px;
+  margin-right: 600px;
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Расстояние между кнопками */
+}
+
 /* Навигация */
 .navMenu {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   padding: 10px 20px;
   position: sticky;
@@ -182,28 +190,6 @@ html, body {
   margin: 0 auto;
 }
 
-// .siteLabel {
-//   margin-top: 30px;
-//   margin-left: 100px;
-//   background-color: #ffffff;
-//   position: absolute;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   text-align: center;
-//   gap: 8px;
-// }
-
-// .siteLabel .logo {
-//   width: 30px;
-//   height: auto;
-// }
-
-// .slogan {
-//   font-size: 1.2rem;
-//   font-weight: bold;
-// }
-
 /* Футер */
 .footer {
   text-align: center;
@@ -216,6 +202,6 @@ html, body {
 
 /* Акцентная "О" в названии */
 .highlightO {
-  color: var(--accent-color);
+  color:#e74c3c;
   font-weight: bold;
 }

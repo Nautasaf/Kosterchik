@@ -59,7 +59,9 @@
 
 .createEventContainer .submitButton {
   grid-column: span 2;
-  width: 100%;
+  width: 30%;
+  margin-top: 20px;
+  margin-left: 240px;
   padding: 1rem;
   background: var(--accent-color);
   color: var(--button-text-color);

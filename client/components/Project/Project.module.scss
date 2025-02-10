@@ -3,6 +3,7 @@
   padding: 2rem;
   text-align: center;
   background-color: var(--primary-bg);
+  color: var(--text-color); /* Применяем переменную для цвета текста */
   border-radius: 12px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
@@ -48,7 +49,7 @@
   margin-top: 1rem;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-muted); /* Применяем переменную для второстепенного текста */
   word-wrap: break-word; /* Перенос текста для длинных строк */
 }
 
@@ -56,8 +57,8 @@
 .lightMode {
   --primary-bg: #ffffff;
   --secondary-bg: #f8f9fa;
-  --text-color: #333;
-  --text-muted: #6c757d;
+  --text-color: #d3d2d2;
+  --text-muted: #93989d;
 }
 
 .darkMode {

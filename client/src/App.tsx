@@ -1,47 +1,50 @@
-import 'react-toastify/dist/ReactToastify.css'
-import { useState, useEffect } from 'react'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import styles from './App.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { RootState, AppDispatch } from '../store/Index'
-import { logoutThunk } from '../store/thunk/LogoutThunk'
-import { Search } from '../components/Search'
-import { setUser } from '../store/slice/UserSlice'
-import { resetFilters } from '../store/slice/SearchSlice'
-import { ToastContainer } from 'react-toastify'
-import { HeaderBar } from '../components/HeaderPage'
-import { IoExitOutline, IoMoon, IoSunny } from 'react-icons/io5'
+import 'react-toastify/dist/ReactToastify.css';
+import { useState, useEffect } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import styles from './App.module.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '../store/Index';
+import { logoutThunk } from '../store/thunk/LogoutThunk';
+import { Search } from '../components/Search';
+import { setUser } from '../store/slice/UserSlice';
+import { resetFilters } from '../store/slice/SearchSlice';
+import { ToastContainer } from 'react-toastify';
+import { HeaderBar } from '../components/HeaderPage';
+import { IoExitOutline, IoMoon, IoSunny, IoPersonOutline } from 'react-icons/io5';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false)
-  const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
-  const dispatch = useDispatch<AppDispatch>()
-  const location = useLocation()
+  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user')
+    const savedUser = localStorage.getItem('user');
     if (savedUser) {
-      const user = JSON.parse(savedUser)
-      dispatch(setUser(user))
+      const user = JSON.parse(savedUser);
+      dispatch(setUser(user));
     }
-  }, [dispatch, isLoggedIn])
+  }, [dispatch, isLoggedIn]);
 
   const handleLogout = () => {
-    dispatch(logoutThunk())
-  }
+    dispatch(logoutThunk());
+  };
 
   const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev)
-  }
+    setIsDarkMode((prev) => !prev);
+  };
 
   const handleResetFilters = () => {
-    dispatch(resetFilters())
-  }
+    dispatch(resetFilters());
+  };
 
   return (
     <div className={isDarkMode ? styles.darkMode : styles.lightMode}>
       <nav className={styles.navMenu}>
         <div className={styles.containerLogo}>
+          <div className={styles.blockPhoto}>
+            <img src='/camp-fire.png' alt='Логотип' className={styles.logo} />
+          </div>
           <div className={styles.blockLogo}>
             <NavLink
               to='/'
@@ -54,29 +57,25 @@ function App() {
               К<span className={styles.highlightO}>О</span>стерчик
             </NavLink>
           </div>
-          <div className={styles.blockPhoto}>
-            <img src='/camp-fire.png' alt='Логотип' className={styles.logo} />
-          </div>
         </div>
 
-        <button onClick={toggleTheme} className={styles.themeToggle}>
-          {isDarkMode ? <IoSunny size={24} /> : <IoMoon size={24} />}
-        </button>
         {isLoggedIn ? (
-          <>
+          <div className={styles.userControls}>
+            <button onClick={toggleTheme} className={styles.themeToggle}>
+              {isDarkMode ? <IoSunny size={24} /> : <IoMoon size={24} />}
+            </button>
             <NavLink
               to='/profile'
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
               }
             >
-              Профиль
+              <IoPersonOutline size={24} />
             </NavLink>
-
             <button onClick={handleLogout} className={styles.logoutButton}>
               <IoExitOutline size={24} />
             </button>
-          </>
+          </div>
         ) : (
           <>
             <NavLink
@@ -99,7 +98,7 @@ function App() {
           </>
         )}
       </nav>
-      {isLoggedIn && location.pathname === '/' && <HeaderBar />}
+      {isLoggedIn && location.pathname === '/' && <HeaderBar isDarkMode={isDarkMode} />}
       {isLoggedIn && location.pathname === '/' && (
         <Search isDarkMode={isDarkMode} />
       )}
@@ -125,7 +124,7 @@ function App() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

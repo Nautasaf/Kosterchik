@@ -1,11 +1,10 @@
-/* Общий стиль боковой панели */
 .sidebar {
   position: fixed;
-  top: 200px;
+  top: 250px;
   left: 10px;
-  width: 300px; /* Уменьшили ширину для минимализма */
-  height: 70vh;
-  border-right: 2px solid var(--border-color); /* Используем переменную для цвета границы */
+  width: 320px;
+  height: 65vh;
+  border-right: 2px solid var(--border-color);
   border-radius: 8px;
   background-color: var(--primary-bg);
   color: var(--text-color);
@@ -16,55 +15,64 @@
   overflow-y: auto;
   overflow-x: hidden;
   scrollbar-width: none;
+  display: flex;
+  flex-direction: column;
 
-  /* Скрываем скроллбар */
   &::-webkit-scrollbar {
     display: none;
   }
 }
 
-/* Заголовок боковой панели */
+/* Заголовок */
 .header {
-  font-size: 1.125rem;
+  font-size: 1.2rem;
   margin-bottom: 1rem;
-  text-align: center;
   color: var(--text-color);
   font-weight: 600;
+  text-align: left;
+  width: 100%;
 }
 
-/* Группа метки и поля ввода */
+/* Группа инпутов */
 .labelWrapper {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
+  gap: 0.8rem;
+  width: 100%;
+  max-width: 250px;
 }
 
-/* Метка */
+/* Метки */
 label {
   font-size: 0.875rem;
   font-weight: 500;
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: left;
+  margin-bottom: 0.5rem; /* Отступ для лучшей читаемости */
 }
 
 /* Поля ввода и селекторы */
 input,
 select {
-  width: 100%;
+  max-width: 250px;
+  background-color: #313131;
+  width: calc(100% - 2px);
   padding: 0.75rem;
-  border: none;
+  border: 2px solid white(--border-color); /* Постоянный бордер */
   border-radius: 6px;
   font-size: 0.875rem;
   color: var(--text-color);
   background-color: var(--input-bg);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease,
+    border-color 0.3s ease;
 
   &:focus {
     background-color: var(--accent-light-bg);
-    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2); /* Акцентный цвет */
+    box-shadow: 0 0 5px rgba(108, 99, 255, 0.3);
     outline: none;
+    border-color: var(--accent-color);
   }
 
   &::placeholder {
@@ -74,12 +82,39 @@ select {
 }
 
 /* Чекбоксы */
-input[type="checkbox"] {
+input[type='checkbox'] {
   width: auto;
   margin-right: 0.5rem;
 }
 
-/* Кнопка "Применить фильтры" */
+input[type="range"] {
+  appearance: none; /* Стандартное свойство */
+  -webkit-appearance: none; /* Для старых версий Safari и Chrome */
+  width: 100%;
+  height: 5px;
+  background: var(--border-color);
+  border-radius: 5px;
+  outline: none;
+  transition: 0.2s;
+  margin-top: 5px;
+
+  &::-webkit-slider-thumb {
+    appearance: none; /* Стандартное свойство */
+    -webkit-appearance: none; /* Для старых версий Safari и Chrome */
+    width: 15px;
+    height: 15px;
+    background: var(--accent-color);
+    border: 2px solid var(--primary-bg);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &:focus {
+    background: var(--accent-light-bg);
+  }
+}
+
+/* Кнопка */
 button {
   width: 100%;
   padding: 0.75rem;
@@ -93,12 +128,12 @@ button {
   transition: background-color 0.3s ease, transform 0.2s ease;
 
   &:hover {
-    background-color: #5c54d3; /* Темный оттенок акцентного цвета */
+    background-color: #5c54d3;
     transform: scale(1.02);
   }
 
   &:active {
-    background-color: #4c43b3; /* Еще темнее при нажатии */
+    background-color: #4c43b3;
   }
 }
 
@@ -110,8 +145,8 @@ button {
   --text-muted: #6c757d;
   --accent-color: #6c63ff;
   --accent-light-bg: #f0f0ff;
-  --input-bg: #f8f9fa;
-  --border-color: #ddd;
+  --input-bg: #ffffff; /* Белый фон для инпутов */
+  --border-color: #ddd; /* Четкий бордер */
 }
 
 .darkMode {
@@ -121,8 +156,8 @@ button {
   --text-muted: #868e96;
   --accent-color: #6c63ff;
   --accent-light-bg: #2a2a4a;
-  --input-bg: #2a2a2a;
-  --border-color: #444;
+  --input-bg: #2a2a2a; /* Темный фон для инпутов */
+  --border-color: #444; /* Четкий бордер */
 }
 
 /* Адаптивность */
