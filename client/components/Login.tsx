@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { setEmail, setPassword, resetForm } from '../store/slice/LoginSlice'
@@ -6,11 +6,14 @@ import { AppDispatch, RootState } from '../store/Index'
 import style from './Login.module.scss'
 import { loginUser } from '../store/thunk/LoginThunk'
 import { toast } from 'react-toastify'
+import defaultBear from './pic/defaultBear.png'
+import typingBear from './pic/typingBear.png'
 
 export const Login: React.FC = () => {
   const { email, password } = useSelector((state: RootState) => state.Login)
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
+  const [bearImage, setBearImage] = useState(defaultBear)
 
   const submitHandler = async (event: React.FormEvent) => {
     event.preventDefault()
@@ -35,24 +38,31 @@ export const Login: React.FC = () => {
       toast.error('Произошла ошибка при входе. Пожалуйста, попробуйте снова.')
     }
   }
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
+    if (name === 'password') {
+      if (value.trim() !== '') {
+        setBearImage(typingBear);
+      } else {
+        setBearImage(defaultBear);
+      }
+    }
     switch (name) {
       case 'email':
-        dispatch(setEmail(value))
-        break
+        dispatch(setEmail(value));
+        break;
       case 'password':
-        dispatch(setPassword(value))
-        break
+        dispatch(setPassword(value));
+        break;
       default:
-        break
+        break;
     }
-  }
+  };
 
   return (
     <form className={style.loginForm} onSubmit={submitHandler}>
       <h2 className={style.formTitle}>Вход</h2>
+      <img src={bearImage} alt="Bear" className={style.bearImage} />
       <div className={style.formGroup}>
         <label htmlFor='email' className={style.formLabel}>
           Email:

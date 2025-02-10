@@ -41,7 +41,7 @@ export const HistoryPage: React.FC = () => {
   return (
     <div className={styles["favorites-page"]}>
       <h1>История событий</h1>
-
+{/* 
       <section>
         <h2>Мои события</h2>
         {userEventsLoading ? (
@@ -60,10 +60,10 @@ export const HistoryPage: React.FC = () => {
         ) : (
           <p>У вас нет истории событий.</p>
         )}
-      </section>
+      </section> */}
 
       <section>
-        <h2>Избранные события</h2>
+        {/* <h2>Избранные события</h2> */}
         {favoritesLoading ? (
           <p>Загрузка...</p>
         ) : favorites.length > 0 ? (
