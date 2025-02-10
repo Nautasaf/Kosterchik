@@ -11,3 +11,8 @@ import { Favorite } from "../interface/EventFetch";
   export const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number, allFavorites: Favorite[]): boolean => {
     return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
   };
+
+  // Функция для получения всех участников события
+  export const handleEventFavorites = (eventId: number, allFavorites: Favorite[]) : Favorite[] => {
+    return allFavorites.filter((fav) => fav.eventId === eventId);
+  }

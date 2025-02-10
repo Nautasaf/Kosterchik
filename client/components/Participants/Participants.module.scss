@@ -120,8 +120,7 @@ li:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Кнопки участники, редактирования и удаления */
-.participantsButton
+/* Кнопки редактирования и удаления */
 .editButton,
 .deleteButton {
   display: inline-block;
@@ -137,17 +136,6 @@ li:hover {
   color: white;
   margin-right: 10px;
 }
-
-/* Стиль кнопки "Участники" */
-.participantsButton {
-  background: linear-gradient(45deg, #21f356, #3cf169);;
-}
-
-.participantsButton {
-  background: linear-gradient(45deg, #19b740, #23913f);;
-  box-shadow: 6px 6px 10px rgba(0, 255, 102, 0.3); /* Тень синего цвета */
-}
-
 /* Стиль кнопки "Редактировать" */
 .editButton {
   background: linear-gradient(45deg, #2196F3, #42A5F5); /* Градиент синего цвета */

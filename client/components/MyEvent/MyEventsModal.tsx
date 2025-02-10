@@ -5,6 +5,7 @@ import { AppDispatch } from '../../store/Index'
 import { deleteEvent } from '../../store/slice/EventSlice'
 import { useNavigate } from 'react-router-dom'
 import { Event } from '../../interface/EventFetch'
+import ParticipantsModal from '../Participants/ParticipantsModal'
 
 interface MyEventsModalProps {
   events: Event[]
@@ -17,6 +18,8 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
 
   // Локальное состояние для списка событий
   const [localEvents, setLocalEvents] = useState(events)
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   // Обновляем локальный список при изменении `events`
   useEffect(() => {
@@ -68,24 +71,41 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
               <li key={event.id} onClick={handleNavigateToEvent(event.id)}>
                 {event.title}
                 <div className='blockButton'>
-                <button
-                  className={styles.editButton}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
-                    handleEditEvent(event.id)
-                  }}
-                >
-                  Редактировать
-                </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={(e) => {
-                    e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
-                    handleDeleteEvent(event.id)
-                  }}
-                >
-                  Удалить
-                </button>
+                  <button
+                    className={styles.participantsButton}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
+                      setIsModalOpen(true)
+                    }}
+                  >
+                    Участники
+                  </button>
+
+                  {isModalOpen && (
+                    <ParticipantsModal
+                      event={event}
+                      onClose={() => setIsModalOpen(false)}
+                    />
+                  )}
+
+                  <button
+                    className={styles.editButton}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
+                      handleEditEvent(event.id)
+                    }}
+                  >
+                    Редактировать
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={(e) => {
+                      e.stopPropagation(); // Чтобы не отрабатывал navigate на страницу события
+                      handleDeleteEvent(event.id)
+                    }}
+                  >
+                    Удалить
+                  </button>
                 </div>
               </li>
             ))
