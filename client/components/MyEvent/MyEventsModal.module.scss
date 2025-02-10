@@ -18,11 +18,12 @@
   flex-direction: column;
   position: relative;
   background-color: var(--primary-bg);
+  color: var(--text-color);
   padding: 30px;
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   animation: slideIn 0.3s ease-out;
   position: relative;
   border: 2px solid var(--secondary-bg);
@@ -32,7 +33,6 @@
 
 .darkMode .modalContent {
   background-color: var(--secondary-bg);
-  color: var(--text-color);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -44,18 +44,26 @@ h2 {
 .closeButton {
   width: 30px;
   position: absolute;
-  top: 0px;
-  right: 30px;
-  background-color: transparent;
+  margin-right: 30px;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   font-size: 24px;
   color: var(--text-muted);
   cursor: pointer;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .closeButton:hover {
+  background-color: rgba(0, 0, 0, 0.2);
   color: var(--accent-color);
 }
 
@@ -89,12 +97,13 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--secondary-bg);
   font-size: 16px;
   font-family: 'Inter', sans-serif;
   color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  word-break: break-word;
 }
 
 li:last-child {
@@ -104,10 +113,10 @@ li:last-child {
 li:hover {
   background-color: var(--secondary-bg);
   cursor: pointer;
+  transform: translateX(5px);
 }
 
 .darkMode li {
-  color: var(--text-color);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -128,7 +137,7 @@ li:hover {
   transition: all 0.3s ease;
   margin-top: 10px;
   width: fit-content;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   color: white;
   margin-right: 10px;
 }
@@ -150,7 +159,8 @@ li:hover {
 
 .editButton:hover {
   background: #5146d3;
-  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
 
 .deleteButton {
@@ -159,7 +169,8 @@ li:hover {
 
 .deleteButton:hover {
   background: #f44336;
-  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -177,5 +188,23 @@ li:hover {
   .deleteButton {
     font-size: 14px;
     padding: 8px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  li {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .editButton,
+  .deleteButton {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }
