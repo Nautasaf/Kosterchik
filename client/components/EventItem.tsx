@@ -1,58 +1,56 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import styles from './EventItem.module.scss'
-import { RootState, AppDispatch } from '../store/Index'
-import { fetchUsers } from '../store/thunk/AllUserThunk'
-import { fetchEvents } from '../store/thunk/EventThunk'
-import { addToFavorites, getAllFavorites } from '../store/thunk/FavoriteThunk'
-import moment from 'moment'
-import 'moment/locale/ru'
-import { isBgColor } from '../src/utils/background'
-import { Favorite } from '../interface/EventFetch'
-import { Map, Placemark, YMaps } from 'react-yandex-maps'
-import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import styles from "./EventItem.module.scss";
+import { RootState, AppDispatch } from "../store/Index";
+import { fetchUsers } from "../store/thunk/AllUserThunk";
+import { fetchEvents } from "../store/thunk/EventThunk";
+import { addToFavorites, getAllFavorites } from "../store/thunk/FavoriteThunk";
+import moment from "moment";
+import "moment/locale/ru";
+import { isBgColor } from "../src/utils/background";
+import { Favorite } from "../interface/EventFetch";
+import { YMaps, Map, Placemark } from "react-yandex-maps";
+// import SubscriptionMap from "./SubscriptionMaps/SubscriptionMaps";
 
-moment.locale('ru')
+moment.locale("ru");
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-export const EventItem = () => {
-  const { id } = useParams()
-  const dispatch = useDispatch<AppDispatch>()
-  const [organizer, setOrganizer] = useState<any>(null) //Добавить типизацию
+export const EventItem: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const dispatch = useDispatch<AppDispatch>();
+  const [organizer, setOrganizer] = useState<any>(null);
 
   const { events, loading: eventsLoading } = useSelector(
-    (state: RootState) => state.Events,
-  )
-
-  //Если так и не будет использоваться – убрать
-  const { users, loading: usersLoading } = useSelector(
-    (state: RootState) => state.AllUsers
+    (state: RootState) => state.Events
   );
-
-  const [showRoute, setShowRoute] = useState(false);
-
-  // Получаем массив объектов, кто куда подал заявку на участие
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
-  )
+  );
 
-  // Получаем количество уже участвующих
-  const handleGetFavorites = (eventId : number) => {
+  // Функция для получения количества заявок
+  const handleGetFavorites = (eventId: number): number => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    const favCounter : number = copyFav.filter((fav : Favorite) => fav.eventId === eventId).length;
-    return favCounter
-  }
-
-  // Функция для проверки, участвует ли пользователь в событии
-  const handleUserAlreadyAddedToFavorites = (eventId: number, userId: number): boolean => {
-    return allFavorites.some((fav) => fav.eventId === eventId && fav.userId === userId);
+    const favCounter: number = copyFav.filter(
+      (fav: Favorite) => fav.eventId === eventId
+    ).length;
+    return favCounter;
   };
-  
+
+  // Функция для проверки, участвует ли пользователь
+  const handleUserAlreadyAddedToFavorites = (
+    eventId: number,
+    userId: number
+  ): boolean => {
+    return allFavorites.some(
+      (fav) => fav.eventId === eventId && fav.userId === userId
+    );
+  };
+
   useEffect(() => {
-    dispatch(getAllFavorites())
-  }, [dispatch])
+    dispatch(getAllFavorites());
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -63,23 +61,31 @@ export const EventItem = () => {
   useEffect(() => {
     if (event) {
       dispatch(fetchUsers(event.userId)).then((res) => {
-        setOrganizer(res.payload) // Сохраняем организатора в локальном стейте
-      })
+        setOrganizer(res.payload);
+      });
     }
   }, [dispatch, event]);
 
-  const userData = JSON.parse(localStorage.getItem('user') || '{}')
-  const userId = userData.id
-  
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
+  const userId = userData.id;
 
   const handleAddToFavorites = () => {
     if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId: userId }))
+      dispatch(addToFavorites({ eventId: event.id, userId }));
     }
-  }
+  };
+
+  // Обработчик для отображения виджета Tawk.to при нажатии на кнопку "Задать вопрос"
+  const handleAskQuestion = () => {
+    if ((window as any).Tawk_API && (window as any).Tawk_API.showWidget) {
+      (window as any).Tawk_API.showWidget();
+    } else {
+      console.error("Tawk.to API не загружен");
+    }
+  };
 
   if (eventsLoading) {
-    return <div>Загрузка данных...</div>
+    return <div>Загрузка данных...</div>;
   }
 
   if (!event) {
@@ -94,18 +100,17 @@ export const EventItem = () => {
   return (
     <div className={styles.eventItem}>
       <h2 className={styles.eventTitle}>{event.title}</h2>
-      {isBgColor(event.background || '') ? (
+      {isBgColor(event.background || "") ? (
         <div
           className={styles.eventImage}
-          style={{ backgroundColor: event.background }}
-        ></div>
+          style={{ backgroundColor: event.background }}></div>
       ) : (
         <img
           className={styles.eventImage}
           src={
             event.background
               ? `${apiUrl}${event.background}`
-              : '/default-background.jpg'
+              : "/default-background.jpg"
           }
           alt={event.title}
         />
@@ -121,9 +126,9 @@ export const EventItem = () => {
                 src={
                   organizer.photoUrl
                     ? `${apiUrl}${organizer.photoUrl}`
-                    : '/default-background.jpg'
+                    : "/default-background.jpg"
                 }
-                alt='avatar'
+                alt="avatar"
               />
             )}
             <div className={styles.profileInfo}>
@@ -140,27 +145,43 @@ export const EventItem = () => {
           <div className={styles.eventCity}>Место: {event.district}</div>
           {event.maxPeople ? (
             <>
-              <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}/{event.maxPeople}</div>
-              
+              <div className={styles.eventCity}>
+                Количество участников: {handleGetFavorites(event.id)}/
+                {event.maxPeople}
+              </div>
               {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-                <div className={styles.eventCity}>Вы уже участвуете в этом мероприятии</div>
+                <div className={styles.eventCity}>
+                  Вы уже участвуете в этом мероприятии
+                </div>
               ) : handleGetFavorites(event.id) === event.maxPeople ? (
-                <div className={styles.eventCity}>В этом мероприятии уже максимальное количество участвующих</div>
+                <div className={styles.eventCity}>
+                  В этом мероприятии уже максимальное количество участников
+                </div>
               ) : (
-                <div className={styles.eventCity}>Вы можете присоединиться к этому мероприятию</div>
+                <div className={styles.eventCity}>
+                  Вы можете присоединиться к этому мероприятию
+                </div>
               )}
             </>
           ) : (
-            <div className={styles.eventCity}>Количество участников: {handleGetFavorites(event.id)}</div>
+            <div className={styles.eventCity}>
+              Количество участников: {handleGetFavorites(event.id)}
+            </div>
           )}
           <div className={styles.eventDate}>
-            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")} 
-            {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+            Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
+            {event.end_date
+              ? ` до ${moment(event.end_date).format("HH:mm")}`
+              : ""}
           </div>
 
           {eventCoordinates && (
             <div className={styles.mapContainer}>
-              <YMaps>
+              <YMaps
+                query={{
+                  apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673",
+                  lang: "ru_RU",
+                }}>
                 <Map
                   state={{ center: eventCoordinates, zoom: 10 }}
                   width="100%"
@@ -172,27 +193,25 @@ export const EventItem = () => {
           )}
 
           <div className={styles.eventButtonContainer}>
-            <button
-              className={styles.eventButton}
-              onClick={() => setShowRoute(true)}>
+            <button className={styles.eventButton} onClick={handleAskQuestion}>
               Задать вопрос
             </button>
 
             {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
+              <button
+                className={styles.eventButton}
+                onClick={handleAddToFavorites}>
                 Отказаться
               </button>
             ) : handleGetFavorites(event.id) === event.maxPeople ? (
-              <button className={styles.eventButton}>
-                Нет мест
-              </button>
+              <button className={styles.eventButton}>Нет мест</button>
             ) : (
-              <button className={styles.eventButton} onClick={handleAddToFavorites}>
+              <button
+                className={styles.eventButton}
+                onClick={handleAddToFavorites}>
                 Я готов
               </button>
             )}
-
-              
 
             <button
               className={styles.eventButton}
@@ -202,12 +221,14 @@ export const EventItem = () => {
           </div>
         </div>
       </div>
-      {showRoute && eventCoordinates && (
+      {/* {showRoute && eventCoordinates && (
         <SubscriptionMap
           eventCoordinates={eventCoordinates}
           onClose={() => setShowRoute(false)}
         />
-      )}
+      )} */}
     </div>
   );
 };
+
+export default EventItem;
