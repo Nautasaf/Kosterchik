@@ -35,6 +35,7 @@ function App() {
 
   const handleLogout = () => {
     dispatch(logoutThunk())
+    
   }
 
   const toggleTheme = () => {
@@ -79,9 +80,13 @@ function App() {
             >
               <IoPersonOutline size={24} />
             </NavLink>
-            <button onClick={handleLogout} className={styles.logoutButton}>
-              <IoExitOutline size={24} />
-            </button>
+            <NavLink
+              to='/login'>
+              <button onClick={handleLogout} className={styles.logoutButton}>
+                <IoExitOutline size={24} />
+              </button>
+            </NavLink>
+            
           </div>
         ) : (
           <div className={styles.userControls}>

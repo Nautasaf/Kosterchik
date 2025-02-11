@@ -94,9 +94,18 @@ const CreateEvent: React.FC = () => {
       try {
         backgroundUrl = await uploadBackground(file)
       } catch (error) {
-        toast.error('Ошибка загрузки фонового изображения', error)
-        toast('Не удалось загрузить фоновое изображение!')
-        return
+        const errorMessage = error instanceof Error ? error.message : 'Неизвестная ошибка';
+        toast.error(
+          <div>
+            <strong>Ошибка загрузки фонового изображения</strong>
+            <p>{errorMessage}</p>
+          </div>,
+          { // Опции тоста
+            autoClose: 3000, // Закрыть через 5 секунд
+          }
+        );
+        toast('Не удалось загрузить фоновое изображение!');
+        return;
       }
     }
 

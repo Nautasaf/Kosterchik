@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styles from './Participants.module.scss';
-import { useNavigate } from "react-router-dom";
-import { AppDispatch, RootState } from "../../store/Index";
 import React, { useEffect, useMemo, useState } from "react";
-import { Event, Favorite, User } from "../../interface/EventFetch";
+import { Event, Favorite } from "../../interface/EventFetch";
 import axios from "axios";
 import { handleCountFavorites, handleEventFavorites } from "../../scripts/FavoriteScripts";
+import { RootState } from "../../store/Index";
+import { User } from "../../interface/Registration";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -27,6 +27,8 @@ const ParticipantsModal: React.FC<ParticipantsModalProps> = ({ event, onClose })
   const [filteredFavorites, setFilteredFavorites] = useState<Favorite[]>([]); 
   const allFavorites = useSelector((state: RootState) => state.Favorites.favorites);
 
+  console.log(userEvents);
+  
   const eventFavorites = useMemo(() => {
     return handleEventFavorites(event.id, allFavorites);
   }, [event.id, allFavorites]);

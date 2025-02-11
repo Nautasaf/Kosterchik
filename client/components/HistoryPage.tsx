@@ -3,13 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState, AppDispatch } from "../store/Index";
 import { fetchFavorites, removeFromFavorites } from "../store/thunk/FavoriteThunk";
 import styles from "./FavoritesPage.module.scss";
+import { useNavigate } from "react-router-dom";
 
 
 export const HistoryPage: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = userData.id;
-console.log("юзер аиди",userId);
+
+  const handleNavigateToEvent = (id: number) => () => {
+    if (id) {
+      navigate(`/event/${id}`);
+    } else {
+      console.error('Invalid event ID');
+    }
+  };
 
   const { favorites} = useSelector((state: RootState) => state.Favorites);
  
@@ -33,7 +42,7 @@ console.log("юзер аиди",userId);
       <ul>
   {filteredFavorites.length > 0 ? (
     filteredFavorites.map((favorite) => (
-      <li key={favorite.eventId} className={styles["favorite-item"]}>
+      <li key={favorite.eventId} className={styles["favorite-item"]} onClick={handleNavigateToEvent(favorite.eventId)}>
         <h3>{favorite.Event?.title || "Без названия"}</h3>
         <p>{favorite.Event?.description}</p>
         <p>{favorite.Event?.city}</p>

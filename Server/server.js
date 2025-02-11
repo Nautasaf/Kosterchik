@@ -42,14 +42,14 @@ const eventRout = require('./routs/EventRout');
 const searchRout = require('./routs/SearchRout');
 const getUsers = require('./routs/GetAllUser');
 const userEvent = require('./routs/UserEvent');
-const infoUser = require('./routs/InfoUser')
+const infoUser = require('./routs/InfoUser');
 server.use('/events', eventRout);
 server.use('/search', searchRout);
 server.use('/', registration, loginRouter, logout, uploadRoute);
 server.use('/users', getUsers);
 server.use('/favorites', favorites);
 server.use('/user-event', userEvent);
-server.use('/info', infoUser)
+server.use('/info', infoUser);
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`);
