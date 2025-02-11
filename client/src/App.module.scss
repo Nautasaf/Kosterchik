@@ -192,9 +192,21 @@ html, body {
 .footer {
   text-align: center;
   padding: 20px 0;
-  font-size: 14px;
-  background-color: var(--secondary-bg);
-  color: var(--text-muted);
+  font-size: 16px;
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: auto;
+
+}
+
+.lightMode .footer {
+  background: #ffffff;
+  color: #000000;
+}
+
+.darkMode .footer {
+  background: #121212;
+  color: #ffffff;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
