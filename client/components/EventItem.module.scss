@@ -14,13 +14,20 @@
 
 /* Фото профиля */
 .profilePhoto {
-  width: 100px; /* Уменьшили размер */
-  height: 100px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
-  margin: 0 auto; /* Центрирование */
+  margin: 0 auto;
 }
 
+.profileInfo,h2 {
+  color: #979797;
+}
+
+.eventDate {
+  color: #979797;
+}
 /* Заголовок события */
 .eventTitle {
   font-size: 2rem;
@@ -33,7 +40,7 @@
 /* Изображение события */
 .eventImage {
   width: 100%; /* Адаптивная ширина */
-  height: 250px; /* Уменьшили высоту */
+  height: 300px; /* Уменьшили высоту */
   border-radius: 10px;
   margin-bottom: 1.5rem;
   border: 1px solid var(--border-color);
@@ -48,7 +55,7 @@
   flex-wrap: nowrap;
 
   @media (max-width: 768px) {
-    flex-direction: column; /* На маленьких экранах ставим в столбец */
+    flex-direction: column;
   }
 }
 
@@ -121,7 +128,7 @@
 .lightMode {
   --primary-bg: #ffffff;
   --secondary-bg: #f8f9fa;
-  --text-color: #333;
+  --text-color: #868484;
   --text-muted: #6c757d;
   --secondary-text-color: #6e6f70;
   --accent-color: #007bff;

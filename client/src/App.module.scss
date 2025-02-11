@@ -2,7 +2,7 @@
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Inter', sans-serif; /* Более современный шрифт */
+  font-family: 'Inter', sans-serif;
   color: #333;
   background-color: var(--secondary-bg);
 }
@@ -21,11 +21,11 @@ html, body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 20px 0;
+  padding-right: 530px;
 }
 
 .blockLogo {
-  font-size: 24px;
+  font-size: 25px;
   font-weight: 600;
   letter-spacing: 0.1em;
 }
@@ -41,8 +41,6 @@ html, body {
 }
 
 .userControls {
-  margin-left: 350px;
-  margin-right: 600px;
   display: flex;
   align-items: center;
   gap: 20px; /* Расстояние между кнопками */
@@ -51,7 +49,7 @@ html, body {
 /* Навигация */
 .navMenu {
   display: flex;
-  justify-content: space-around;
+  // justify-content:space-around;
   align-items: center;
   padding: 10px 20px;
   position: sticky;

@@ -1,42 +1,49 @@
-import 'react-toastify/dist/ReactToastify.css';
-import { useState, useEffect } from 'react';
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
-import styles from './App.module.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../store/Index';
-import { logoutThunk } from '../store/thunk/LogoutThunk';
-import { Search } from '../components/Search';
-import { setUser } from '../store/slice/UserSlice';
-import { resetFilters } from '../store/slice/SearchSlice';
-import { ToastContainer } from 'react-toastify';
-import { HeaderBar } from '../components/HeaderPage';
-import { IoExitOutline, IoMoon, IoSunny, IoPersonOutline } from 'react-icons/io5';
+import 'react-toastify/dist/ReactToastify.css'
+import { useState, useEffect } from 'react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import styles from './App.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState, AppDispatch } from '../store/Index'
+import { logoutThunk } from '../store/thunk/LogoutThunk'
+import { Search } from '../components/Search'
+import { setUser } from '../store/slice/UserSlice'
+import { resetFilters } from '../store/slice/SearchSlice'
+import { ToastContainer } from 'react-toastify'
+import { HeaderBar } from '../components/HeaderPage'
+import {
+  IoExitOutline,
+  IoMoon,
+  IoSunny,
+  IoPersonOutline,
+  IoPersonAddOutline,
+  IoLogInOutline,
+} from 'react-icons/io5'
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const { isLoggedIn } = useSelector((state: RootState) => state.Auth);
-  const dispatch = useDispatch<AppDispatch>();
-  const location = useLocation();
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const { isLoggedIn } = useSelector((state: RootState) => state.Auth)
+  const dispatch = useDispatch<AppDispatch>()
+  const location = useLocation()
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user');
+    const savedUser = localStorage.getItem('user')
     if (savedUser) {
-      const user = JSON.parse(savedUser);
-      dispatch(setUser(user));
+      const user = JSON.parse(savedUser)
+      dispatch(setUser(user))
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn])
 
   const handleLogout = () => {
-    dispatch(logoutThunk());
-  };
+    dispatch(logoutThunk())
+  }
 
   const toggleTheme = () => {
-    setIsDarkMode((prev) => !prev);
-  };
+    setIsDarkMode((prev) => !prev)
+  }
 
   const handleResetFilters = () => {
-    dispatch(resetFilters());
-  };
+    dispatch(resetFilters())
+  }
 
   return (
     <div className={isDarkMode ? styles.darkMode : styles.lightMode}>
@@ -77,28 +84,29 @@ function App() {
             </button>
           </div>
         ) : (
-          <>
+          <div className={styles.userControls}>
             <NavLink
               to='/registration'
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
               }
             >
-              Регистрация
+              <IoPersonAddOutline size={24} />
             </NavLink>
-
             <NavLink
               to='/login'
               className={({ isActive }) =>
                 `${styles.navLink} ${isActive ? styles.navLinkActive : ''}`
               }
             >
-              Логин
+              <IoLogInOutline size={24} />
             </NavLink>
-          </>
+          </div>
         )}
       </nav>
-      {isLoggedIn && location.pathname === '/' && <HeaderBar isDarkMode={isDarkMode} />}
+      {isLoggedIn && location.pathname === '/' && (
+        <HeaderBar isDarkMode={isDarkMode} />
+      )}
       {isLoggedIn && location.pathname === '/' && (
         <Search isDarkMode={isDarkMode} />
       )}
@@ -124,7 +132,7 @@ function App() {
         </div>
       </footer>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

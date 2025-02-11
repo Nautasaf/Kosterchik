@@ -6,6 +6,7 @@ import styles from "./CreateEvent.module.scss";
 import { createEvent } from "../../store/slice/EventSlice";
 import { AppDispatch } from "../../store/Index";
 import MapPicker from "../MapPicker";
+import { toast } from 'react-toastify'
 
 // interface IEventData {
 //   title: string;
@@ -61,7 +62,7 @@ const CreateEvent: React.FC = () => {
   const [district, setDistrict] = useState('')
   const [format, setFormat] = useState('')
   const [language, setLanguage] = useState('')
- 
+
   const [organizer, setOrganizer] = useState('')
 
   const uploadBackground = async (file : File) => {
@@ -82,7 +83,7 @@ const CreateEvent: React.FC = () => {
     e.preventDefault();
 
     if (!user.id) {
-      alert("Необходимо авторизоваться для создания события.");
+      toast("Необходимо авторизоваться для создания события.");
       return;
     }
 
@@ -92,8 +93,8 @@ const CreateEvent: React.FC = () => {
       try {
         backgroundUrl = await uploadBackground(file)
       } catch (error) {
-        console.error('Ошибка загрузки фонового изображения', error)
-        alert('Не удалось загрузить фоновое изображение!')
+        toast.error('Ошибка загрузки фонового изображения', error)
+        toast('Не удалось загрузить фоновое изображение!')
         return
       }
     }
@@ -120,16 +121,16 @@ const CreateEvent: React.FC = () => {
     background: backgroundUrl,
     longitude: location.lng,
     latitude: location.lat,
-    
+
   }
 
     try {
       await dispatch(createEvent(eventData)).unwrap()
-      alert('Событие успешно создано!')
+      toast.success('Событие успешно создано!')
       navigate('/')
     } catch (error) {
       console.error("Ошибка при создании события:", error);
-      alert("Произошла ошибка при создании события.");
+      toast.error("Произошла ошибка при создании события.");
     }
   };
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -252,16 +253,16 @@ const CreateEvent: React.FC = () => {
       <option value="Лекция">Лекция</option>
     </select>
   </label>
-  
+
 <div className={styles.formGroup}>
   <label>Возрастное ограничение:</label>
   <input
-    type="text" 
+    type="text"
     value={age_restriction}
     onChange={(e) => {
       const value = e.target.value;
-      const numericValue = value.replace(/[^0-9]/g, ''); 
-      setAge_registration(numericValue ? Number(numericValue) : 0); 
+      const numericValue = value.replace(/[^0-9]/g, '');
+      setAge_registration(numericValue ? Number(numericValue) : 0);
     }}
     required
   />
@@ -332,7 +333,7 @@ const CreateEvent: React.FC = () => {
             type='text'
             value={organizer}
             onChange={(e) => setOrganizer(e.target.value)}
-            
+
           />
         </div>
         <div className={styles.formGroup}>
