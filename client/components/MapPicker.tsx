@@ -15,6 +15,8 @@ const MapPicker: React.FC<MapPickerProps> = ({
     lng: number;
   }>(initialCoordinates || { lat: 55.751244, lng: 37.618423 });
 
+  console.log("markerCoords", markerCoords);
+
   const handleMapClick = (e: any) => {
     const coords = e.get("coords");
     const newCoords = { lat: coords[0], lng: coords[1] };
