@@ -2,7 +2,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import style from './HeaderPage.module.scss';
 import { NavLink } from 'react-router-dom';
 
-export const HeaderBar = ({ isDarkMode }) => {
+interface HeaderBarProps {
+  isDarkMode: boolean; // Тип для isDarkMode
+}
+
+export const HeaderBar: React.FC<HeaderBarProps> = ({ isDarkMode }) => {
   const categories = [
     { path: 'restaurants', name: 'Рестораны' },
     { path: 'concerts', name: 'Концерты' },
