@@ -83,18 +83,18 @@ export const Sidebar: React.FC = () => {
           placeholder='Введите город'
         />
       </label>
-
-      <div className={styles.labelWrapper}>
-        <span>Дата:</span>
-        <DatePicker
-          selected={parsedDate || null}
-          onChange={handleDateChange}
-          dateFormat='dd-MM-yyyy'
-          placeholderText='Выберите день и месяц'
-          className={styles.searchInput}
-        />
-      </div>
-
+      <label>
+        <div className={styles.labelWrapper}>
+          <span>Дата:</span>
+          <DatePicker
+            selected={parsedDate || null}
+            onChange={handleDateChange}
+            dateFormat='dd-MM-yyyy'
+            placeholderText='Выберите день и месяц'
+            className={styles.searchInput}
+          />
+        </div>
+      </label>
       <label>
         Тип события:
         <select
