@@ -12,7 +12,7 @@ export const HistoryPage: React.FC = () => {
 console.log("юзер аиди",userId);
 
   const { favorites} = useSelector((state: RootState) => state.Favorites);
- 
+
   useEffect(() => {
     dispatch(fetchFavorites(userId));
   }, [dispatch, userId]);

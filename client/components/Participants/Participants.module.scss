@@ -1,67 +1,164 @@
-/* Общие стили для модального окна */
+/* Общий стиль модального окна */
 .modalOverlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out; /* Плавное появление */
+  animation: fadeIn 0.3s ease-out;
 }
 
-
+/* Контейнер модального окна */
 .modalContent {
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: #ffffff; /* Белый фон для светлой темы */
+  background-color: var(--primary-bg);
   padding: 30px;
   border-radius: 12px;
   max-width: 600px;
-  width: 100%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.3s ease-out; /* Плавное появление контента */
-  position: relative; /* Для позиционирования крестика */
-  border: 2px solid #dcdcdc;
-  font-family: 'Montserrat', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  width: 90%;
+  box-shadow: var(--box-shadow);
+  border: 2px solid var(--border-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  animation: slideIn 0.3s ease-out;
 }
 
-/* Темная тема для модального окна */
+/* Темная тема */
 .darkMode .modalContent {
-  background-color: #121212; /* Чёрный фон для тёмной темы */
-  color: #ffffff;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-h2 {
-  width: 100%;
+/* Заголовок */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* Кнопка закрытия в углу */
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Кнопка закрытия */
 .closeButton {
-  width: 30px;
-  position: absolute;
-  top: 0px;
-  right: 30px;
-  background-color: transparent;
+  margin-left: 560px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
   border: none;
   font-size: 24px;
-  color: #706e6e;
+  color: var(--text-muted);
   cursor: pointer;
-  font-weight: bold;
   transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+.approveButton {
+  max-width: 200px;
+}
+.rejectButton {
+  margin-left: 10px;
+  max-width: 200px;
 }
 
-.closeButton:hover {
-  color: #ff7875; /* Красный при наведении */
+/* Контент модалки */
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Анимации для появления модального окна */
+/* Стили для списка */
+.eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eventItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--hover-bg);
+    cursor: pointer;
+  }
+}
+
+/* Темная тема для списка */
+.darkMode .eventItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .eventItem:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Кнопки */
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--button-shadow);
+  color: white;
+}
+
+/* Кнопка редактирования */
+.editButton {
+  background: var(--blue-gradient);
+
+  &:hover {
+    background: var(--blue-hover);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+/* Кнопка удаления */
+.deleteButton {
+  background: var(--red-gradient);
+
+  &:hover {
+    background: var(--red-hover);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+/* Анимации */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -73,7 +170,7 @@ h2 {
 
 @keyframes slideIn {
   from {
-    transform: translateY(-50px);
+    transform: translateY(-20px);
     opacity: 0;
   }
   to {
@@ -82,87 +179,10 @@ h2 {
   }
 }
 
-/* Стили для списка событий */
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-li:last-child {
-  border-bottom: none;
-}
-
-li:hover {
-  background-color: #f7f7f7; /* Светло-серый при наведении */
-  cursor: pointer;
-}
-
-/* Темная тема для списка событий */
-.darkMode li {
-  color: #ffffff;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.darkMode li:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Кнопки редактирования и удаления */
-.editButton,
-.deleteButton {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-  width: fit-content;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
-  color: white;
-  margin-right: 10px;
-}
-/* Стиль кнопки "Редактировать" */
-.editButton {
-  background: linear-gradient(45deg, #2196F3, #42A5F5); /* Градиент синего цвета */
-}
-
-.editButton:hover {
-  background: linear-gradient(45deg, #1E88E5, #42A5F5); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3); /* Тень синего цвета */
-}
-
-/* Стиль кнопки "Удалить" */
-.deleteButton {
-  background: linear-gradient(45deg, #FF5252, #FF7043); /* Градиент красного цвета */
-}
-
-.deleteButton:hover {
-  background: linear-gradient(45deg, #F44336, #FF7043); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3); /* Тень красного цвета */
-}
-
-
-/* Стили для мобильных устройств */
+/* Адаптивность */
 @media (max-width: 768px) {
   .modalContent {
     padding: 20px;
-    width: 90%;
-    max-width: 100%;
   }
 
   .closeButton {
@@ -172,6 +192,6 @@ li:hover {
   .editButton,
   .deleteButton {
     font-size: 14px;
-    padding: 8px 14px;
+    padding: 8px 12px;
   }
 }

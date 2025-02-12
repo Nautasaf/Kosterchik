@@ -1,210 +1,76 @@
 /* Общие стили для модального окна */
+/* Стили */
 .modalOverlay {
+  margin-top: 40px;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(59, 59, 59, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out;
 }
-
+.closeButton{
+margin-left: 600px;
+  width: auto;
+}
 .modalContent {
-  display: flex;
-  flex-direction: column;
-  position: relative;
   background-color: var(--primary-bg);
   color: var(--text-color);
   padding: 30px;
   border-radius: 12px;
-  max-width: 600px;
+  max-width: 650px;
   width: 100%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  animation: slideIn 0.3s ease-out;
-  position: relative;
-  border: 2px solid var(--secondary-bg);
-  font-family: 'Inter', sans-serif;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: 0 4px 12px rgba(136, 135, 135, 0.61);
 }
 
-.darkMode .modalContent {
-  background-color: var(--secondary-bg);
-  border-color: rgba(255, 255, 255, 0.1);
+.eventListContainer {
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-h2 {
-  width: 100%;
-}
-
-/* Кнопка закрытия в углу */
-.closeButton {
-  width: 30px;
-  position: absolute;
-  margin-right: 30px;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: none;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  font-size: 24px;
-  color: var(--text-muted);
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.closeButton:hover {
-  background-color: rgba(0, 0, 0, 0.2);
-  color: var(--accent-color);
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-ul {
-  list-style-type: none;
+.eventList {
+  list-style: none;
   padding: 0;
   margin: 0;
 }
 
 li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 16px;
+  padding: 10px;
   border-bottom: 1px solid var(--secondary-bg);
-  font-size: 16px;
-  font-family: 'Inter', sans-serif;
-  color: var(--text-color);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-  word-break: break-word;
 }
 
-li:last-child {
-  border-bottom: none;
-}
-
-li:hover {
-  background-color: var(--secondary-bg);
-  cursor: pointer;
-  transform: translateX(5px);
-}
-
-.darkMode li {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.darkMode li:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Кнопки участники, редактирования и удаления */
-.participantsButton
-.editButton,
-.deleteButton {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
+.buttonContainer {
+  display: flex;
+  gap: 10px;
   margin-top: 10px;
-  width: fit-content;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  color: white;
-  margin-right: 10px;
+  margin-right: 20px;
 }
 
-/* Стиль кнопки "Участники" */
-.participantsButton {
-  background: linear-gradient(45deg, #21f356, #3cf169);;
+.participantsButton, .editButton, .deleteButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.participantsButton {
-  background: linear-gradient(45deg, #19b740, #23913f);;
-  box-shadow: 6px 6px 10px rgba(0, 255, 102, 0.3); /* Тень синего цвета */
+.participantsButton { background: #575757; }
+.editButton { background: var(--accent-color); }
+.deleteButton { background: #5b5959; }
+
+.participantsButton:hover { background: #808682; }
+.editButton:hover { background: #89888d; }
+.deleteButton:hover { background: #8c8989; }
+
+.eventListContainer::-webkit-scrollbar {
+  width: 8px;
 }
 
-/* Стиль кнопки "Редактировать" */
-.editButton {
+.eventListContainer::-webkit-scrollbar-thumb {
   background: var(--accent-color);
-}
-
-.editButton:hover {
-  background: #5146d3;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-}
-
-.deleteButton {
-  background: #ff5252;
-}
-
-.deleteButton:hover {
-  background: #f44336;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
-}
-
-@media (max-width: 768px) {
-  .modalContent {
-    padding: 20px;
-    width: 90%;
-    max-width: 100%;
-  }
-
-  .closeButton {
-    font-size: 20px;
-  }
-
-  .editButton,
-  .deleteButton {
-    font-size: 14px;
-    padding: 8px 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  .modalContent {
-    padding: 15px;
-    border-radius: 8px;
-  }
-
-  li {
-    font-size: 14px;
-    padding: 8px 0;
-  }
-
-  .editButton,
-  .deleteButton {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
+  border-radius: 4px;
 }
