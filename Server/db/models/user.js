@@ -1,11 +1,15 @@
 'use strict';
 const { Model } = require('sequelize');
-
+// Импортируем модель EventMessage
+const EventMessage = require('./eventMessage');
 module.exports = (sequelize, DataTypes) => {
+
   class User extends Model {
     static associate(models) {
       User.hasMany(models.Event, { foreignKey: 'userId' });
       User.belongsToMany(models.Event, { through: models.EventUser, foreignKey: 'userId' });
+      User.hasMany(models.Message, { foreignKey: 'userId' });
+      User.hasMany(models.EventMessage, { foreignKey: 'userId' });
     }
   }
   User.init({

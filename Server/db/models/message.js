@@ -13,13 +13,24 @@ module.exports = (sequelize, DataTypes) => {
 
   Message.init(
     {
-      userId: DataTypes.INTEGER,
-      eventId: DataTypes.INTEGER,
-      text: DataTypes.TEXT,
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,  // Обязательно для записи
+      },
+      eventId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,  // Обязательно для записи
+      },
+      text: {
+        type: DataTypes.TEXT,
+        allowNull: false,  // Сообщение обязательно
+      },
     },
     {
       sequelize,
       modelName: 'Message',
+      timestamps: true, // Автоматическая поддержка createdAt и updatedAt
+      underscored: true, // Если хотите использовать snake_case для полей
     }
   );
 
