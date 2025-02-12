@@ -1,133 +1,186 @@
-/* Общий стиль для всего приложения */
+/* Общий стиль */
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Inter', sans-serif;
+  color: #333;
+  background-color: var(--secondary-bg);
 }
 
 .appContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   transition: background 0.5s ease, color 0.5s ease;
 }
 
-/* Темы */
-.lightMode {
-  background: #ffffff;
-  color: #000000;
+/* Логотип */
+.containerLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 530px;
 }
 
-.darkMode {
-  background: #030325;
-  color: #ffffff;
+.blockLogo {
+  font-size: 25px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
-.logo{
-  width: 25px; /* Размер изображения */
+.logo {
+  width: 40px;
   height: auto;
-  margin-left: 8px;
-  vertical-align: middle;
+}
+
+.blockQuote {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.userControls {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Расстояние между кнопками */
 }
 
 /* Навигация */
 .navMenu {
   display: flex;
-  justify-content: center;
+  // justify-content:space-around;
   align-items: center;
   padding: 10px 20px;
   position: sticky;
   top: 0;
-  width: auto;
+  width: 100%;
   z-index: 1000;
-  transition: background 0.3s ease;
-  gap: 15px;
+  background-color: var(--primary-bg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.lightMode .navMenu {
-  background: #ffffff;
-}
-
-.darkMode .navMenu {
-  background: #030325;
-}
-
-/* Ссылки */
 .navLink {
   text-decoration: none;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text-color);
+  margin: 0 15px;
   position: relative;
   transition: color 0.3s ease;
-  color: inherit;
 }
 
-/* Красная "О" в "КOстерчик" */
-.highlightO {
-  color: #ff0000;
-  font-weight: bold;
+.navLink:hover,
+.navLinkActive {
+  color: var(--accent-color);
 }
 
-/* Красное подчеркивание при наведении */
-.navLink::after,
-.navLinkActive::after {
+.navLink::after {
   content: '';
   display: block;
-  width: 100%;
+  width: 0%;
   height: 2px;
-  background: #ff0000;
+  background: var(--accent-color);
   position: absolute;
   bottom: -5px;
   left: 0;
-  transform: scaleX(0);
-  transition: transform 0.3s ease;
+  transition: width 0.3s ease;
 }
 
 .navLink:hover::after,
 .navLinkActive::after {
-  transform: scaleX(1);
+  width: 100%;
 }
 
-/* Кнопки выхода и переключения темы */
-.themeToggle, .logoutButton {
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #000000;
+  --text-muted: #646b72;
+  --accent-color: #6c63ff;
+}
+
+.darkMode {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --text-muted: #898c8e;
+  --accent-color: #6c63ff;
+}
+
+/* Кнопки темы и выхода */
+.logoutButton,
+.themeToggle {
   background: none;
   border: none;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
   padding: 5px 10px;
-  border-radius: 5px;
-  white-space: nowrap;
-  min-width: unset;
-  width: auto;
-  display: inline-block;
+  transition: color 0.3s ease;
 }
 
-.lightMode .themeToggle, .lightMode .logoutButton {
-  color: #000000;
-  background: rgba(0, 0, 0, 0.1);
+.logoutButton {
+  color: #e74c3c; /* Красный цвет для кнопки выхода */
 }
 
-.lightMode .themeToggle:hover, .lightMode .logoutButton:hover {
-  background: rgba(0, 0, 0, 0.2);
+.logoutButton:hover {
+  text-decoration: underline;
 }
 
-.darkMode .themeToggle, .darkMode .logoutButton {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.1);
+.themeToggle {
+  font-size: 20px;
+  color: var(--accent-color);
 }
 
-.darkMode .themeToggle:hover, .darkMode .logoutButton:hover {
-  background: rgba(255, 255, 255, 0.2);
+.projectInfo {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
-/* Контент по центру */
+.project,
+.developers {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 10px 15px;
+  position: relative;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.project:hover,
+.developers:hover {
+  color: var(--accent-color);
+}
+
+.project::after,
+.developers::after {
+  content: '';
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: var(--accent-color);
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  transition: width 0.3s ease;
+}
+
+.project:hover::after,
+.developers:hover::after {
+  width: 100%;
+}
+
+/* Контент */
 .outletContainer {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 50px;
@@ -143,6 +196,7 @@ html, body {
   width: 100%;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   margin-top: auto;
+
 }
 
 .lightMode .footer {
@@ -154,4 +208,10 @@ html, body {
   background: #121212;
   color: #ffffff;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Акцентная "О" в названии */
+.highlightO {
+  color:#e74c3c;
+  font-weight: bold;
 }

@@ -2,33 +2,33 @@
   position: relative;
   width: 150px;
   height: 150px;
-  margin: 0 auto 20px;
+  margin: 20px auto;
   border-radius: 50%;
-  border: 2px dashed #ccc;
+  border: 2px dashed var(--text-muted); /* Используем переменную для цвета */
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
   cursor: pointer;
-  transition: border-color 0.3s ease;
-
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+  background-color: var(--secondary-bg); /* Фон соответствует теме */
   &:hover {
-    border-color: #007bff;
+    border-color: var(--accent-color); /* Акцентный цвет при наведении */
+    background-color: rgba(0, 0, 0, 0.05); /* Легкий эффект при наведении */
   }
-
   .blockPhotoImg {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 50%;
   }
-
   .blockPhotoSpan {
-    color: #888;
+    color: var(--text-muted); /* Цвет текста соответствует теме */
     font-size: 14px;
+    font-family: 'Inter', sans-serif; /* Соответствие шрифту */
     text-align: center;
+    letter-spacing: 0.05em; /* Добавляем легкий интервал между буквами */
   }
-
   .hiddenInput {
     position: absolute;
     opacity: 0;

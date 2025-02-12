@@ -8,12 +8,14 @@ import { store } from "../store/Index.ts";
 import { Login } from "../components/Login.tsx";
 import ProfilePage from "../components/profilePage/ProfilePage";
 import { HeadPage } from "../components/HeadPage.tsx";
-import EventItem from "../components/EventItem.tsx";
+import { EventItem } from "../components/EventItem.tsx";
 import CreateEvent from "../components/createEvent/CreateEvent";
 import { FavoritesPage } from "../components/FavoritesPage.tsx";
 import { HistoryPage } from "../components/HistoryPage.tsx";
 import EditEventPage from "../components/EditEventPage/EditEventPage";
 import { CategoryPage } from "../components/CategoryPage.tsx";
+import Project from "../components/Project/Project";
+import Developers from "../components/Developers/Developers.tsx";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: "/eventType/:eventType",
         element: <CategoryPage />,
+      },
+      {
+        path: "/project",
+        element: <Project />,
+      },
+      {
+        path: "/developers",
+        element: <Developers />,
       },
     ],
   },

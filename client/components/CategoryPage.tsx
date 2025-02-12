@@ -1,18 +1,17 @@
-import { NavLink, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store/Index';
-import React from 'react';
-import style from "./CategoryPage.module.scss";
-import moment from "moment";
-import "moment/locale/ru";
+import { NavLink, useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { RootState } from '../store/Index'
+import style from './CategoryPage.module.scss'
+import moment from 'moment'
+import 'moment/locale/ru'
 
 export const CategoryPage = () => {
-  const { eventType } = useParams(); 
-  const eventsState = useSelector((state: RootState) => state.Events); 
- 
-console.log(eventType);
+  const { eventType } = useParams()
+  const eventsState = useSelector((state: RootState) => state.Events)
 
-  const events = Array.isArray(eventsState.events) ? eventsState.events : [];
+  console.log(eventType)
+
+  const events = Array.isArray(eventsState.events) ? eventsState.events : []
 
   const categoryMapping: Record<string, string> = {
     restaurants: 'Ресторан',
@@ -26,17 +25,19 @@ console.log(eventType);
     bars: 'Бар',
     shashlyk: 'Шашлык',
     lectures: 'Лекция',
-  };
+  }
 
-  
-  const categoryValue = categoryMapping[eventType as keyof typeof categoryMapping];
+  const categoryValue =
+    categoryMapping[eventType as keyof typeof categoryMapping]
 
   const filteredEvents = events.filter(
-    (event) => event.event_type && event.event_type.toLowerCase() === categoryValue?.toLowerCase()
-  );
+    (event) =>
+      event.event_type &&
+      event.event_type.toLowerCase() === categoryValue?.toLowerCase(),
+  )
 
   if (!eventType || !categoryValue) {
-    return <p>Тип события не указан или не найден.</p>;
+    return <p>Тип события не указан или не найден.</p>
   }
 
   return (
@@ -44,7 +45,7 @@ console.log(eventType);
       <header className={style.header}>
         <h1 className={style.title}>События в категории: {categoryValue}</h1>
       </header>
-      
+
       {filteredEvents.length > 0 ? (
         <div className={style.sliderContainer}>
           <div className={style.eventsSlider}>
@@ -56,8 +57,11 @@ console.log(eventType);
                   <p className={style.eventCity}>Город: {event.city}</p>
                   <p className={style.eventDistrict}>Место: {event.district}</p>
                   <div className={style.eventDate}>
-                    Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
-                    {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}
+                    Начало:{' '}
+                    {moment(event.start_date).format('D MMMM YYYY, HH:mm')}
+                    {event.end_date
+                      ? ` до ${moment(event.end_date).format('HH:mm')}`
+                      : ''}
                   </div>
                 </NavLink>
               </div>
@@ -68,5 +72,5 @@ console.log(eventType);
         <p className={style.noEvents}>Событий в этой категории нет.</p>
       )}
     </div>
-  );
-};
+  )
+}

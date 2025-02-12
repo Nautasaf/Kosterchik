@@ -5,6 +5,33 @@ import { useNavigate } from "react-router-dom";
 import styles from "./CreateEvent.module.scss";
 import { createEvent } from "../../store/slice/EventSlice";
 import MapPicker from "../MapPicker";
+import { toast } from "react-toastify";
+import { addToFavorites } from "../../store/thunk/FavoriteThunk";
+
+// interface IEventData {
+//   title: string;
+//   description: string;
+//   city: string;
+//   date: string;
+//   userId: number;
+//   imageUrl: string;
+//   background: string;
+//   requirements: string;
+//   latitude: number;
+//   longitude: number;
+//   maxPeople: number
+//   start_date: string
+//   end_date: string
+//   price: number
+//   event_type: string
+//   age_restriction: number
+//   duration: number
+//   district: string
+//   format: string
+//   language: string
+//   accessibility: boolean
+//   organizer: string
+// }
 
 const CreateEvent: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -77,11 +104,11 @@ const CreateEvent: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user.id) {
-      alert("Необходимо авторизоваться для создания события.");
+      toast("Необходимо авторизоваться для создания события.");
       return;
     }
     if (!location) {
-      alert("Местоположение не определено, попробуйте позже.");
+      toast("Местоположение не определено, попробуйте позже.");
       return;
     }
 
@@ -90,8 +117,8 @@ const CreateEvent: React.FC = () => {
       try {
         backgroundUrl = await uploadBackground(file);
       } catch (error) {
-        console.error("Ошибка загрузки фонового изображения", error);
-        alert("Не удалось загрузить фоновое изображение!");
+        toast.error("Ошибка загрузки фонового изображения", error);
+        toast("Не удалось загрузить фоновое изображение!");
         return;
       }
     }
@@ -119,18 +146,27 @@ const CreateEvent: React.FC = () => {
       language,
       organizer,
       background: backgroundUrl,
-      latitude: location.lat,
       longitude: location.lng,
+      latitude: location.lat,
       markerIcon,
     };
 
     try {
-      await dispatch(createEvent(eventData)).unwrap();
-      alert("Событие успешно создано!");
+      const createdEvent = await dispatch(createEvent(eventData)).unwrap();
+      await dispatch(
+        addToFavorites({ eventId: createdEvent.id, userId: user.id })
+      );
+      toast.success("Событие успешно создано!");
       navigate("/");
     } catch (error) {
       console.error("Ошибка при создании события:", error);
       alert("Произошла ошибка при создании события.");
+    }
+  };
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    if (name === "eventType") {
+      setEvent_type(value);
     }
   };
 
@@ -202,39 +238,66 @@ const CreateEvent: React.FC = () => {
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label>Цена билета:</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Тип события:</label>
+          <label>Цена билета ₽:</label>
           <input
             type="text"
-            value={event_type}
-            onChange={(e) => setEvent_type(e.target.value)}
+            value={price}
+            onChange={(e) => {
+              const value = e.target.value;
+              const numericValue = value.replace(/[^0-9]/g, "");
+              setPrice(numericValue ? Number(numericValue) : 0);
+            }}
             required
           />
         </div>
+
+        <label>
+          <p>Тип события:</p>
+          <select
+            name="eventType"
+            value={event_type}
+            onChange={handleSelectChange}>
+            <option value="">Любой</option>
+            <option value="Ресторан">Рестораны</option>
+            <option value="Экстрим">Экстрим</option>
+            <option value="Шашлык">Шашлык</option>
+            <option value="Концерт">Концерт</option>
+            <option value="Выставка">Выставка</option>
+            <option value="Театр">Театр</option>
+            <option value="Спортивное событие">Спортивное событие</option>
+            <option value="Фестиваль">Фестиваль</option>
+            <option value="Семинар">Семинар</option>
+            <option value="Бар">Бар</option>
+            <option value="Лекция">Лекция</option>
+          </select>
+        </label>
+
         <div className={styles.formGroup}>
           <label>Возрастное ограничение:</label>
           <input
-            type="number"
+            type="text"
             value={age_restriction}
-            onChange={(e) => setAge_restriction(Number(e.target.value))}
+            onChange={(e) => {
+              const value = e.target.value;
+              const numericValue = value.replace(/[^0-9]/g, "");
+              setAge_restriction(numericValue ? Number(numericValue) : 0);
+            }}
             required
           />
         </div>
+
         <div className={styles.formGroup}>
-          <label>Длительность (мин.):</label>
+          <label>Длительность минуты:</label>
           <input
-            type="number"
+            type="text"
             value={duration}
-            onChange={(e) => setDuration(Number(e.target.value))}
+            onChange={(e) => {
+              const value = e.target.value;
+              const numericValue = value.replace(/[^0-9]/g, "");
+              setDuration(numericValue ? Number(numericValue) : 0);
+            }}
             required
           />
         </div>
@@ -271,7 +334,6 @@ const CreateEvent: React.FC = () => {
             type="text"
             value={organizer}
             onChange={(e) => setOrganizer(e.target.value)}
-            required
           />
         </div>
         <div className={styles.formGroup}>

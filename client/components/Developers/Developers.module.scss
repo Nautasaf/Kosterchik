@@ -1,0 +1,90 @@
+/* Общий контейнер */
+.developersContainer {
+  padding: 2rem;
+  text-align: center;
+  background-color: var(--primary-bg);
+  color: var(--text-color); /* Применяем переменную для цвета текста */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto; /* Центрирование на странице */
+}
+
+/* Галерея разработчиков */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+/* Карточка разработчика */
+.devCard {
+  width: 100%; /* Адаптивная ширина */
+  max-width: 280px;
+  text-align: center;
+  overflow: hidden;
+  border-radius: 12px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  background-color: var(--secondary-bg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: scale(1.05); /* Небольшое увеличение при наведении */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Изображение разработчика */
+.devCard img {
+  width: 100%;
+  height: 200px; /* Фиксированная высота */
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Описание разработчика */
+.devDescription {
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-muted); /* Применяем переменную для второстепенного текста */
+  word-wrap: break-word; /* Перенос текста для длинных строк */
+}
+
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #333; /* Основной цвет текста для светлой темы */
+  --text-muted: #6c757d; /* Второстепенный цвет текста для светлой темы */
+}
+
+.darkMode {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #ffffff; /* Основной цвет текста для темной темы */
+  --text-muted: #535454; /* Второстепенный цвет текста для темной темы */
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .devCard {
+    max-width: 100%; /* Полная ширина на маленьких экранах */
+  }
+
+  .devDescription {
+    font-size: 0.9rem;
+  }
+
+  .devCard img {
+    height: 150px; /* Уменьшенная высота изображения */
+  }
+}
+
+@media (max-width: 480px) {
+  .devDescription {
+    font-size: 0.8rem;
+  }
+}

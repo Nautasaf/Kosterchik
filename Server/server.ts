@@ -5,12 +5,6 @@ const express = require('express')
 const serverConfig = require('./serverConfig')
 const server = express()
 const db = require('./db/models/index')
-const registration = require('./routs/RegistrationRout')
-const loginRouter = require('./routs/LoginRout')
-const logout = require('./routs/Logout')
-const uploadRoute = require('./routs/UploadRoute')
-const CreateEventRout = require('./routs/CreateEventRout')
-const favorites = require('./routs/Favorite')
 
 // Создание папки uploads, если она не существует
 const dir = './uploads'
@@ -32,15 +26,23 @@ async function testConnection() {
 
 testConnection()
 
+const registration = require('./routs/RegistrationRout')
+const loginRouter = require('./routs/LoginRout')
+const logout = require('./routs/Logout')
+const uploadRoute = require('./routs/UploadRoute')
+const favorites = require('./routs/Favorite')
 const eventRout = require('./routs/EventRout')
 const searchRout = require('./routs/SearchRout')
 const getUsers = require('./routs/GetAllUser')
+const userEvent = require('./routs/UserEvent')
+
 server.use('/events', eventRout)
 server.use('/search', searchRout)
 server.use('/', registration, loginRouter, logout, uploadRoute)
-server.use('/events', CreateEventRout)
 server.use('/users', getUsers)
 server.use('/favorites', favorites)
+server.use('/user-event', userEvent)
+
 
 
 const PORT = process.env.PORT || 3000

@@ -15,7 +15,6 @@ const express = require('express');
 const serverConfig = require('./serverConfig');
 const server = express();
 const db = require('./db/models/index');
-
 // Создание папки uploads, если она не существует
 const dir = './uploads';
 if (!fs.existsSync(dir)) {
@@ -33,27 +32,24 @@ function testConnection() {
         }
     });
 }
-
-testConnection()
-
+testConnection();
 const registration = require('./routs/RegistrationRout');
 const loginRouter = require('./routs/LoginRout');
 const logout = require('./routs/Logout');
 const uploadRoute = require('./routs/UploadRoute');
-// const CreateEventRout = require('./routs/CreateEventRout');
-const eventRout = require('./routs/EventRout')
-const searchRout = require('./routs/SearchRout')
-const getUsers = require('./routs/GetAllUser')
-const favorites = require('./routs/Favorite')
-const userEvent = require('./routs/UserEvent')
-server.use('/events', eventRout)
-server.use('/search', searchRout)
-server.use('/', registration, loginRouter, logout, uploadRoute)
-// server.use('/events', CreateEventRout)
-server.use('/users', getUsers)
-server.use('/favorites', favorites)
-server.use('/user-event', userEvent)
-
+const favorites = require('./routs/Favorite');
+const eventRout = require('./routs/EventRout');
+const searchRout = require('./routs/SearchRout');
+const getUsers = require('./routs/GetAllUser');
+const userEvent = require('./routs/UserEvent');
+const infoUser = require('./routs/InfoUser')
+server.use('/events', eventRout);
+server.use('/search', searchRout);
+server.use('/', registration, loginRouter, logout, uploadRoute);
+server.use('/users', getUsers);
+server.use('/favorites', favorites);
+server.use('/user-event', userEvent);
+server.use('/info', infoUser)
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
     console.log(`Server is working on port ${PORT}`);

@@ -1,10 +1,12 @@
 import 'react-toastify/dist/ReactToastify.css';
-import style from './HeaderPage.module.scss'; 
+import style from './HeaderPage.module.scss';
 import { NavLink } from 'react-router-dom';
-import React from 'react';
 
-export const HeaderBar = () => {
+interface HeaderBarProps {
+  isDarkMode: boolean; // Тип для isDarkMode
+}
 
+export const HeaderBar: React.FC<HeaderBarProps> = ({ isDarkMode }) => {
   const categories = [
     { path: 'restaurants', name: 'Рестораны' },
     { path: 'concerts', name: 'Концерты' },
@@ -20,11 +22,11 @@ export const HeaderBar = () => {
   ];
 
   return (
-    <div className={style.headerContainer}>
+    <div className={`${style.headerContainer} ${isDarkMode ? style.darkMode : style.lightMode}`}>
       {categories.map((category) => (
         <NavLink
           key={category.path}
-          to={`/eventType/${category.path}`} 
+          to={`/eventType/${category.path}`}
           className={({ isActive }) =>
             `${style.navLink} ${isActive ? style.navLinkActive : ''}`
           }

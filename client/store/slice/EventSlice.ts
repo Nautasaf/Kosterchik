@@ -59,11 +59,13 @@ export const createEvent = createAsyncThunk<
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
+      
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data || 'Ошибка при создании события'
-      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при создании события');
     }
   }
 );
@@ -86,10 +88,11 @@ export const editEvent = createAsyncThunk<
         }
       );
       return response.data;
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data || 'Ошибка при редактировании события'
-      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при редактировании события');
     }
   }
 );
@@ -106,11 +109,12 @@ export const deleteEvent = createAsyncThunk<
       await axios.delete(`${apiUrl}/events/${eventId}`, {
         withCredentials: true,
       });
-      return eventId; // Возвращаем ID удалённого события
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data || 'Ошибка при удалении события'
-      );
+      return eventId;
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.data) {
+        return rejectWithValue(error.response.data as string);
+      }
+      return rejectWithValue('Ошибка при удалении события');
     }
   }
 );

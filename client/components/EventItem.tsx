@@ -1,18 +1,25 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./EventItem.module.scss";
 import { RootState, AppDispatch } from "../store/Index";
 import { fetchUsers } from "../store/thunk/AllUserThunk";
 import { fetchEvents } from "../store/thunk/EventThunk";
-import { addToFavorites, getAllFavorites } from "../store/thunk/FavoriteThunk";
+import {
+  addToFavorites,
+  getAllFavorites,
+  removeFromFavorites,
+} from "../store/thunk/FavoriteThunk";
 import moment from "moment";
 import "moment/locale/ru";
 import { isBgColor } from "../src/utils/background";
-import { Favorite } from "../interface/EventFetch";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
+import { Map, Placemark, YMaps } from "react-yandex-maps";
 import SubscriptionMap from "./SubscriptionMaps/SubscriptionMaps";
-// import TawkToChat from "./TawkToChat";
+import {
+  handleCountFavorites,
+  handleUserAlreadyAddedToFavorites,
+} from "../scripts/FavoriteScripts";
+import { Favorite } from "../interface/EventFetch";
 
 moment.locale("ru");
 
@@ -33,30 +40,40 @@ export const EventItem: React.FC = () => {
   const { events, loading: eventsLoading } = useSelector(
     (state: RootState) => state.Events
   );
-  // Получаем список избранных (для проверки участия)
+
+  //Если так и не будет использоваться – убрать
+  // const { users, loading: usersLoading } = useSelector(
+  //   (state: RootState) => state.AllUsers
+  // );
+
+  const [showRoute, setShowRoute] = useState(false);
+
+  // Получаем массив объектов, кто куда подал заявку на участие
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   );
 
-  // Функция для получения количества участников по событию
-  const handleGetFavorites = (eventId: number): number => {
-    const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    return copyFav.filter((fav: Favorite) => fav.eventId === eventId).length;
-  };
-
-  // Функция для проверки, участвует ли текущий пользователь в событии
-  const handleUserAlreadyAddedToFavorites = (
-    eventId: number,
-    userId: number
-  ): boolean => {
-    return allFavorites.some(
-      (fav) => fav.eventId === eventId && fav.userId === userId
-    );
-  };
+  const [localFavorites, setLocalFavorites] = useState<Favorite[]>([]);
 
   useEffect(() => {
-    dispatch(getAllFavorites());
-  }, [dispatch]);
+    setLocalFavorites(allFavorites);
+  }, [allFavorites]);
+
+  const handleAddToFavorites = () => {
+    if (event) {
+      dispatch(addToFavorites({ eventId: event.id, userId: userId })).then(() =>
+        dispatch(getAllFavorites())
+      );
+    }
+  };
+
+  const handleRemoveFromFavorites = () => {
+    if (event) {
+      dispatch(removeFromFavorites({ eventId: event.id, userId: userId })).then(
+        () => dispatch(getAllFavorites())
+      );
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchEvents());
@@ -67,33 +84,15 @@ export const EventItem: React.FC = () => {
 
   useEffect(() => {
     if (event) {
-      // Получаем данные организатора по userId события
+      dispatch(getAllFavorites()); //Добавил вытягивание всех "фаворитов"
       dispatch(fetchUsers(event.userId)).then((res) => {
         setOrganizer(res.payload);
       });
     }
   }, [dispatch, event]);
 
-  // Получаем данные текущего пользователя из localStorage
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = userData.id;
-
-  // Обработчик для добавления/отмены участия (избранное)
-  const handleAddToFavorites = () => {
-    if (event) {
-      dispatch(addToFavorites({ eventId: event.id, userId }));
-    }
-  };
-
-  // Обработчик для отображения виджета чата Tawk.to
-  const handleAskQuestion = () => {
-    setChatVisible(true);
-    if ((window as any).Tawk_API && (window as any).Tawk_API.showWidget) {
-      (window as any).Tawk_API.showWidget();
-    } else {
-      console.error("Tawk.to API не загружен");
-    }
-  };
 
   if (eventsLoading) {
     return <div>Загрузка данных...</div>;
@@ -155,31 +154,7 @@ export const EventItem: React.FC = () => {
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>Город: {event.city}</div>
           <div className={styles.eventCity}>Место: {event.district}</div>
-          {event.maxPeople ? (
-            <>
-              <div className={styles.eventCity}>
-                Количество участников: {handleGetFavorites(event.id)}/
-                {event.maxPeople}
-              </div>
-              {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
-                <div className={styles.eventCity}>
-                  Вы уже участвуете в этом мероприятии
-                </div>
-              ) : handleGetFavorites(event.id) === event.maxPeople ? (
-                <div className={styles.eventCity}>
-                  В этом мероприятии уже максимальное количество участников
-                </div>
-              ) : (
-                <div className={styles.eventCity}>
-                  Вы можете присоединиться к этому мероприятию
-                </div>
-              )}
-            </>
-          ) : (
-            <div className={styles.eventCity}>
-              Количество участников: {handleGetFavorites(event.id)}
-            </div>
-          )}
+
           <div className={styles.eventDate}>
             Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
             {event.end_date
@@ -204,19 +179,63 @@ export const EventItem: React.FC = () => {
             </div>
           )}
 
+          {event.maxPeople ? (
+            <>
+              <div className={styles.eventCity}>
+                Количество участников:{" "}
+                {handleCountFavorites(event.id, localFavorites)}/
+                {event.maxPeople}
+              </div>
+
+              {handleUserAlreadyAddedToFavorites(
+                event.id,
+                userId,
+                localFavorites
+              ) ? (
+                <div className={styles.eventCity}>
+                  Вы уже участвуете в этом мероприятии
+                </div>
+              ) : handleCountFavorites(event.id, allFavorites) ===
+                event.maxPeople ? (
+                <div className={styles.eventCity}>
+                  В этом мероприятии уже максимальное количество участвующих
+                </div>
+              ) : (
+                <div className={styles.eventCity}>
+                  Вы можете присоединиться к этому мероприятию
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              <div className={styles.eventCity}>
+                Вы можете присоединиться к этому мероприятию
+              </div>
+              <div className={styles.eventCity}>
+                Количество участников:{" "}
+                {handleCountFavorites(event.id, localFavorites)}
+              </div>
+            </>
+          )}
+
           <div className={styles.eventButtonContainer}>
             <button className={styles.eventButton} onClick={handleAskQuestion}>
               Задать вопрос
             </button>
 
-            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
+            {handleUserAlreadyAddedToFavorites(
+              event.id,
+              userId,
+              localFavorites
+            ) ? (
               <button
                 className={styles.eventButton}
-                onClick={handleAddToFavorites}>
+                onClick={handleRemoveFromFavorites}>
                 Отказаться
               </button>
-            ) : handleGetFavorites(event.id) === event.maxPeople ? (
-              <button className={styles.eventButton}>Нет мест</button>
+            ) : handleCountFavorites(event.id, localFavorites) ===
+              event.maxPeople ? (
+              <button className={styles.eventInactiveButton}>Нет мест</button>
             ) : (
               <button
                 className={styles.eventButton}

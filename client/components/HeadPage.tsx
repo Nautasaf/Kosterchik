@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./HeadPage.module.scss";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,6 +9,11 @@ import "moment/locale/ru";
 import { Sidebar } from "./SideBar";
 import { getAllFavorites } from "../store/thunk/FavoriteThunk";
 import { isBgColor } from "../src/utils/background";
+import {
+  handleCountFavorites,
+  handleUserAlreadyAddedToFavorites,
+} from "../scripts/FavoriteScripts";
+import { Favorite } from "../interface/EventFetch";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -67,29 +72,14 @@ export const HeadPage: React.FC = () => {
     (state: RootState) => state.Favorites.favorites
   );
 
-  // Получаем данные текущего пользователя (из localStorage)
-  const userData = JSON.parse(localStorage.getItem("userss") || "{}");
+  const [localFavorites, setLocalFavorites] = useState<Favorite[]>([]);
+
+  useEffect(() => {
+    setLocalFavorites(allFavorites);
+  }, [allFavorites]);
+
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = userData.id;
-
-  // Функция для подсчёта количества избранных заявок для события
-  const handleGetFavorites = (eventId: number): number => {
-    // Клонируем объект избранных, чтобы не мутировать состояние
-    const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    const favCounter = copyFav.filter(
-      (fav: any) => fav.eventId === eventId
-    ).length;
-    return favCounter;
-  };
-
-  // Функция для проверки, добавил ли пользователь событие в избранное
-  const handleUserAlreadyAddedToFavorites = (
-    eventId: number,
-    userId: number
-  ): boolean => {
-    return allFavorites.some(
-      (fav: any) => fav.eventId === eventId && fav.userId === userId
-    );
-  };
 
   // Получаем все избранные события (при изменении диспатча)
   useEffect(() => {
@@ -223,21 +213,30 @@ export const HeadPage: React.FC = () => {
               />
             )}
             <p className={styles.eventInfo}>{event.description}</p>
+
             {event.maxPeople ? (
               <p className={styles.eventInfo}>
-                Количество участников: {handleGetFavorites(event.id)}/
+                Количество участников:{" "}
+                {handleCountFavorites(event.id, localFavorites)}/
                 {event.maxPeople}
               </p>
             ) : (
               <p className={styles.eventInfo}>
-                Количество участников: {handleGetFavorites(event.id)}
+                Количество участников:{" "}
+                {handleCountFavorites(event.id, localFavorites)}
               </p>
             )}
-            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
+
+            {handleUserAlreadyAddedToFavorites(
+              event.id,
+              userId,
+              localFavorites
+            ) ? (
               <div className={styles.eventInfo}>
                 Вы уже участвуете в этом мероприятии
               </div>
-            ) : handleGetFavorites(event.id) === event.maxPeople ? (
+            ) : handleCountFavorites(event.id, localFavorites) ===
+              event.maxPeople ? (
               <div className={styles.eventInfo}>
                 В этом мероприятии уже максимальное количество участвующих
               </div>

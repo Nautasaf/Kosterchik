@@ -10,51 +10,63 @@
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fadeIn 0.3s ease-out; /* Плавное появление */
+  animation: fadeIn 0.3s ease-out;
 }
 
-
 .modalContent {
-  background-color: #ffffff; /* Белый фон для светлой темы */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
   padding: 30px;
   border-radius: 12px;
   max-width: 600px;
   width: 100%;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.3s ease-out; /* Плавное появление контента */
-  position: relative; /* Для позиционирования крестика */
-  border: 2px solid #dcdcdc;
-  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+  position: relative;
+  border: 2px solid var(--secondary-bg);
+  font-family: 'Inter', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Темная тема для модального окна */
 .darkMode .modalContent {
-  background-color: #121212; /* Чёрный фон для тёмной темы */
-  color: #ffffff;
+  background-color: var(--secondary-bg);
   border-color: rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+  width: 100%;
 }
 
 /* Кнопка закрытия в углу */
 .closeButton {
+  width: 30px;
   position: absolute;
+  margin-right: 30px;
   top: 10px;
   right: 10px;
-  margin-left: 100px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
   border: none;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
   font-size: 24px;
-  color: #706e6e;
+  color: var(--text-muted);
   cursor: pointer;
   font-weight: bold;
-  transition: color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .closeButton:hover {
-  color: #ff7875; /* Красный при наведении */
+  background-color: rgba(0, 0, 0, 0.2);
+  color: var(--accent-color);
 }
 
-/* Анимации для появления модального окна */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -75,7 +87,6 @@
   }
 }
 
-/* Стили для списка событий */
 ul {
   list-style-type: none;
   padding: 0;
@@ -86,12 +97,13 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #eee;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--secondary-bg);
   font-size: 16px;
-  font-family: Arial, sans-serif;
-  color: #333;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  word-break: break-word;
 }
 
 li:last-child {
@@ -99,13 +111,12 @@ li:last-child {
 }
 
 li:hover {
-  background-color: #f7f7f7; /* Светло-серый при наведении */
+  background-color: var(--secondary-bg);
   cursor: pointer;
+  transform: translateX(5px);
 }
 
-/* Темная тема для списка событий */
 .darkMode li {
-  color: #ffffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -113,7 +124,8 @@ li:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-/* Кнопки редактирования и удаления */
+/* Кнопки участники, редактирования и удаления */
+.participantsButton
 .editButton,
 .deleteButton {
   display: inline-block;
@@ -125,32 +137,42 @@ li:hover {
   transition: all 0.3s ease;
   margin-top: 10px;
   width: fit-content;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   color: white;
   margin-right: 10px;
 }
+
+/* Стиль кнопки "Участники" */
+.participantsButton {
+  background: linear-gradient(45deg, #21f356, #3cf169);;
+}
+
+.participantsButton {
+  background: linear-gradient(45deg, #19b740, #23913f);;
+  box-shadow: 6px 6px 10px rgba(0, 255, 102, 0.3); /* Тень синего цвета */
+}
+
 /* Стиль кнопки "Редактировать" */
 .editButton {
-  background: linear-gradient(45deg, #2196F3, #42A5F5); /* Градиент синего цвета */
+  background: var(--accent-color);
 }
 
 .editButton:hover {
-  background: linear-gradient(45deg, #1E88E5, #42A5F5); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(0, 123, 255, 0.3); /* Тень синего цвета */
+  background: #5146d3;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
 }
 
-/* Стиль кнопки "Удалить" */
 .deleteButton {
-  background: linear-gradient(45deg, #FF5252, #FF7043); /* Градиент красного цвета */
+  background: #ff5252;
 }
 
 .deleteButton:hover {
-  background: linear-gradient(45deg, #F44336, #FF7043); /* Немного темнее при наведении */
-  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3); /* Тень красного цвета */
+  background: #f44336;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
 }
 
-
-/* Стили для мобильных устройств */
 @media (max-width: 768px) {
   .modalContent {
     padding: 20px;
@@ -166,5 +188,23 @@ li:hover {
   .deleteButton {
     font-size: 14px;
     padding: 8px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    padding: 15px;
+    border-radius: 8px;
+  }
+
+  li {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+
+  .editButton,
+  .deleteButton {
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }

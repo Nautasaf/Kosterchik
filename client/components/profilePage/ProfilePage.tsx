@@ -6,6 +6,7 @@ import { RootState } from '../../store/Index'
 import { useNavigate } from 'react-router-dom'
 import MyEventsModal from '../MyEvent/MyEventsModal'
 import axios from 'axios'
+import { Event } from '../../interface/EventFetch'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -13,7 +14,7 @@ const ProfilePage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [userEvents, setUserEvents] = useState<any[]>([])
+  const [userEvents, setUserEvents] = useState<Event[]>([])
 
   useEffect(() => {
     const fetchUserEvents = async () => {
