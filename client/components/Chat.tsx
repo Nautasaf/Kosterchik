@@ -7,13 +7,15 @@ interface ChatProps {
   userId: number;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const Chat: React.FC<ChatProps> = ({ eventId, userId }) => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    const socketIo = io('http://localhost:3000');
+    const socketIo = io(apiUrl);
     setSocket(socketIo);
 
     socketIo.on('connect', () => {
