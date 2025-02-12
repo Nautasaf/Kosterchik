@@ -248,25 +248,28 @@ const CreateEvent: React.FC = () => {
     required
   />
 </div>
-
-  <label>
-    <p>Тип события:</p>
-    <select name="eventType" value={event_type} onChange={handleSelectChange}>
-      <option value="">Любой</option>
-      <option value="Ресторан">Рестораны</option>
-      <option value="Экстрим">Экстрим</option>
-      <option value="Шашлык">Шашлык</option>
-      <option value="Концерт">Концерт</option>
-      <option value="Выставка">Выставка</option>
-      <option value="Театр">Театр</option>
-      <option value="Спортивное событие">Спортивное событие</option>
-      <option value="Фестиваль">Фестиваль</option>
-      <option value="Семинар">Семинар</option>
-      <option value="Бар">Бар</option>
-      <option value="Лекция">Лекция</option>
-    </select>
-  </label>
-
+<div className={`${styles.formGroup} ${styles.eventType}`}>
+      <label>Тип события:</label>
+      <select
+        name="eventType"
+        value={event_type}
+        onChange={handleSelectChange}
+        required
+      >
+        <option value="">Любой</option>
+        <option value="Ресторан">Рестораны</option>
+        <option value="Экстрим">Экстрим</option>
+        <option value="Шашлык">Шашлык</option>
+        <option value="Концерт">Концерт</option>
+        <option value="Выставка">Выставка</option>
+        <option value="Театр">Театр</option>
+        <option value="Спортивное событие">Спортивное событие</option>
+        <option value="Фестиваль">Фестиваль</option>
+        <option value="Семинар">Семинар</option>
+        <option value="Бар">Бар</option>
+        <option value="Лекция">Лекция</option>
+      </select>
+    </div>
 <div className={styles.formGroup}>
   <label>Возрастное ограничение:</label>
   <input

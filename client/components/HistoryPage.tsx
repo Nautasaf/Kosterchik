@@ -21,7 +21,7 @@ export const HistoryPage: React.FC = () => {
   };
 
   const { favorites} = useSelector((state: RootState) => state.Favorites);
- 
+
   useEffect(() => {
     dispatch(fetchFavorites(userId));
   }, [dispatch, userId]);

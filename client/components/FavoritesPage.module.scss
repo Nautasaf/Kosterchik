@@ -1,56 +1,128 @@
-.favorites-page {
-  margin: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
+/* Общие переменные */
+:root {
+  --primary-color: #2196F3;
+  --primary-hover: #1E88E5;
+  --danger-color: #FF5252;
+  --danger-hover: #F44336;
+  --background-light: #ffffff;
+  --background-dark: #121212;
+  --text-light: #333;
+  --text-dark: #ffffff;
+  --border-color: #dcdcdc;
+  --border-dark: rgba(255, 255, 255, 0.1);
+  --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
+/* Контейнер страницы */
+.favorites-page {
+  margin: 20px;
+  padding: 30px;
+  background-color: var(--background-light);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Темная тема */
+.darkMode .favorites-page {
+  background-color: var(--background-dark);
+  color: var(--text-dark);
+}
+
+/* Заголовок */
 .favorites-page h1 {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
+/* Список событий */
 .favorites-page ul {
   list-style-type: none;
   padding: 0;
 }
 
+/* Элемент списка */
 .favorite-item {
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: var(--background-light);
+  padding: 20px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.favorite-item:hover {
+  transform: translateY(-2px);
+}
+
+/* Темная тема для элементов списка */
+.darkMode .favorite-item {
+  background-color: var(--background-dark);
+}
+
+/* Название события */
 .favorite-item h3 {
   font-size: 1.5rem;
   margin: 0;
-  color: #333;
+  color: var(--text-light);
 }
 
+/* Описание события */
 .favorite-item p {
   font-size: 1rem;
   color: #666;
   margin: 10px 0;
 }
 
-.favorite-item button {
-  background-color: #e74c3c;
-  color: #fff;
-  padding: 8px 12px;
+.darkMode .favorite-item h3,
+.darkMode .favorite-item p {
+  color: var(--text-dark);
+}
+
+/* Кнопка удаления */
+.delete-button {
+  background: linear-gradient(45deg, var(--danger-color), #FF7043);
+  color: white;
+  padding: 10px 18px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s ease;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.favorite-item button:hover {
-  background-color: #c0392b;
+.delete-button:hover {
+  background: linear-gradient(45deg, var(--danger-hover), #FF7043);
+  box-shadow: 6px 6px 10px rgba(255, 0, 0, 0.3);
 }
 
+/* Стиль для пустого списка */
 .no-favorites {
   font-size: 1.2rem;
   color: #888;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Темная тема для пустого списка */
+.darkMode .no-favorites {
+  color: var(--text-dark);
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .favorites-page {
+    padding: 20px;
+  }
+
+  .favorite-item {
+    padding: 15px;
+  }
+
+  .delete-button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
 }
