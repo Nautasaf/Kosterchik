@@ -1,13 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-// RootState здесь не используется, можно убрать
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-interface Event {
-  longitude: any;
-  latitude: any;
-  id: number ;
+// Обновляем интерфейс Event: координаты теперь явно числовые
+export interface Event {
+  id: number;
   title: string;
   description: string;
   city: string;
@@ -15,9 +13,7 @@ interface Event {
   start_date: string;
   end_date: string;
   userId: number;
-  maxPeople: number | undefined
-  createdAt?: string;
-  updatedAt?: string;
+  maxPeople?: number;
   imageUrl?: string;
   background?: string;
   requirements?: string;
@@ -33,9 +29,12 @@ interface Event {
   rating?: number;
   organizer?: string;
   popularity?: number;
+  latitude: number;
+  longitude: number;
+  markerIcon?: string;
 }
 
-interface EventState {
+export interface EventState {
   events: Event[];
   loading: boolean;
   error: string | null;
@@ -48,50 +47,72 @@ const initialState: EventState = {
 };
 
 // Thunk для создания события
-export const createEvent = createAsyncThunk(
+export const createEvent = createAsyncThunk<
+  Event,
+  Omit<Event, 'id'>,
+  { rejectValue: string }
+>(
   'events/createEvent',
-  async (eventData: Omit<Event, 'id'>, { rejectWithValue }) => {
+  async (eventData, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${apiUrl}/events`, eventData, {
         headers: { 'Content-Type': 'application/json' },
         withCredentials: true,
       });
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при создании события');
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data || 'Ошибка при создании события'
+      );
     }
-  },
+  }
 );
 
 // Thunk для редактирования события
-export const editEvent = createAsyncThunk(
+export const editEvent = createAsyncThunk<
+  Event,
+  { eventId: number; updatedData: Partial<Event> },
+  { rejectValue: string }
+>(
   'events/editEvent',
-  async ({ eventId, updatedData }: { eventId: number; updatedData: Partial<Event> }, { rejectWithValue }) => {
+  async ({ eventId, updatedData }, { rejectWithValue }) => {
     try {
-      const response = await axios.put(`${apiUrl}/events/${eventId}`, updatedData, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
+      const response = await axios.put(
+        `${apiUrl}/events/${eventId}`,
+        updatedData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при редактировании события');
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data || 'Ошибка при редактировании события'
+      );
     }
-  },
+  }
 );
 
 // Thunk для удаления события
-export const deleteEvent = createAsyncThunk(
+export const deleteEvent = createAsyncThunk<
+  number,
+  number,
+  { rejectValue: string }
+>(
   'events/deleteEvent',
-  async (eventId: number, { rejectWithValue }) => {
+  async (eventId, { rejectWithValue }) => {
     try {
       await axios.delete(`${apiUrl}/events/${eventId}`, {
         withCredentials: true,
       });
-      return eventId;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || 'Ошибка при удалении события');
+      return eventId; // Возвращаем ID удалённого события
+    } catch (error: any) {
+      return rejectWithValue(
+        error.response?.data || 'Ошибка при удалении события'
+      );
     }
-  },
+  }
 );
 
 const eventSlice = createSlice({
@@ -104,10 +125,13 @@ const eventSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(createEvent.fulfilled, (state, action: PayloadAction<Event>) => {
-      state.loading = false;
-      state.events.push(action.payload);
-    });
+    builder.addCase(
+      createEvent.fulfilled,
+      (state, action: PayloadAction<Event>) => {
+        state.loading = false;
+        state.events.push(action.payload);
+      }
+    );
     builder.addCase(createEvent.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
@@ -118,13 +142,18 @@ const eventSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(editEvent.fulfilled, (state, action: PayloadAction<Event>) => {
-      state.loading = false;
-      const index = state.events.findIndex((event) => event.id === action.payload.id);
-      if (index !== -1) {
-        state.events[index] = action.payload;
+    builder.addCase(
+      editEvent.fulfilled,
+      (state, action: PayloadAction<Event>) => {
+        state.loading = false;
+        const index = state.events.findIndex(
+          (event) => event.id === action.payload.id
+        );
+        if (index !== -1) {
+          state.events[index] = action.payload;
+        }
       }
-    });
+    );
     builder.addCase(editEvent.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
@@ -135,10 +164,15 @@ const eventSlice = createSlice({
       state.loading = true;
       state.error = null;
     });
-    builder.addCase(deleteEvent.fulfilled, (state, action: PayloadAction<number>) => {
-      state.loading = false;
-      state.events = state.events.filter((event) => event.id !== action.payload);
-    });
+    builder.addCase(
+      deleteEvent.fulfilled,
+      (state, action: PayloadAction<number>) => {
+        state.loading = false;
+        state.events = state.events.filter(
+          (event) => event.id !== action.payload
+        );
+      }
+    );
     builder.addCase(deleteEvent.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;

@@ -1,43 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { YMaps, Map, Placemark } from "react-yandex-maps";
-import moment from "moment";
-import "moment/locale/ru";
+import { useDispatch, useSelector } from "react-redux";
 import styles from "./EventItem.module.scss";
 import { RootState, AppDispatch } from "../store/Index";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../store/thunk/AllUserThunk";
 import { fetchEvents } from "../store/thunk/EventThunk";
 import { addToFavorites, getAllFavorites } from "../store/thunk/FavoriteThunk";
+import moment from "moment";
+import "moment/locale/ru";
 import { isBgColor } from "../src/utils/background";
+import { Favorite } from "../interface/EventFetch";
+import { YMaps, Map, Placemark } from "react-yandex-maps";
 import SubscriptionMap from "./SubscriptionMaps/SubscriptionMaps";
+// import TawkToChat from "./TawkToChat";
+
+moment.locale("ru");
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
-const EventItem: React.FC = () => {
-  // Извлекаем id события из параметров маршрута
+export const EventItem: React.FC = () => {
+  // Извлекаем id события из URL-параметров
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch<AppDispatch>();
 
-  // Состояния для организатора и отображения маршрута
+  // Локальное состояние для данных организатора и виджета чата
   const [organizer, setOrganizer] = useState<any>(null);
-  const [showRoute, setShowRoute] = useState(false);
+  const [chatVisible, setChatVisible] = useState(false);
+  // Если нужен функционал отображения маршрута, можно добавить:
+  // const [routeVisible, setRouteVisible] = useState(false);
 
   // Получаем события из Redux
   const { events, loading: eventsLoading } = useSelector(
     (state: RootState) => state.Events
   );
-
-  // Избранное: получаем список и считаем количество участников
+  // Получаем список избранных (для проверки участия)
   const allFavorites = useSelector(
     (state: RootState) => state.Favorites.favorites
   );
+
+  // Функция для получения количества участников по событию
   const handleGetFavorites = (eventId: number): number => {
     const copyFav = JSON.parse(JSON.stringify(allFavorites));
-    return copyFav.filter((fav: any) => fav.eventId === eventId).length;
+    return copyFav.filter((fav: Favorite) => fav.eventId === eventId).length;
   };
 
-  // Загружаем избранное и события при инициализации компонента
+  // Функция для проверки, участвует ли текущий пользователь в событии
+  const handleUserAlreadyAddedToFavorites = (
+    eventId: number,
+    userId: number
+  ): boolean => {
+    return allFavorites.some(
+      (fav) => fav.eventId === eventId && fav.userId === userId
+    );
+  };
+
   useEffect(() => {
     dispatch(getAllFavorites());
   }, [dispatch]);
@@ -46,12 +62,12 @@ const EventItem: React.FC = () => {
     dispatch(fetchEvents());
   }, [dispatch]);
 
-  // Ищем событие по id
+  // Находим событие по id (данные приходят из Redux)
   const event = events.find((e) => e.id.toString() === id);
 
-  // Если событие найдено, загружаем данные организатора
   useEffect(() => {
     if (event) {
+      // Получаем данные организатора по userId события
       dispatch(fetchUsers(event.userId)).then((res) => {
         setOrganizer(res.payload);
       });
@@ -62,11 +78,20 @@ const EventItem: React.FC = () => {
   const userData = JSON.parse(localStorage.getItem("user") || "{}");
   const userId = userData.id;
 
-  // Обработчик для добавления события в избранное
+  // Обработчик для добавления/отмены участия (избранное)
   const handleAddToFavorites = () => {
     if (event) {
       dispatch(addToFavorites({ eventId: event.id, userId }));
-      setShowRoute(true);
+    }
+  };
+
+  // Обработчик для отображения виджета чата Tawk.to
+  const handleAskQuestion = () => {
+    setChatVisible(true);
+    if ((window as any).Tawk_API && (window as any).Tawk_API.showWidget) {
+      (window as any).Tawk_API.showWidget();
+    } else {
+      console.error("Tawk.to API не загружен");
     }
   };
 
@@ -78,14 +103,11 @@ const EventItem: React.FC = () => {
     return <div>Событие не найдено</div>;
   }
 
-  // Вычисляем координаты события (если заданы)
+  // Если координаты события заданы, используем их; иначе они могут быть дефолтными на стороне сервера
   const eventCoordinates =
     event.latitude && event.longitude
       ? ([event.latitude, event.longitude] as [number, number])
       : null;
-
-  // Для отладки можно вывести в консоль координаты
-  console.log("Event coordinates:", eventCoordinates);
 
   return (
     <div className={styles.eventItem}>
@@ -105,6 +127,7 @@ const EventItem: React.FC = () => {
           alt={event.title}
         />
       )}
+
       <div className={styles.eventColumns}>
         <div className={styles.eventColumn}>
           <div className={styles.containerProfile}>
@@ -127,6 +150,7 @@ const EventItem: React.FC = () => {
             </div>
           </div>
         </div>
+
         <div className={styles.eventColumn}>
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>Город: {event.city}</div>
@@ -137,11 +161,19 @@ const EventItem: React.FC = () => {
                 Количество участников: {handleGetFavorites(event.id)}/
                 {event.maxPeople}
               </div>
-              <button
-                className={styles.eventButton}
-                onClick={handleAddToFavorites}>
-                Я готов
-              </button>
+              {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
+                <div className={styles.eventCity}>
+                  Вы уже участвуете в этом мероприятии
+                </div>
+              ) : handleGetFavorites(event.id) === event.maxPeople ? (
+                <div className={styles.eventCity}>
+                  В этом мероприятии уже максимальное количество участников
+                </div>
+              ) : (
+                <div className={styles.eventCity}>
+                  Вы можете присоединиться к этому мероприятию
+                </div>
+              )}
             </>
           ) : (
             <div className={styles.eventCity}>
@@ -154,30 +186,62 @@ const EventItem: React.FC = () => {
               ? ` до ${moment(event.end_date).format("HH:mm")}`
               : ""}
           </div>
+
+          {eventCoordinates && (
+            <div className={styles.mapContainer}>
+              <YMaps
+                query={{
+                  apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673",
+                  lang: "ru_RU",
+                }}>
+                <Map
+                  state={{ center: eventCoordinates, zoom: 10 }}
+                  width="100%"
+                  height="300px">
+                  <Placemark geometry={eventCoordinates} />
+                </Map>
+              </YMaps>
+            </div>
+          )}
+
+          <div className={styles.eventButtonContainer}>
+            <button className={styles.eventButton} onClick={handleAskQuestion}>
+              Задать вопрос
+            </button>
+
+            {handleUserAlreadyAddedToFavorites(event.id, userId) ? (
+              <button
+                className={styles.eventButton}
+                onClick={handleAddToFavorites}>
+                Отказаться
+              </button>
+            ) : handleGetFavorites(event.id) === event.maxPeople ? (
+              <button className={styles.eventButton}>Нет мест</button>
+            ) : (
+              <button
+                className={styles.eventButton}
+                onClick={handleAddToFavorites}>
+                Я готов
+              </button>
+            )}
+
+            <button
+              className={styles.eventButton}
+              onClick={() => console.log("Участники")}>
+              Участники
+            </button>
+          </div>
         </div>
       </div>
-      // EventItem.tsx
-      {eventCoordinates && (
-        <div className={styles.mapContainer}>
-          <YMaps query={{ apikey: "34b7dcda-c8dc-4636-8fbc-7924193d0673" }}>
-            <Map
-              state={{ center: eventCoordinates, zoom: 13 }}
-              width="100%"
-              height="300px">
-              <Placemark
-                geometry={eventCoordinates}
-                options={{ preset: "islands#darkblueCircleIcon" }}
-              />
-            </Map>
-          </YMaps>
-        </div>
-      )}
-      {showRoute && eventCoordinates && (
-        <SubscriptionMap
-          eventCoordinates={eventCoordinates}
-          onClose={() => setShowRoute(false)}
-        />
-      )}
+
+      {/* {chatVisible && <TawkToChat />} */}
+      {/* Если нужен компонент маршрута, его можно добавить аналогично */}
+      {/* {routeVisible && eventCoordinates && (
+          <SubscriptionMap
+            eventCoordinates={eventCoordinates}
+            onClose={() => setRouteVisible(false)}
+          />
+      )} */}
     </div>
   );
 };

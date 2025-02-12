@@ -1,51 +1,51 @@
-import React, { useEffect, useState } from 'react'
-import styles from './MyEventsModal.module.scss'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../../store/Index'
-import { deleteEvent } from '../../store/slice/EventSlice'
-import { useNavigate } from 'react-router-dom'
-import { Event } from '../../interface/EventFetch'
+import React, { useEffect, useState } from "react";
+import styles from "./MyEventsModal.module.scss";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/Index";
+// Изменили импорт deleteEvent:
+import { deleteEvent } from "../../store/thunk/DeleteEvent";
+import { useNavigate } from "react-router-dom";
+import { Event } from "../../interface/EventFetch";
 
 interface MyEventsModalProps {
-  events: Event[]
-  onClose: () => void
+  events: Event[];
+  onClose: () => void;
 }
 
 const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
-  const dispatch = useDispatch<AppDispatch>()
-  const navigate = useNavigate()
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   // Локальное состояние для списка событий
-  const [localEvents, setLocalEvents] = useState(events)
+  const [localEvents, setLocalEvents] = useState(events);
 
-  // Обновляем локальный список при изменении `events`
+  // Обновляем локальный список при изменении events
   useEffect(() => {
-    setLocalEvents(events)
-  }, [events])
+    setLocalEvents(events);
+  }, [events]);
 
   // Функция удаления события
   const handleDeleteEvent = async (eventId: number) => {
-    if (window.confirm('Вы уверены, что хотите удалить это событие?')) {
+    if (window.confirm("Вы уверены, что хотите удалить это событие?")) {
       try {
-        await dispatch(deleteEvent(eventId)).unwrap()
-        alert('Событие успешно удалено!')
-
+        await dispatch(deleteEvent(eventId)).unwrap();
+        alert("Событие успешно удалено!");
         // Убираем удаленное событие из локального списка
         setLocalEvents((prevEvents) =>
-          prevEvents.filter((event) => event.id !== eventId),
-        )
+          prevEvents.filter((event) => event.id !== eventId)
+        );
       } catch (error) {
-        console.error('Ошибка при удалении события:', error)
-        alert('Произошла ошибка при удалении события.')
+        console.error("Ошибка при удалении события:", error);
+        alert("Произошла ошибка при удалении события.");
       }
     }
-  }
+  };
 
   // Функция редактирования события
   const handleEditEvent = (eventId: number) => {
-    navigate(`/edit-event/${eventId}`)
-    onClose()
-  }
+    navigate(`/edit-event/${eventId}`);
+    onClose();
+  };
 
   return (
     <div className={styles.modalOverlay} onClick={onClose}>
@@ -59,19 +59,17 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
             localEvents.map((event) => (
               <li key={event.id}>
                 {event.title}
-                <div className='blockButton'>
-                <button
-                  className={styles.editButton}
-                  onClick={() => handleEditEvent(event.id)}
-                >
-                  Редактировать
-                </button>
-                <button
-                  className={styles.deleteButton}
-                  onClick={() => handleDeleteEvent(event.id)}
-                >
-                  Удалить
-                </button>
+                <div className="blockButton">
+                  <button
+                    className={styles.editButton}
+                    onClick={() => handleEditEvent(event.id)}>
+                    Редактировать
+                  </button>
+                  <button
+                    className={styles.deleteButton}
+                    onClick={() => handleDeleteEvent(event.id)}>
+                    Удалить
+                  </button>
                 </div>
               </li>
             ))
@@ -81,7 +79,7 @@ const MyEventsModal: React.FC<MyEventsModalProps> = ({ events, onClose }) => {
         </ul>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MyEventsModal
+export default MyEventsModal;

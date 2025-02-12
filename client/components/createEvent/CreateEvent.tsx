@@ -11,6 +11,8 @@ const CreateEvent: React.FC = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const apiUrl = import.meta.env.VITE_API_URL;
+
+  // Основные поля события
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [city, setCity] = useState(user.city || "");
@@ -31,19 +33,23 @@ const CreateEvent: React.FC = () => {
   const [organizer, setOrganizer] = useState("");
   const [markerIcon, setMarkerIcon] = useState<string>("fire");
 
+  // Состояние для координат события – по умолчанию центр Москвы
   const [location, setLocation] = useState<{ lat: number; lng: number }>({
     lat: 55.751244,
     lng: 37.618423,
   });
 
+  // При монтировании пытаемся получить текущую геолокацию пользователя
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLocation({
+          const coords = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-          });
+          };
+          console.log("Получена геолокация:", coords);
+          setLocation(coords);
         },
         (error) => {
           console.error("Ошибка получения геолокации:", error);
@@ -56,6 +62,7 @@ const CreateEvent: React.FC = () => {
     }
   }, []);
 
+  // Функция загрузки фонового изображения на сервер
   const uploadBackground = async (file: File) => {
     const formData = new FormData();
     formData.append("backgroundImage", file);
@@ -88,6 +95,9 @@ const CreateEvent: React.FC = () => {
         return;
       }
     }
+
+    // Логируем используемые координаты перед отправкой запроса
+    console.log("Используем координаты:", location);
 
     const eventData = {
       title,
@@ -282,8 +292,11 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Выберите место проведения:</label>
           <MapPicker
-            onLocationSelect={(coords) => setLocation(coords)}
-            initialCoordinates={location || { lat: 55.751244, lng: 37.618423 }}
+            onLocationSelect={(coords) => {
+              console.log("Новые координаты из MapPicker:", coords);
+              setLocation(coords);
+            }}
+            initialCoordinates={location}
           />
         </div>
         <div className={styles.formGroup}>

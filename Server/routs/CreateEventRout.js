@@ -25,16 +25,17 @@ router.post('/', async (req, res) => {
       district,
       format,
       language,
-      accessibility,
       organizer,
       latitude,
       longitude,
+      markerIcon,
+      accessibility,
     } = req.body;
-   
+
     if (!userId) {
       return res.status(400).json({ message: 'Ошибка: userId не указан' });
     }
-    console.log('userId===>', userId);
+    console.log("userId ===>", userId);
 
     const newEvent = await Event.create({
       title,
@@ -60,6 +61,7 @@ router.post('/', async (req, res) => {
       organizer,
       latitude,
       longitude,
+      markerIcon,
     });
 
     await EventUser.create({
