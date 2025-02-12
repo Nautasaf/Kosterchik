@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { log } = require('console');
 const { User, Event, EventUser, UserFavorite } = require('../db/models'); 
 const nodemailer = require('nodemailer');
-require('dotenv').config();2
+require('dotenv').config();
 
 
 const transporter = nodemailer.createTransport({
