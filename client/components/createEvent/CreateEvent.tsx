@@ -206,18 +206,6 @@ const CreateEvent: React.FC = () => {
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Максимальное количество человек:</label>
-          <input
-            type='text'
-            value={maxPeople}
-            onChange={(e) => {
-              const value = e.target.value;
-              const numericValue = value.replace(/[^0-9]/g, '');
-              setMaxPeople(numericValue ? Number(numericValue) : 0);
-            }}
-          />
-        </div>
-        <div className={styles.formGroup}>
           <label>Дата начала события:</label>
           <input
             type='date'
@@ -235,7 +223,18 @@ const CreateEvent: React.FC = () => {
             required
           />
         </div>
-        
+        <div className={styles.formGroup}>
+          <label>Максимальное количество человек:</label>
+          <input
+            type='text'
+            value={maxPeople}
+            onChange={(e) => {
+              const value = e.target.value;
+              const numericValue = value.replace(/[^0-9]/g, '');
+              setMaxPeople(numericValue ? Number(numericValue) : 0);
+            }}
+          />
+        </div>
         <div className={styles.formGroup}>
           <label>Цена билета ₽:</label>
           <input
