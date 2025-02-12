@@ -1,0 +1,48 @@
+/* Заголовок чата */
+.chatHeader {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  /* Контейнер для сообщений */
+  .messages {
+    height: calc(100% - 80px);  /* Оставляем место для заголовка и ввода */
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  /* Контейнер для ввода сообщения и кнопки */
+  .inputContainer {
+    display: flex;
+    flex-direction: column; /* Размещаем элементы вертикально */
+    align-items: stretch;  /* Заставляем элементы занимать всю ширину */
+    position: absolute;
+    bottom: 20px;  /* Отступ снизу от контейнера чата */
+    width: 100%;  /* Занимаем всю ширину */
+    padding: 5px;
+    box-sizing: border-box; /* Учитываем padding в расчете ширины */
+  }
+  
+  /* Поле ввода сообщения */
+  .inputContainer input {
+    width: 100%;  
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;  /* Отступ от кнопки */
+    box-sizing: border-box; /* Учитываем padding в расчете ширины */
+  }
+  
+  /* Кнопка отправки */
+  .inputContainer button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 12px;  /* Уменьшаем отступы внутри кнопки */
+    font-size: 14px;  /* Уменьшаем размер текста */
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box; /* Учитываем padding в расчете ширины */
+  }

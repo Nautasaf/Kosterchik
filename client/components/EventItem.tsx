@@ -13,24 +13,26 @@ import { Map, Placemark, YMaps } from 'react-yandex-maps'
 import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
 import { handleCountFavorites, handleUserAlreadyAddedToFavorites } from '../scripts/FavoriteScripts'
 import { Favorite } from '../interface/EventFetch'
+import Chat from './Chat'
+import React from 'react'
 
 moment.locale('ru')
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
+
 export const EventItem = () => {
   const { id } = useParams()
   const dispatch = useDispatch<AppDispatch>()
-  const [organizer, setOrganizer] = useState<any>(null) //Добавить типизацию
-
-  const { events, loading: eventsLoading } = useSelector(
-    (state: RootState) => state.Events,
-  )
-
-  //Если так и не будет использоваться – убрать
-  // const { users, loading: usersLoading } = useSelector(
-  //   (state: RootState) => state.AllUsers
-  // );
+  const [organizer, setOrganizer] = useState<any>(null) 
+  const [showChat, setShowChat] = useState(false);
+  const { events, loading: eventsLoading } = useSelector((state: RootState) => state.Events)
+  console.log(id );
+  
+ const toggleChat = () => {
+   setShowChat((prev) => !prev);
+ };
+ 
 
   const [showRoute, setShowRoute] = useState(false);
 
@@ -177,12 +179,16 @@ export const EventItem = () => {
           )}
 
           <div className={styles.eventButtonContainer}>
-            <button
-              className={styles.eventButton}
-              onClick={() => setShowRoute(true)}>
-              Задать вопрос
-            </button>
+         
+          <button className={styles.eventButton} onClick={toggleChat}>
+  Задать вопрос
+</button>
 
+{showChat && (
+  <div className={`${styles.chatContainer} ${showChat ? styles.open : ''}`}>
+    <Chat eventId={event.id} userId={userId} />
+  </div>
+)}
             {handleUserAlreadyAddedToFavorites(event.id, userId, localFavorites) ? (
               <button className={styles.eventButton} onClick={handleRemoveFromFavorites}>
                 Отказаться

@@ -158,3 +158,34 @@
   --accent-color: #007bff;
   --border-color: #444;
 }
+
+
+
+
+.chatContainer {
+  display: none;  // Скрываем чат по умолчанию
+  transition: all 0.3s ease-in-out;  // Добавим плавный переход для анимации
+}
+
+.chatContainer.open {
+  display: block;  // Показываем чат, когда состояние showChat = true
+}
+.chatContainer {
+  display: none;
+  position: fixed;  // фиксируем чат поверх страницы
+  bottom: 20px;     // отступ снизу
+  right: 20px;      // отступ справа
+  width: 300px;     // ширина чата
+  height: 400px;    // высота чата
+  background-color: #fff;  // белый фон
+  border-radius: 8px;      // закругленные углы
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  // легкая тень для выделения
+  padding: 20px;           // внутренние отступы
+  z-index: 999;            // чат будет поверх остальных элементов
+  transition: all 0.3s ease;  // плавный переход
+}
+
+
+ 
+  
+ 
