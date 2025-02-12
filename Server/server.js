@@ -129,7 +129,7 @@ const searchRout = require('./routs/SearchRout');
 const getUsers = require('./routs/GetAllUser');
 const userEvent = require('./routs/UserEvent');
 const infoUser = require('./routs/InfoUser');
-const infoUser = require('./routs/InfoUser');
+
 server.use('/events', eventRout);
 server.use('/search', searchRout);
 server.use('/', registration, loginRouter, logout, uploadRoute);
