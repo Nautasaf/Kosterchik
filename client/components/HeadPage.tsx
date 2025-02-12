@@ -11,7 +11,6 @@ import { getAllFavorites } from '../store/thunk/FavoriteThunk'
 import { isBgColor } from '../src/utils/background'
 import { handleCountFavorites, handleUserAlreadyAddedToFavorites } from '../scripts/FavoriteScripts'
 import { Favorite } from '../interface/EventFetch'
-import Chat from "../components/Chat"
 const apiUrl = import.meta.env.VITE_API_URL;
 
 moment.updateLocale('ru', {

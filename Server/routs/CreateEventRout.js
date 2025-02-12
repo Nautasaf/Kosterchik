@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
       organizer,
       latitude,
       longitude,
+      markerIcon
     } = req.body;
    
     if (!userId) {
@@ -60,6 +61,7 @@ router.post('/', async (req, res) => {
       organizer,
       latitude,
       longitude,
+      markerIcon
     });
 
     await EventUser.create({

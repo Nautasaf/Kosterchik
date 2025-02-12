@@ -14,7 +14,6 @@ import SubscriptionMap from './SubscriptionMaps/SubscriptionMaps'
 import { handleCountFavorites, handleUserAlreadyAddedToFavorites } from '../scripts/FavoriteScripts'
 import { Favorite } from '../interface/EventFetch'
 import Chat from './Chat'
-import React from 'react'
 
 moment.locale('ru')
 

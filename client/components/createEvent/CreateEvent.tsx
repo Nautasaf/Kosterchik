@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/Index";
 import { useNavigate } from "react-router-dom";
@@ -52,19 +52,42 @@ const CreateEvent: React.FC = () => {
     lat: 55.751244,
     lng: 37.618423,
   });
+  const [markerIcon, setMarkerIcon] = useState<string>("fire");
   const [file, setFile] = useState<File | null>(null)
   const [maxPeople, setMaxPeople] = useState(0)
   const [start_date, setStart_date] = useState('')
   const [end_date, setEnd_date] = useState('')
   const [price, setPrice] = useState(0)
   const [event_type, setEvent_type] = useState('')
-  const [age_restriction, setAge_registration] = useState(0)
+  const [age_restriction, setAge_restriction] = useState(0)
   const [duration, setDuration] = useState(0)
   const [district, setDistrict] = useState('')
   const [format, setFormat] = useState('')
   const [language, setLanguage] = useState('')
-
   const [organizer, setOrganizer] = useState('')
+
+   // При монтировании пытаемся получить текущую геолокацию пользователя
+   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          console.log("Получена геолокация:", coords);
+          setLocation(coords);
+        },
+        (error) => {
+          console.error("Ошибка получения геолокации:", error);
+          setLocation({ lat: 55.751244, lng: 37.618423 });
+        }
+      );
+    } else {
+      console.error("Геолокация не поддерживается браузером");
+      setLocation({ lat: 55.751244, lng: 37.618423 });
+    }
+  }, []);
 
   const uploadBackground = async (file : File) => {
     const formData = new FormData()
@@ -131,6 +154,7 @@ const CreateEvent: React.FC = () => {
     background: backgroundUrl,
     longitude: location.lng,
     latitude: location.lat,
+    markerIcon,
   }
 
     try {
@@ -278,7 +302,7 @@ const CreateEvent: React.FC = () => {
     onChange={(e) => {
       const value = e.target.value;
       const numericValue = value.replace(/[^0-9]/g, '');
-      setAge_registration(numericValue ? Number(numericValue) : 0);
+      setAge_restriction(numericValue ? Number(numericValue) : 0);
     }}
     required
   />
@@ -361,9 +385,23 @@ const CreateEvent: React.FC = () => {
         <div className={styles.formGroup}>
           <label>Выберите место проведения:</label>
           <MapPicker
-            onLocationSelect={(coords) => setLocation(coords)}
+            onLocationSelect={(coords) => {
+              console.log("Новые координаты из MapPicker:", coords);
+              setLocation(coords);
+            }}
             initialCoordinates={location}
           />
+        </div>
+        <div className={styles.formGroup}>
+          <label>Выберите иконку события:</label>
+          <select
+            value={markerIcon}
+            onChange={(e) => setMarkerIcon(e.target.value)}>
+            <option value="fire">🔥 Огонь (Костёр)</option>
+            <option value="music">🎵 Музыка</option>
+            <option value="party">🎉 Вечеринка</option>
+            <option value="sport">⚽ Спорт</option>
+          </select>
         </div>
         <button type="submit" className={styles.submitButton}>
           Создать событие

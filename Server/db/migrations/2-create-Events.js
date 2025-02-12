@@ -117,6 +117,21 @@ module.exports = {
         allowNull: true,
         defaultValue: 0,
       },
+      // Добавляем столбцы для координат без дефолтных значений,
+      // чтобы при создании события использовались переданные данные
+      latitude: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      longitude: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      // Добавляем столбец для иконки события
+      markerIcon: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -127,10 +142,9 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('NOW()'),
       },
-    })
+    });
   },
-
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Events')
+    await queryInterface.dropTable('Events');
   },
-}
+};

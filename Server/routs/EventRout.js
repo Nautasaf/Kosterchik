@@ -30,6 +30,7 @@ router.get('/user/:userId', async (req, res) => {
     res.status(500).json({ message: 'Ошибка сервера' })
   }
 })
+
 // Получение события по ID
 router.get('/:eventId', async (req, res) => {
   try {
@@ -51,8 +52,7 @@ router.get('/:eventId', async (req, res) => {
 router.put('/:eventId', async (req, res) => {
   try {
     const { eventId } = req.params
-    const { title, description, city, date, background, requirements } =
-      req.body
+    const { title, description, city, date, background, requirements } = req.body
 
     const event = await Event.findByPk(eventId)
 
@@ -97,6 +97,7 @@ router.delete('/:eventId', async (req, res) => {
   }
 })
 
+// Создание события
 router.post('/', async (req, res) => {
   console.log("📥 Полученные данные на сервере:", req.body);
 
@@ -122,13 +123,24 @@ router.post('/', async (req, res) => {
       language,
       accessibility,
       organizer,
+      latitude,
+      longitude,
+      markerIcon,
     } = req.body
-   
-    // Проверяем, что userId передан и он не равен null
+
+    // Проверяем, что userId передан
     if (!userId) {
       return res.status(400).json({ message: 'Ошибка: userId не указан' })
     }
     console.log('userId===>', userId)
+
+    // Приводим координаты к числовому типу
+    const lat = latitude !== undefined ? parseFloat(latitude) : null;
+    const lng = longitude !== undefined ? parseFloat(longitude) : null;
+
+    if (lat === null || lng === null || isNaN(lat) || isNaN(lng)) {
+      return res.status(400).json({ message: 'Ошибка: некорректные координаты' });
+    }
 
     // Создаем событие в базе данных
     const newEvent = await Event.create({
@@ -153,6 +165,9 @@ router.post('/', async (req, res) => {
       language,
       accessibility,
       organizer,
+      latitude: lat,
+      longitude: lng,
+      markerIcon,
     })
 
     // Добавляем создателя события в таблицу EventUser
@@ -160,8 +175,6 @@ router.post('/', async (req, res) => {
       userId: userId,
       eventId: newEvent.id,
     })
-
-    // Возвращаем созданное событие
     res.status(201).json(newEvent)
   } catch (error) {
     console.error("❌ Ошибка при создании события:", error);
@@ -169,4 +182,4 @@ router.post('/', async (req, res) => {
   }
 });
 
-module.exports = router
+module.exports = router;
