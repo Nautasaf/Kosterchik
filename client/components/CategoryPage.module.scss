@@ -3,6 +3,9 @@
   width: 100%;
   overflow-x: hidden;
   background-color: var(--primary-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Шапка страницы */
@@ -14,107 +17,127 @@
 .title {
   font-size: 2rem;
   margin: 0;
-  padding: 0;
   color: var(--text-color);
   font-weight: 600;
 }
 
-/* Контейнер слайдера */
 .sliderContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-x: auto;
   padding: 2rem 0;
   max-width: 100%;
+  scroll-behavior: smooth;
   position: relative;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  width: 100%;
 }
 
-/* Слайдер событий */
 .eventsSlider {
   display: flex;
   gap: 1.5rem;
   padding: 1rem;
-  max-width: 100%;
+  flex-wrap: nowrap;
+  width: max-content;
 }
 
-/* Элемент события */
 .eventItem {
-  min-width: 300px;
-  height: 80vh;
+  width: 510px;
+  height: 450px;
   background-color: var(--secondary-bg);
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   text-align: center;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
 
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  }
+.eventItem:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для изображения */
+.eventImage {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
 /* Ссылка на событие */
 .eventLink {
   text-decoration: none;
-  color: #ffffff; /* Белый цвет текста для ссылки */
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  align-items: center;
   flex-grow: 1;
-  padding: 1rem;
-  position: absolute;
-  inset: 0;
+  padding: 0.5rem 1rem; /* Уменьшаем padding */
+  overflow: hidden;
+  height: 100%;
 }
 
 /* Заголовок события */
 .eventTitle {
-  font-size: 1.75rem;
+  font-size: 1.8rem;
   font-weight: 600;
-  margin-bottom: 1rem;
-  color: #ffffff; /* Белый цвет для заголовка */
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 100%;
 }
 
 /* Информация о событии */
 .eventInfo {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  color: #ffffff; /* Белый цвет для информации */
-  opacity: 0.8; /* Сlightly lighter for muted text */
+  font-size: 1.1rem;
+  color: var(--text-color);
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 100%;
 }
 
 /* Город и район */
 .eventCity,
 .eventDistrict {
-  font-size: 0.9rem;
-  color: #ffffff; /* Белый цвет для дополнительной информации */
-  opacity: 0.7; /* Еще светлее */
+  font-size: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Дата события */
 .eventDate {
-  font-size: 0.9rem;
-  color: #ffffff; /* Белый цвет для даты */
-  opacity: 0.7; /* Еще светлее */
-}
-
-/* Элементы внутри eventItem */
-.eventItem > * {
-  margin-top: auto;
+  font-size: 1rem;
+  color: var(--text-color);
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Сообщение "Нет событий" */
 .noEvents {
   text-align: center;
-  font-size: 1.25rem;
-  color: var(--text-muted); /* Используем мутед-цвет из темы */
+  font-size: 1.5rem;
+  color: var(--text-muted);
 }
 
 /* Темы */
@@ -135,36 +158,44 @@
 /* Адаптивность */
 @media (max-width: 768px) {
   .eventItem {
-    min-width: 250px; /* Дополнительно уменьшаем ширину */
-    height: 70vh;
+    width: 270px;
+    height: 400px;
   }
 
   .eventTitle {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
 
   .eventInfo {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
 
   .eventCity,
   .eventDistrict,
   .eventDate {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .eventLink {
+    padding: 0.5rem 0.5rem; /* Уменьшаем padding для мобильных */
   }
 }
 
 @media (max-width: 480px) {
   .eventItem {
-    min-width: 200px;
-    height: 60vh;
+    width: 240px;
+    height: 350px;
   }
 
   .eventTitle {
-    font-size: 1.25rem;
+    font-size: 1.4rem;
   }
 
   .eventInfo {
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .eventLink {
+    padding: 0.5rem 0.5rem; /* Уменьшаем padding для мобильных */
   }
 }
