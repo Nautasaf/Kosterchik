@@ -1,7 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
 // Импортируем модель EventMessage
-const EventMessage = require('./eventMessage');
 module.exports = (sequelize, DataTypes) => {
 
   class User extends Model {
