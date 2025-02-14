@@ -139,7 +139,7 @@ export const EventItem = () => {
           <div className={styles.eventDescription}>{event.description}</div>
           <div className={styles.eventCity}>Город: {event.city}</div>
           <div className={styles.eventCity}>Место: {event.district}</div>
-          
+          <div className={styles.eventCity}>Цена: {event.price} ₽</div>
           <div className={styles.eventDate}>
             Начало: {moment(event.start_date).format("D MMMM YYYY, HH:mm")}
             {event.end_date ? ` до ${moment(event.end_date).format("HH:mm")}` : ""}

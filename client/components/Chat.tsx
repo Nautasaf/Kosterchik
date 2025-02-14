@@ -13,6 +13,7 @@ const Chat: React.FC<ChatProps> = ({ eventId, userId }) => {
   const [messages, setMessages] = useState<any[]>([]);
   const [message, setMessage] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
+  
 
   useEffect(() => {
     const socketIo = io(apiUrl);

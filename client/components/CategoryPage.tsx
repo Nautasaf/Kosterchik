@@ -4,7 +4,7 @@ import { RootState } from '../store/Index'
 import style from './CategoryPage.module.scss'
 import moment from 'moment'
 import 'moment/locale/ru'
-
+const apiUrl = import.meta.env.VITE_API_URL;
 export const CategoryPage = () => {
   const { eventType } = useParams()
   const eventsState = useSelector((state: RootState) => state.Events)
@@ -53,6 +53,15 @@ export const CategoryPage = () => {
               <div className={style.eventItem} key={event.id}>
                 <NavLink to={`/event/${event.id}`} className={style.eventLink}>
                   <h2 className={style.eventTitle}>{event.title}</h2>
+                  <img
+                  className={style.eventImage}
+                  src={
+                    event.background
+                      ? `${apiUrl}${event.background}`
+                      : '/default-background.jpg'
+                  }
+                  alt={event.title}
+                />
                   <p className={style.eventInfo}>{event.description}</p>
                   <p className={style.eventCity}>Город: {event.city}</p>
                   <p className={style.eventDistrict}>Место: {event.district}</p>
