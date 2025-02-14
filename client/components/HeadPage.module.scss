@@ -1,7 +1,7 @@
-/* Основной контейнер страницы */
 .headPageContainer {
   margin-left: 250px;
-  max-width: 1200px;
+  width: 100%; /* Устанавливаем ширину на 100% от родительского контейнера */
+  max-width: 1400px; /* Устанавливаем максимальную ширину */
   padding: 2rem;
   background-color: var(--primary-bg);
   border-radius: 12px;
@@ -36,10 +36,10 @@
   letter-spacing: -1px;
 }
 
-/* Список событий (всегда два столбца) */
+/* Список событий (всегда три столбца) */
 .eventList {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Всегда два столбца */
+  grid-template-columns: repeat(3, 1fr); /* Изменено на три столбца */
   gap: 1.5rem;
   margin-top: 1rem;
 }
@@ -136,9 +136,9 @@
     font-size: 0.875rem;
   }
 
-  /* На маленьких экранах один столбец */
+  /* На маленьких экранах два столбца */
   .eventList {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -153,5 +153,10 @@
 
   .eventInfo {
     font-size: 0.8rem;
+  }
+
+  /* На еще меньших экранах один столбец */
+  .eventList {
+    grid-template-columns: 1fr;
   }
 }

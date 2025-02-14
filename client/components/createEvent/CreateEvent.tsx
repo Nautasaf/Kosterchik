@@ -235,7 +235,7 @@ const CreateEvent: React.FC = () => {
             type='date'
             value={start_date}
             onChange={(e) => setStart_date(e.target.value)}
-            required
+           
           />
         </div>
         <div className={styles.formGroup}>
@@ -244,7 +244,7 @@ const CreateEvent: React.FC = () => {
             type='date'
             value={end_date}
             onChange={(e) => setEnd_date(e.target.value)}
-            required
+           
           />
         </div>
         <div className={styles.formGroup}>
