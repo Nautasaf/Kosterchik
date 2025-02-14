@@ -4,9 +4,9 @@
   align-items: center;
   background-color: #f8f8f8;
   border-radius: 16px;
-  padding: 2rem;
-  width: 100%;
-  max-width: 400px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 700px;
   margin: 0 auto;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   border: 1px solid #e0e0e0;
@@ -23,7 +23,7 @@
   }
 
   .formGroup {
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -38,8 +38,8 @@
     }
 
     .formInput {
-      width: 80%;
-      padding: 0.75rem;
+      width: 90%; 
+      padding: 0.6rem;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 1rem;
@@ -61,7 +61,7 @@
 
   .formButton {
     width: 60%;
-    padding: 0.75rem;
+    padding: 0.6rem;
     background-color: #494a4b; /* Простой цвет фона */
     color: white;
     border: none;
