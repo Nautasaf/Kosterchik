@@ -121,11 +121,6 @@ function App() {
       </div>
       <ToastContainer />
       <footer className={styles.footer}>
-        <div>
-          Контакты: +7(929)-198-88-32
-          <br />
-          Адрес: г. Уфа, ул. Салавата Юлаева д.90
-        </div>
         <div className={styles.footerLinks}>
           <NavLink to='/project' className={styles.footerLink}>
             О Проекте
