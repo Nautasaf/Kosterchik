@@ -1,45 +1,129 @@
+/* Общий контейнер профиля и поиска */
+.profileContainer,
 .searchContainer {
+  max-width: 73%;
+  padding: 1.5rem;
+  background-color: var(--primary-bg);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s ease;
+  margin-left:800px;
+  // margin-right: auto; /* Центрирование на странице */
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Контейнер поиска */
+.searchContainer {
+  padding-right: 50px;
+  // margin-top: 50px;
+  margin-left: 355px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 20px; /* Чуть больше расстояние между элементами */
-  padding: 20px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 750px; /* Чуть шире */
-  margin: 0 auto;
+  justify-content: center;
+  gap: 1rem;
+  position: sticky;
+  top: 80px;
+  z-index: 1000;
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-.searchInput {
-  width: 250px; /* Чуть длиннее */
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
-  outline: none;
-  transition: border-color 0.3s;
-  background-color: white; 
-  color: black; 
+/* Скрытый и видимый поиск */
+.hidden {
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+}
 
-  &:focus {
-    border-color: #007bff;
+.visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Инпуты */
+.searchInput {
+  width: 100%;
+  max-width: 280px;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: var(--input-bg);
+  color: var(--text-color);
+}
+
+.searchInput:focus {
+  background-color: var(--accent-light-bg);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Дата-пикер */
+.react-datepicker {
+  background-color: var(--primary-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.react-datepicker__day {
+  padding: 0.5rem;
+  font-size: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.react-datepicker__day--today {
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
+  border-radius: 50%;
+}
+
+.react-datepicker__day--selected {
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
+  border-radius: 50%;
+}
+
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #565656;
+  --text-muted: #6c757d;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #f0f0ff;
+  --input-bg: #f8f9fa;
+}
+
+.darkMode {
+  --primary-bg: #050505;
+  --secondary-bg: #383838;
+  --text-color: #ffffff;
+  --text-muted: #868e96;
+  --accent-color: #6c63ff;
+  --accent-light-bg: #2a2a4a;
+  --input-bg: #2a2a2a;
+}
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+  .profileContainer,
+  .searchContainer {
+    max-width: 100%;
+    padding: 1rem;
+  }
+
+  .searchInput {
+    width: 100%;
   }
 }
 
-.searchButton {
-  width: 230px; /* Немного уже */
-  padding: 12px;
-  background-color: white; /* Белый фон */
-  color: black; /* Черный текст */
-  border: 1px solid #007bff; /* Добавляем границу для выделения */
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-
-  &:hover {
-    background-color: #007bff;
-    color: white;
+@media (max-width: 480px) {
+  .searchInput {
+    font-size: 0.9rem;
+    padding: 0.75rem;
   }
 }

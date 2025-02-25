@@ -22,17 +22,111 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: DataTypes.TEXT,
-      city: DataTypes.STRING,
-      date: DataTypes.DATE,
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      start_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      end_date: {
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      imageUrl: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      background: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      requirements: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
+      maxPeople: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      price: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      event_type: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      age_restriction: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      duration: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      district: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      format: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      language: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      accessibility: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+      },
+      rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
+        defaultValue: 0.0,
+      },
+      organizer: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      popularity: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
+      },
+      latitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        // Значение будет передано из запроса, поэтому defaultValue не задаём
+      },
+      longitude: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        // Значение будет передано из запроса
+      },
+      markerIcon: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
     {
       sequelize,
       modelName: 'Event',
+      timestamps: true,
     }
   );
 

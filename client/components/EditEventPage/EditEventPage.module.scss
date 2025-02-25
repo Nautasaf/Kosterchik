@@ -1,0 +1,95 @@
+.editEventContainer {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 25px;
+  background-color: var(--secondary-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: var(--box-shadow);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.editEventHeader {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.editEventForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; // Равномерные отступы между элементами
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+
+  input,
+  textarea {
+    width: 95%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 5px var(--accent-color);
+    }
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+/* Кнопка */
+.editEventButton {
+  padding: 12px 0;
+  background: linear-gradient(45deg, var(--accent-color), var(--accent-hover));
+  color: white;
+  border: solid 1px white;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(4, 4, 4, 0.2);
+
+  &:hover {
+    background: linear-gradient(45deg, var(--accent-hover), var(--accent-color));
+    box-shadow: 0 6px 12px rgba(81, 0, 255, 0.3);
+  }
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .editEventContainer {
+    padding: 20px;
+  }
+
+  .editEventHeader {
+    font-size: 1.5rem;
+  }
+
+  .editEventButton {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}

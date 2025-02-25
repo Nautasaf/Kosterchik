@@ -1,0 +1,105 @@
+.createEventContainer {
+  min-width: 700px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--primary-bg);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  transition: all 0.3s ease-in-out;
+}
+.createEventContainer h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+.createEventContainer form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  align-items: center;
+}
+.createEventContainer .formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  align-items: center;
+  text-align: center;
+}
+
+.createEventContainer .formGroup label {
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: center;
+}
+.createEventContainer .formGroup input,
+.createEventContainer .formGroup textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+.createEventContainer .formGroup input:focus,
+.createEventContainer .formGroup textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+.createEventContainer .submitButton {
+  grid-column: span 2;
+  width: 30%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  background: var(--accent-color);
+  color: var(--button-text-color);
+  border: none;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+.createEventContainer .submitButton:hover {
+  background: var(--accent-hover);
+  transform: translateY(-2px);
+}
+.createEventContainer .submitButton:active {
+  background: var(--accent-active);
+  transform: translateY(0);
+}
+/* Стили для карты */
+.createEventContainer .formGroup.mapGroup {
+  grid-column: span 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.createEventContainer .formGroup.mapGroup .MapPicker {
+  width: 80%; /* Ширина карты */
+  max-width: 600px;
+  margin: 0 auto;
+}
+@media (max-width: 768px) {
+  .createEventContainer {
+    padding: 1rem;
+    width: 90%;
+  }
+  .createEventContainer form {
+    grid-template-columns: 1fr;
+  }
+  .createEventContainer .submitButton {
+    font-size: 1rem;
+    padding: 0.75rem;
+  }
+}

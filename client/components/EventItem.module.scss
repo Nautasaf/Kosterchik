@@ -1,0 +1,191 @@
+/* Карточка события */
+.eventItem {
+  min-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--primary-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border: 1px solid var(--border-color);
+  font-family: 'Inter', sans-serif;
+  transition: box-shadow 0.3s ease;
+}
+
+/* Фото профиля */
+.profilePhoto {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.profileInfo,h2 {
+  color: #979797;
+}
+
+.eventDate {
+  color: #979797;
+}
+/* Заголовок события */
+.eventTitle {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+/* Изображение события */
+.eventImage {
+  width: 100%; /* Адаптивная ширина */
+  height: 300px; /* Уменьшили высоту */
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  object-fit: cover;
+}
+
+/* Контейнер колонок */
+.eventColumns {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+/* Колонка событий */
+.eventColumn {
+  flex: 1 1 48%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  @media (max-width: 768px) {
+    flex: 1 1 100%; /* Полная ширина на маленьких экранах */
+  }
+}
+
+/* Описание и город события */
+.eventDescription,
+.eventCity {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Контейнер кнопок */
+.eventButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* На маленьких экранах ставим в столбец */
+  }
+}
+
+/* Кнопки */
+/* Кнопки */
+.eventButton {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent-color);
+  color: var(--primary-bg);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 48%;
+
+  &:hover {
+    background-color: rgba(var(--accent-color-rgb), 0.9); // Сlightly darker using RGBA
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    background-color: rgba(var(--accent-color-rgb), 0.8); // Even darker
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.eventInactiveButton {
+  padding: 12px 20px;
+  background-color: #bfc2c6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: default;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  width: 45%;
+}
+
+/* Добавляем RGB-версию акцентного цвета */
+:root {
+  --accent-color: #007bff;
+  --accent-color-rgb: 0, 123, 255; // RGB representation of #007bff
+}
+
+/* Темы */
+.lightMode {
+  --primary-bg: #ffffff;
+  --secondary-bg: #f8f9fa;
+  --text-color: #868484;
+  --text-muted: #6c757d;
+  --secondary-text-color: #6e6f70;
+  --accent-color: #007bff;
+  --border-color: #ddd;
+}
+
+.darkMode {
+  --primary-bg: #121212;
+  --secondary-bg: #1e1e1e;
+  --text-color: #ffffff;
+  --text-muted: #868e96;
+  --secondary-text-color: #888;
+  --accent-color: #007bff;
+  --border-color: #444;
+}
+
+
+
+
+.chatContainer {
+  display: none;  // Скрываем чат по умолчанию
+  transition: all 0.3s ease-in-out;  // Добавим плавный переход для анимации
+}
+
+.chatContainer.open {
+  display: block;  // Показываем чат, когда состояние showChat = true
+}
+.chatContainer {
+  display: none;
+  position: fixed;  // фиксируем чат поверх страницы
+  bottom: 20px;     // отступ снизу
+  right: 20px;      // отступ справа
+  width: 300px;     // ширина чата
+  height: 400px;    // высота чата
+  background-color: #fff;  // белый фон
+  border-radius: 8px;      // закругленные углы
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);  // легкая тень для выделения
+  padding: 20px;           // внутренние отступы
+  z-index: 999;            // чат будет поверх остальных элементов
+  transition: all 0.3s ease;  // плавный переход
+}
+
+
+ 
+  
+ 

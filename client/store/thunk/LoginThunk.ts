@@ -1,38 +1,37 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RegisterUserResponse, RegisterUserError } from '../../interface/Registration';
-import { login } from '../slice/AuthSlice';
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import {RegisterUserResponse,RegisterUserError, User,} from '../../interface/Registration'
+import { login } from '../slice/AuthSlice'
+
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export const loginUser = createAsyncThunk<
-  RegisterUserResponse,
-  { email: string; password: string }, 
-  { rejectValue: RegisterUserError } 
->(
-  'login/loginUser',
-  async (userData, {  dispatch, rejectWithValue }) => {
-    try {
-      const response = await fetch('http://81.177.222.20:3000/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+ User,
+  { email: string; password: string },
+  { rejectValue: RegisterUserError }
+>('login/loginUser',
+   async (userData, { dispatch, rejectWithValue }) => {
+  try {
+    const response = await fetch(`${apiUrl}/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify(userData),
+    })
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        return rejectWithValue({ message: errorData?.text || 'Ошибка логина' });
-      }
-      const data: RegisterUserResponse = await response.json();
-      dispatch(login(data));  
-     
-      
-      return data;
-
-    } catch (error) {
-        console.error('Ошибка при логине:', error);
-      return rejectWithValue({ message: 'Ошибка соединения или сервер недоступен' });
+    if (!response.ok) {
+      const errorData = await response.json()
+      return rejectWithValue({ message: errorData?.text || 'Ошибка логина' })
     }
+    const { data }: RegisterUserResponse = await response.json()
+    dispatch(login(data))
+
+    return data
+  } catch (error) {
+    console.error('Ошибка при логине:', error)
+    return rejectWithValue({
+      message: 'Ошибка соединения или сервер недоступен',
+    })
   }
-);
-
-
+})

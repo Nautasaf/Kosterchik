@@ -1,0 +1,76 @@
+/* Общие стили для модального окна */
+/* Стили */
+.modalOverlay {
+  margin-top: 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(59, 59, 59, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.closeButton{
+margin-left: 600px;
+  width: auto;
+}
+.modalContent {
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 650px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(136, 135, 135, 0.61);
+}
+
+.eventListContainer {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  padding: 10px;
+  border-bottom: 1px solid var(--secondary-bg);
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.participantsButton, .editButton, .deleteButton {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.participantsButton { background: #575757; }
+.editButton { background: var(--accent-color); }
+.deleteButton { background: #5b5959; }
+
+.participantsButton:hover { background: #808682; }
+.editButton:hover { background: #89888d; }
+.deleteButton:hover { background: #8c8989; }
+
+.eventListContainer::-webkit-scrollbar {
+  width: 8px;
+}
+
+.eventListContainer::-webkit-scrollbar-thumb {
+  background: var(--accent-color);
+  border-radius: 4px;
+}

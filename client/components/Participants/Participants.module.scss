@@ -1,0 +1,197 @@
+/* Общий стиль модального окна */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Контейнер модального окна */
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: var(--primary-bg);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: var(--box-shadow);
+  border: 2px solid var(--border-color);
+  font-family: 'Inter', sans-serif;
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Темная тема */
+.darkMode .modalContent {
+  background-color: var(--secondary-bg);
+  color: var(--text-color);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Заголовок */
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Кнопка закрытия */
+.closeButton {
+  margin-left: 560px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: var(--accent-color);
+  }
+}
+.approveButton {
+  max-width: 200px;
+}
+.rejectButton {
+  margin-left: 10px;
+  max-width: 200px;
+}
+
+/* Контент модалки */
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Стили для списка */
+.eventList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.eventItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 16px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: var(--hover-bg);
+    cursor: pointer;
+  }
+}
+
+/* Темная тема для списка */
+.darkMode .eventItem {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.darkMode .eventItem:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Кнопки */
+.buttonGroup {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.editButton,
+.deleteButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--button-shadow);
+  color: white;
+}
+
+/* Кнопка редактирования */
+.editButton {
+  background: var(--blue-gradient);
+
+  &:hover {
+    background: var(--blue-hover);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+/* Кнопка удаления */
+.deleteButton {
+  background: var(--red-gradient);
+
+  &:hover {
+    background: var(--red-hover);
+    box-shadow: var(--button-hover-shadow);
+  }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  .modalContent {
+    padding: 20px;
+  }
+
+  .closeButton {
+    font-size: 20px;
+  }
+
+  .editButton,
+  .deleteButton {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+}
